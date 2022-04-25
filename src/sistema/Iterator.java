@@ -9,6 +9,6 @@ package sistema;
  * @author mimit
  */
 public interface Iterator {
-    public void hashNext();
-    public void next();
+    public boolean hashNext();
+    public String next();
 }

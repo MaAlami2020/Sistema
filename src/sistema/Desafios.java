@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -42,13 +43,18 @@ public class Desafios implements Iterator{
     }
 
     @Override
-    public void hashNext() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean hashNext() {
+        Usuario usuario = new Usuario();
+        List<String> listaNotif = usuario.getNotifDesafio();
+        return !listaNotif.isEmpty();
     }
 
     @Override
-    public void next() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String next() {
+        Usuario usuario = new Usuario();
+        List<String> listaNotif = usuario.getNotifDesafio();
+        String notif = listaNotif.get(0);
+        return notif;
     }
     
 }
