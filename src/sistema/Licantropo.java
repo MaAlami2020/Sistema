@@ -23,7 +23,7 @@ public class Licantropo extends Personaje{
     private int oro;
     private int salud;
     private int poder;
-    private int rabia = 0;
+    private int rabia;
     
     public Licantropo(){
     }

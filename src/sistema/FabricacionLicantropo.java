@@ -29,7 +29,7 @@ public class FabricacionLicantropo extends Fabrica{
           Scanner sc = new Scanner(System.in);
           opc = sc.next();
         }while(opc == "si");
-        licantropo.getRabia();
+        licantropo.setRabia(0);
         licantropo.anadirOro();
         licantropo.anadirPoder();
         licantropo.anadirSalud();
