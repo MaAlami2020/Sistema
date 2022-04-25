@@ -23,7 +23,7 @@ public class Cazador extends Personaje{
     private int oro;
     private int salud;
     private int poder;
-    private int voluntad = 3;
+    private int voluntad;
     
     public Cazador(){
     }
