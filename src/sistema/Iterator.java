@@ -9,6 +9,6 @@ package sistema;
  * @author mimit
  */
 public interface Iterator {
-    public void aceptarDesafio();
-    public void rechazarDesafio();
+    public void hashNext();
+    public void next();
 }

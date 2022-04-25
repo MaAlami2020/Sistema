@@ -165,6 +165,7 @@ public class Usuario extends MenuInicio{
     }
     
     public void darBaja_Personaje(){
+        
     }
     
     public void registrar_Personaje(){

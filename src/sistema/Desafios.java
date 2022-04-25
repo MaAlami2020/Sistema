@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class Desafios implements Iterator{
 
-    @Override
+    
     public void aceptarDesafio() {
         int opc = 0;
         do{
@@ -34,12 +34,21 @@ public class Desafios implements Iterator{
         }
     }
 
-    @Override
     public void rechazarDesafio() {
         Usuario usuario = new Usuario();
         double oroPersonaje = usuario.getUsuarioDesafiar().getTipoPersonaje().anadirOro();
         int oroDesafiador = usuario.getUserlist().get(usuario.getIndex()).getTipoPersonaje().anadirOro();
         oroPersonaje -= (double) oroDesafiador * 0.1;
+    }
+
+    @Override
+    public void hashNext() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void next() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
