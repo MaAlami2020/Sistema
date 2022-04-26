@@ -5,6 +5,8 @@
 package sistema;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -72,17 +74,16 @@ public class Usuario extends MenuInicio{
         return registro;
     }
 
-    //@Override
     public void registrar_darBaja(){
         boolean userRegistered = false;
         System.out.println("ingrese su nombre: ");
         Scanner sc = new Scanner(System.in);
         String name = sc.next();
-        //this.setNombre(name);
+        this.setNombre(name);
         System.out.println("ingrese su nick: ");
         sc = new Scanner(System.in);
         String apodo = sc.next();
-        //this.setNick(apodo);
+        this.setNick(apodo);
         System.out.println("ingrese una contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
         String contrasenia = sc.next();
@@ -91,7 +92,7 @@ public class Usuario extends MenuInicio{
            sc = new Scanner(System.in);
            contrasenia = sc.next();
         }
-        //this.setPassword(contrasenia);
+        this.setPassword(contrasenia);
         
         for(Usuario us: getUserlist()){
            if((us.getNombre().equals(name))&(us.getNick().equals(apodo))){
@@ -181,6 +182,14 @@ public class Usuario extends MenuInicio{
            FabricacionVampiro fabVampiro = new FabricacionVampiro();
            getUserlist().get(index).tipoPersonaje = fabVampiro.crearPersonaje(); 
            seleccionarOpcionMenu();
+        }else if(opc == 2){
+           FabricacionLicantropo fabLicantropo = new FabricacionLicantropo();
+           getUserlist().get(index).tipoPersonaje = fabLicantropo.crearPersonaje(); 
+           seleccionarOpcionMenu();
+        }else if(opc == 3){
+           FabricacionCazador fabCazador = new FabricacionCazador();
+           getUserlist().get(index).tipoPersonaje = fabCazador.crearPersonaje(); 
+           seleccionarOpcionMenu();
         }
     }
     
@@ -202,15 +211,25 @@ public class Usuario extends MenuInicio{
         System.out.println("introduzca el nick del usuario a desafiar: ");
         Scanner sc = new Scanner(System.in);
         String nickUsuarioDesafiar = sc.next();
+        Operador operador = new Operador();
         for(Usuario usuarioDesafiado: getUserlist()){
            if(usuarioDesafiado.nick.equals(nickUsuarioDesafiar)){
-               usuarioDesafiar = usuarioDesafiado;
+               boolean estaPresente = false;
+               for(Usuario us: operador.getUsuariosBaneados()){
+                   if(us.getNick().equals(usuarioDesafiado.nick)){
+                       estaPresente = true;  
+                   }
+               }if(estaPresente == false){
+                  usuarioDesafiar = usuarioDesafiado;
+                  apostarOro();
+                  operador.validarDesafio();
+               }else{
+                  System.out.println("no puede desafiar a esste usuario");
+               }
            }
         }
-        apostarOro();
-        //Operador operador = new Operador();
-        seleccionarOpcionMenu();
-        //operador.validarDesafio();
+        
+        seleccionarOpcionMenu();    
     }
     public void cambiarArmadura_activa(){
        List<Armadura> armaduraActiva = usuarioDesafiar.tipoPersonaje.getListaArmaduras();
@@ -316,9 +335,45 @@ public class Usuario extends MenuInicio{
     }
     
     public void consultarOro(){
+        Operador operador = new Operador();
+        System.out.println("usuario: " + this.nombre);
+        System.out.print("oro ganado: ");
+        for(Combate combate: operador.getListaCombates()){
+            if(this.nombre.equals(combate.getUsuarioDesafiante().getNombre())){
+                System.out.print(combate.getUsuarioDesafiante().getTipoPersonaje().anadirOro());
+            }else if(this.nombre.equals(combate.getUsuarioDesafiado().getNombre())){
+                System.out.print(combate.getUsuarioDesafiado().getTipoPersonaje().anadirOro());
+            }
+        }
     }
     
     public void consultarRanking(){
+        List<Usuario> listaUsuarios = getUserlist(); 
+        Usuario [] usuarios = new Usuario[listaUsuarios.size()];
+        int pos = 0;       
+        for(Usuario usuario: listaUsuarios){
+            usuarios[pos] = usuario;
+            pos++;
+        }
+        for(int i = 0; i < usuarios.length; i++){
+            for(int j = i+1; j < usuarios.length; j++){
+                Usuario aux = null;
+                if(usuarios[i].getTipoPersonaje().anadirOro() > usuarios[j].getTipoPersonaje().anadirOro()){
+                    aux = usuarios[i];
+                    usuarios[i] = usuarios[j];
+                    usuarios[j] = aux;
+                }
+            }
+        }
+        for(int posUs = usuarios.length; posUs > 0; posUs--){
+             System.out.print("usuario: " + usuarios[pos].getNombre() + " --> ");
+             System.out.println("oro ganado: " + usuarios[posUs].getTipoPersonaje().anadirOro());
+        }
+    }
+    
+    public void mostrarResultadoDesafiante(){
+       Combate combate = new Combate();
+       combate.mostrarResultaddo();
     }
     
     public void aceptar_rechazarDesafio(){
@@ -335,6 +390,7 @@ public class Usuario extends MenuInicio{
                 desafios.aceptarDesafio();
                 notifDesafio.remove(cont);
                 cont++;
+                mostrarResultadoDesafiante();
             }else if(opc == 2){
                 desafios.rechazarDesafio();
                 notifDesafio.remove(cont);
@@ -342,6 +398,7 @@ public class Usuario extends MenuInicio{
             }
             notifDesafio.iterator().next();
         }
+        seleccionarOpcionMenu();
     }
     
     //@Override

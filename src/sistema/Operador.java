@@ -4,6 +4,8 @@
  */
 package sistema;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,8 +22,13 @@ public class Operador extends MenuInicio{
     private List<Usuario> usuariosBaneados = new ArrayList<>();
     private Usuario usuarioDesafiante;
     private Usuario usuarioDesafiado;
-    private int fortalezasPresentes = 0;
-    private int debilidadesPresentes = 0;
+    private int fortalezasVampiro;
+    private int debilidadesVampiro;
+    private int fortalezasLicantropo;
+    private int debilidadesLicantropo;
+    private int fortalezasCazador;
+    private int debilidadesCazador;
+    private List<Combate> listaCombates = new ArrayList<>(); 
     
     public Operador(String nombre, String nick, String password) {
         this.nombre = nombre;
@@ -35,6 +42,34 @@ public class Operador extends MenuInicio{
         usuarioDesafiado = usuario.getUsuarioDesafiar();
     }
 
+    public List<Combate> getListaCombates() {
+        return listaCombates;
+    }
+
+    public int getFortalezasVampiro() {
+        return fortalezasVampiro;
+    }
+
+    public int getDebilidadesVampiro() {
+        return debilidadesVampiro;
+    }
+
+    public int getFortalezasLicantropo() {
+        return fortalezasLicantropo;
+    }
+
+    public int getDebilidadesLicantropo() {
+        return debilidadesLicantropo;
+    }
+
+    public int getFortalezasCazador() {
+        return fortalezasCazador;
+    }
+
+    public int getDebilidadesCazador() {
+        return debilidadesCazador;
+    }
+    
     public List<Usuario> getUsuariosBaneados() {
         return usuariosBaneados;
     }
@@ -201,21 +236,42 @@ public class Operador extends MenuInicio{
   
     
     public void validarDesafio(){
-        Usuario user = new Usuario();
-        for(Fortaleza fortaleza: getUserlist().get(user.getIndex()).getTipoPersonaje().getListaFortalezas()){
-             fortalezasPresentes += fortaleza.getSensibilidad();  
-        }
-        for(Debilidad debilidad: getUserlist().get(user.getIndex()).getTipoPersonaje().getListaDebilidades()){
-             debilidadesPresentes += debilidad.getSensibilidad();
-        }
-        for(Fortaleza fortaleza: user.getUsuarioDesafiar().getTipoPersonaje().getListaFortalezas()){
-             fortalezasPresentes += fortaleza.getSensibilidad(); 
-        }
-        for(Debilidad debilidad: user.getUsuarioDesafiar().getTipoPersonaje().getListaDebilidades()){
-             debilidadesPresentes += debilidad.getSensibilidad(); 
+      Vampiro vampiro = new Vampiro();
+      Licantropo licantropo = new Licantropo();
+      Cazador cazador = new Cazador();
+      Usuario user = usuarioDesafiado;
+      while(user != null){ 
+        if(user.getTipoPersonaje() == vampiro){
+           for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
+                fortalezasVampiro += fortaleza.getSensibilidad();  
+           }
+           for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
+             debilidadesVampiro += debilidad.getSensibilidad();
+           }
+        }else if(user.getTipoPersonaje() == licantropo){
+           for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
+                fortalezasLicantropo += fortaleza.getSensibilidad();  
+           }
+           for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
+               debilidadesLicantropo += debilidad.getSensibilidad();
+           }
+        }else if(user.getTipoPersonaje() == cazador){
+           for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
+                fortalezasCazador += fortaleza.getSensibilidad();  
+           }
+           for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
+             debilidadesCazador += debilidad.getSensibilidad();
+           }
         }
         user.getUsuarioDesafiar().getNotifDesafio().add("desafio pendiente");
         seleccionarOpcionMenu();
+      }
+      if(user == usuarioDesafiado){      
+            user = usuarioDesafiante;        
+      }else{
+            user = null;
+      }
+  
     }
     
     public void añadir_atributos_personaje(){
@@ -284,6 +340,29 @@ public class Operador extends MenuInicio{
     
     public void banearUsuario(Usuario usuarioBaneado){
         usuariosBaneados.add(usuarioBaneado);
+        LocalDateTime horaActual = LocalDateTime.now();
+        LocalDateTime hora = horaActual.minusHours(24);
+        for(Usuario usBaneado: usuariosBaneados){
+            for(Combate combate: listaCombates){
+                usuarioDesafiante = combate.getUsuarioDesafiante();
+                usuarioDesafiado = combate.getUsuarioDesafiado();
+                if(usuarioDesafiante == combate.getUsuarioVencedor()){
+                   if(usBaneado.getNombre() == usuarioDesafiado.getNombre()){
+                      LocalDateTime horaCombate = combate.getFecha();
+                      if(horaCombate.isBefore(hora)){
+                        desbanearUsuario(usBaneado);
+                      }
+                   }   
+                }else if(usuarioDesafiado == combate.getUsuarioVencedor()){
+                   if(usBaneado.getNombre() == usuarioDesafiante.getNombre()){
+                      LocalDateTime horaCombate = combate.getFecha();
+                      if(horaCombate.isBefore(hora)){
+                        desbanearUsuario(usBaneado);
+                      }
+                   } 
+                }
+            }
+        }
     }
     
     public void desbanearUsuario(Usuario usuarioDesbaneado){

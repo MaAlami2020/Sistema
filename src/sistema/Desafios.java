@@ -32,6 +32,7 @@ public class Desafios implements Iterator{
         }else if(opc == 3){
            Combate combate = new Combate();
            combate.iniciar();
+           combate.mostrarResultaddo();
         }
     }
 
