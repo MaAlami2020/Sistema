@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -90,7 +91,8 @@ public class Operador extends MenuInicio{
         this.nick = nickInicio;
     }
 
-    public void registrar_darBaja(){
+    public void registrar_darBaja() throws IOException{
+     Usuario usuario = new Usuario();   
       System.out.println("1.iniciar sesion");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
@@ -138,14 +140,15 @@ public class Operador extends MenuInicio{
            }
         }
         if(operatorRegistered == false){
-            getOperatorlist().add(new Operador(name,apodo,contrasenia));  
+            getOperatorlist().add(new Operador(name,apodo,contrasenia));
+            usuario.serializar(this);
             System.out.println("registrado/a corractamente");
             entrar_salirSistema();
         }
       }
     }
     
-    public void seleccionarOpcionMenu(){
+    public void seleccionarOpcionMenu() throws IOException{
         System.out.println("***BIENVENIDO**");
         System.out.println("3.-editar un personaje");
         System.out.println("4.-validar desafio");
@@ -179,7 +182,9 @@ public class Operador extends MenuInicio{
         }
     }
     
-    public void editar_Personaje(){
+    public void editar_Personaje() throws IOException{
+     try{
+        Usuario usuario = new Usuario();
         Vampiro vampiro = new Vampiro();
       Usuario user = usuarioDesafiado;
       while(user != null){ 
@@ -225,17 +230,23 @@ public class Operador extends MenuInicio{
             }
              
         }
+        usuario.serializar(user);
       }
       if(user == usuarioDesafiado){      
             user = usuarioDesafiante;        
       }else{
             user = null;
       }
-      seleccionarOpcionMenu();  
+       
+     }catch(Exception e){
+        System.out.println("el usuario no tiene personaje");
+     }
+     seleccionarOpcionMenu(); 
     }
   
     
-    public void validarDesafio(){
+    public void validarDesafio() throws IOException{
+     try{
       Vampiro vampiro = new Vampiro();
       Licantropo licantropo = new Licantropo();
       Cazador cazador = new Cazador();
@@ -271,10 +282,13 @@ public class Operador extends MenuInicio{
       }else{
             user = null;
       }
-  
+     }catch(Exception e){
+        System.out.println("ningun usuario lanzo un desafio");
+     } 
     }
     
-    public void añadir_atributos_personaje(){
+    public void añadir_atributos_personaje() throws IOException{
+      try{
         Usuario usuario = new Usuario();
         System.out.println("1.-añadir atributos al personaje de: " + usuarioDesafiante.getNombre());
         System.out.println("2.-añadir atributos al personaje de: " + usuarioDesafiado.getNombre());
@@ -335,10 +349,15 @@ public class Operador extends MenuInicio{
                System.out.println("seleccion erronea");
             }
         }
-        seleccionarOpcionMenu();
+        usuario.serializar(usuario);
+      }catch(Exception e){
+         System.out.println("el usuario no tiene personaje");
+      }
+      seleccionarOpcionMenu();
     }
     
     public void banearUsuario(Usuario usuarioBaneado){
+      try{
         usuariosBaneados.add(usuarioBaneado);
         LocalDateTime horaActual = LocalDateTime.now();
         LocalDateTime hora = horaActual.minusHours(24);
@@ -363,16 +382,30 @@ public class Operador extends MenuInicio{
                 }
             }
         }
+      }catch(Exception e){
+         System.out.println("error");
+      }
     }
     
     public void desbanearUsuario(Usuario usuarioDesbaneado){
+      try{  
         usuariosBaneados.remove(usuarioDesbaneado);
+      }catch(Exception e){
+         System.out.println("error");
+      }
     }
     
-    public void entrar_salirSistema(){
+    public void entrar_salirSistema() throws IOException{
+      System.out.println("1.-entrar en el sistema");
+      System.out.println("2.-salir del sistema");
+      System.out.println("seleccione una opcion: -1 o 2-");
+      Scanner sc = new Scanner(System.in);
+      String opcion = sc.next();
+      int opc = Integer.parseInt(opcion);
+      if(opc == 1){
         boolean opRegistered = false;
         System.out.println("ingrese su nombre de usuario: ");
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         String nameOp = sc.next();
         this.setNombre(nameOp);
         System.out.println("ingrese su contrasenia (8-12 caracteres): ");
@@ -388,7 +421,10 @@ public class Operador extends MenuInicio{
         }
         if(opRegistered == false){
            System.out.println("usuario no registrado");
-        }           
+        }
+      }else if(opc == 2){
+          System.out.println("saliendo del sistema");
+      }
     }
 
     public String getPassword() {

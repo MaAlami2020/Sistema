@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Combate{
         return usuarioVencedor;
     }
     
-    public void iniciar(){
+    public void iniciar() throws IOException{
         Usuario usuario = new Usuario();
         int saludDesafiador = usuarioDesafiado.getTipoPersonaje().anadirSalud();
         MenuInicio menu = new MenuInicio();
@@ -88,6 +89,7 @@ public class Combate{
         if(((saludDesafiadoGhoul != 0)|(saludDesafiadoDemonio != 0)|(saludDesafiadoHumano != 0))){
             contendientes.add(usuarioDesafiado);
         }
+        usuario.serializar(this);
     }
     
     public void mostrarResultaddo(){

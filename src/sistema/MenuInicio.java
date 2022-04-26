@@ -14,9 +14,6 @@ import java.util.List;
 public class MenuInicio {
     private List<Usuario> userlist = new ArrayList<>();
     private List<Operador> operatorlist = new ArrayList<>();
-    
-    //public abstract void registrar_darBaja();
-    //public abstract void entrar_salirSistema();
 
     public List<Usuario> getUserlist() {
         return userlist;
@@ -25,6 +22,5 @@ public class MenuInicio {
     public List<Operador> getOperatorlist() {
         return operatorlist;
     }
-    
     
 }

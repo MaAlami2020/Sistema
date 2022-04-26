@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ import java.util.Scanner;
 public class Desafios implements Iterator{
 
     
-    public void aceptarDesafio() {
+    public void aceptarDesafio() throws IOException {
         int opc = 0;
         do{
            System.out.println("1.cambiar arma activa");
@@ -37,9 +38,10 @@ public class Desafios implements Iterator{
     }
 
     public void rechazarDesafio() {
+        MenuInicio menu = new MenuInicio();
         Usuario usuario = new Usuario();
         double oroPersonaje = usuario.getUsuarioDesafiar().getTipoPersonaje().anadirOro();
-        int oroDesafiador = usuario.getUserlist().get(usuario.getIndex()).getTipoPersonaje().anadirOro();
+        int oroDesafiador = menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje().anadirOro();
         oroPersonaje -= (double) oroDesafiador * 0.1;
     }
 
