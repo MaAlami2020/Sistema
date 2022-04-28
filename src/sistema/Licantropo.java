@@ -300,4 +300,9 @@ public class Licantropo extends Personaje{
     public List<Armadura> getArmadurasActivas() {
         return armaduraActiva;
     }
+
+    @Override
+    public void anadirSangreAcum() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

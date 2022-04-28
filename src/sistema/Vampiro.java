@@ -80,6 +80,7 @@ public class Vampiro extends Personaje{
        this.edad = edadP;
     }
     
+    @Override
     public void anadirSangreAcum(){
        int sangreAcum = -1;
        while((sangreAcum < 0)&(sangreAcum > 10)){

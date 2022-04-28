@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -13,9 +14,14 @@ import java.util.Scanner;
  * @author mimit
  */
 public class Desafios implements Iterator{
+    private Usuario usuario = new Usuario();
+    private Combate combate = new Combate();
+
+    public Desafios()throws FileNotFoundException, IOException{
+    }
 
     
-    public void aceptarDesafio() throws IOException {
+    public void aceptarDesafio(){
         int opc = 0;
         do{
            System.out.println("1.cambiar arma activa");
@@ -25,36 +31,30 @@ public class Desafios implements Iterator{
            String opcion = sc.next();
            opc = Integer.parseInt(opcion);
         }while((opc < 1)|(opc > 3));
-        if(opc == 1){
-           Usuario usuario = new Usuario();
+        if(opc == 1){          
            usuario.cambiarArmas_activas();
         }else if(opc == 2){
         
         }else if(opc == 3){
-           Combate combate = new Combate();
            combate.iniciar();
            combate.mostrarResultaddo();
         }
     }
 
     public void rechazarDesafio() {
-        MenuInicio menu = new MenuInicio();
-        Usuario usuario = new Usuario();
         double oroPersonaje = usuario.getUsuarioDesafiar().getTipoPersonaje().anadirOro();
-        int oroDesafiador = menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje().anadirOro();
+        int oroDesafiador = usuario.getUsuarioDesafiante().getTipoPersonaje().anadirOro();
         oroPersonaje -= (double) oroDesafiador * 0.1;
     }
 
     @Override
     public boolean hashNext() {
-        Usuario usuario = new Usuario();
         List<String> listaNotif = usuario.getNotifDesafio();
         return !listaNotif.isEmpty();
     }
 
     @Override
     public String next() {
-        Usuario usuario = new Usuario();
         List<String> listaNotif = usuario.getNotifDesafio();
         String notif = listaNotif.get(0);
         return notif;

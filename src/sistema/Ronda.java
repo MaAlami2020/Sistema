@@ -4,6 +4,8 @@
  */
 package sistema;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import static java.lang.Math.random;
 
 /**
@@ -15,6 +17,12 @@ public class Ronda {
     private int valorAtaqueDesafiador;
     private int valorDefensaDesafiante;
     private int valorDefensaDesafiador;
+    private Usuario usuario = new Usuario();
+    private Operador operador = new Operador();
+
+    public Ronda()throws FileNotFoundException, IOException{
+       
+    }
 
     public int getValorAtaqueDesafiante() {
         return valorAtaqueDesafiante;
@@ -49,12 +57,10 @@ public class Ronda {
     }
     
     public void calcularPtencialAtaque(){
-      Operador operador = new Operador();
-      Usuario usuario = new Usuario();
+      
       Usuario usuarioDesafiador = usuario.getUsuarioDesafiar();
         
-      MenuInicio menu = new MenuInicio();
-      Usuario usuarioDesafiante = menu.getUserlist().get(usuario.getIndex());
+      Usuario usuarioDesafiante = usuario.getUsuarioDesafiante();
         
       Usuario user = usuarioDesafiador;
       while(user != null){  
@@ -126,14 +132,11 @@ public class Ronda {
     }
     
     public void calcularPotencialDefensa(){
-      Usuario usuario = new Usuario();
       Usuario usuarioDesafiador = usuario.getUsuarioDesafiar();
-        
-      MenuInicio menu = new MenuInicio();
-      Usuario usuarioDesafiante = menu.getUserlist().get(usuario.getIndex());
+       
+      Usuario usuarioDesafiante = usuario.getUsuarioDesafiante();
         
       Usuario user = usuarioDesafiador;
-      Operador operador = new Operador();
       while(user != null){  
         int poder = user.getTipoPersonaje().anadirPoder();
         int defensaEquipoActivo = 0;
@@ -216,8 +219,6 @@ public class Ronda {
     }
     
     public void Juego(){
-       Usuario usuario = new  Usuario();
-       MenuInicio menu = new MenuInicio();
        Vampiro vampiro = new Vampiro();
        Licantropo licantropo = new Licantropo();
        Cazador cazador = new Cazador();
@@ -280,10 +281,10 @@ public class Ronda {
                }
            }
        }else if(valorAtaqueDesafiante > valorDefensaDesafiador){
-           int saludDesafianteGhoul = menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje().construirGhoul().getSalud();
+           int saludDesafianteGhoul = usuario.getUsuarioDesafiante().getTipoPersonaje().construirGhoul().getSalud();
            if(saludDesafianteGhoul != 0){
                 saludDesafianteGhoul -= 1;
-                if(menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje() == licantropo){
+                if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
                    int rabia = licantropo.getRabia();
                    rabia += 1;
                    licantropo.setRabia(rabia);
@@ -294,10 +295,10 @@ public class Ronda {
                    cazador.setVoluntad(voluntad);
                 }
            }else{
-               int saludDesafianteDemonio = menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje().construirDemonio().getSalud();
+               int saludDesafianteDemonio = usuario.getUsuarioDesafiante().getTipoPersonaje().construirDemonio().getSalud();
                if(saludDesafianteDemonio != 0){
                    saludDesafianteDemonio -= 1;
-                   if(menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje() == licantropo){
+                   if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
                        int rabia = licantropo.getRabia();
                        rabia += 1;
                        licantropo.setRabia(rabia);
@@ -308,10 +309,10 @@ public class Ronda {
                        cazador.setVoluntad(voluntad);
                    }
                }else{
-                   if(menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje() != vampiro){
-                       int saludDesafianteHumano = menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje().construirHumano().getSalud();                       
+                   if(usuario.getUsuarioDesafiante().getTipoPersonaje() != vampiro){
+                       int saludDesafianteHumano = usuario.getUsuarioDesafiante().getTipoPersonaje().construirHumano().getSalud();                       
                        saludDesafianteHumano -= 1;
-                       if(menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje() == licantropo){
+                       if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
                            int rabia = licantropo.getRabia();
                            rabia += 1;
                            licantropo.setRabia(rabia);
@@ -322,9 +323,9 @@ public class Ronda {
                            cazador.setVoluntad(voluntad);
                        }
                    }else{
-                       int saludDesafiantePersonaje = menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje().anadirSalud();
+                       int saludDesafiantePersonaje = usuario.getUsuarioDesafiante().getTipoPersonaje().anadirSalud();
                        saludDesafiantePersonaje -= 1;
-                       if(menu.getUserlist().get(usuario.getIndex()).getTipoPersonaje() == licantropo){
+                       if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
                            int rabia = licantropo.getRabia();
                            rabia += 1;
                            licantropo.setRabia(rabia);

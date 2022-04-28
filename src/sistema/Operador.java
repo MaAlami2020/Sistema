@@ -4,12 +4,15 @@
  */
 package sistema;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,17 +33,20 @@ public class Operador extends MenuInicio{
     private int fortalezasCazador;
     private int debilidadesCazador;
     private List<Combate> listaCombates = new ArrayList<>(); 
+    private Usuario usuario;
     
-    public Operador(String nombre, String nick, String password) {
+    public Operador(String nombre, String nick, String password) throws IOException{
         this.nombre = nombre;
         this.nick = nick;
         this.password = password;
+        this.usuario = new Usuario();
+        usuarioDesafiante = usuario.getUsuarioDesafiante();
+        usuarioDesafiado = usuario.getUsuarioDesafiar();
+        
     }
 
-    public Operador(){
-        Usuario usuario = new Usuario();
-        usuarioDesafiante = getUserlist().get(usuario.getIndex());
-        usuarioDesafiado = usuario.getUsuarioDesafiar();
+    public Operador()throws FileNotFoundException, IOException{
+        
     }
 
     public List<Combate> getListaCombates() {
@@ -91,8 +97,8 @@ public class Operador extends MenuInicio{
         this.nick = nickInicio;
     }
 
-    public void registrar_darBaja() throws IOException{
-     Usuario usuario = new Usuario();   
+    @Override
+    public void registrar_darBaja(){   
       System.out.println("1.iniciar sesion");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
@@ -140,7 +146,11 @@ public class Operador extends MenuInicio{
            }
         }
         if(operatorRegistered == false){
-            getOperatorlist().add(new Operador(name,apodo,contrasenia));
+            try {
+                getOperatorlist().add(new Operador(name,apodo,contrasenia));
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
             usuario.serializar(this);
             System.out.println("registrado/a corractamente");
             entrar_salirSistema();
@@ -148,7 +158,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void seleccionarOpcionMenu() throws IOException{
+    public void seleccionarOpcionMenu(){
         System.out.println("***BIENVENIDO**");
         System.out.println("3.-editar un personaje");
         System.out.println("4.-validar desafio");
@@ -182,7 +192,7 @@ public class Operador extends MenuInicio{
         }
     }
     
-    public void editar_Personaje() throws IOException{
+    public void editar_Personaje(){
      try{
         Usuario usuario = new Usuario();
         Vampiro vampiro = new Vampiro();
@@ -245,7 +255,7 @@ public class Operador extends MenuInicio{
     }
   
     
-    public void validarDesafio() throws IOException{
+    public void validarDesafio(){
      try{
       Vampiro vampiro = new Vampiro();
       Licantropo licantropo = new Licantropo();
@@ -287,7 +297,7 @@ public class Operador extends MenuInicio{
      } 
     }
     
-    public void añadir_atributos_personaje() throws IOException{
+    public void añadir_atributos_personaje(){
       try{
         Usuario usuario = new Usuario();
         System.out.println("1.-añadir atributos al personaje de: " + usuarioDesafiante.getNombre());
@@ -395,7 +405,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void entrar_salirSistema() throws IOException{
+    public void entrar_salirSistema(){
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
       System.out.println("seleccione una opcion: -1 o 2-");

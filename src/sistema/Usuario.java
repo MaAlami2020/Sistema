@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,26 +17,32 @@ import java.util.Scanner;
  * @author mimit
  * esta clase es abstarcta, por tanto, en la clase sistema, en vez de crear objetos de la clase ussuario crearé objetos de sus hijas
  */
-public class Usuario{
+public class Usuario extends MenuInicio{
     private String nombre;
     private String nick;
-    private String password;
-    private String registro = "A00AA";   
+    private String password;  
+    private StringBuilder registro = new StringBuilder();
     private Personaje tipoPersonaje;
     private int index = 0;
     private Usuario usuarioDesafiar;
+    private Usuario usuarioDesafiante;
     private int oroApostado;
-    private List<String> notifDesafio;
+    private List<String> notifDesafio = new ArrayList<>();
+    private Combate combate;
+    private Desafios desafios;
+    private Operador operador;
 
-    public Usuario(String nombre, String nick, String password, String registro, Personaje tipoPersonaje) {
+    public Usuario(String nombre, String nick, String password, StringBuilder registro, Personaje tipoPersonaje) throws IOException{
         this.nombre = nombre;
         this.nick = nick;
         this.password = password;
         this.registro = registro;
         this.tipoPersonaje = tipoPersonaje;
+        this.operador = new Operador();
     }
 
-    public Usuario(){
+    public Usuario()throws FileNotFoundException, IOException{
+        
     }
     
     public String getNombre() {
@@ -53,53 +60,51 @@ public class Usuario{
     public void setNick(String nickInicio) {
         this.nick = nickInicio;
     }
-
-    public String getRegistro() {
-        return registro;
-    }
     
-    public String updateRegistro(String registro){
-        MenuInicio menu = new MenuInicio();
-        if(menu.getUserlist().size() != 0){
+    public StringBuilder updateRegistro(){
+        if(getUserlist().size() != 0){
        //char [] registroArray = new char[4];
           for(int i = 0; i <= 4; i++){
           //registroArray[i] = registro.charAt(i);
              char caracter = registro.charAt(i);
-             if((caracter < 'z')|(caracter < '9')){
-                char nuevoCaracter = caracter++;
-                registro.replace(caracter, nuevoCaracter);
-                return registro;             
-             }else
-                i++;
+             if((caracter < 'Z')|(caracter < '9')){
+                char nuevoCaracter = caracter;
+                nuevoCaracter++;
+                registro.setCharAt(i, nuevoCaracter);
+                return registro;
+             }
           }
         }
         return registro;
     }
 
-    public void registrar_darBaja() throws IOException{
-      MenuInicio menu = new MenuInicio();
+    @Override
+    public void registrar_darBaja(){
+      
       boolean userRegistered = false;  
-      System.out.println("1.iniciar sesion");
+      System.out.println("1.registrarse");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
-      int opcion = 0;
+      Scanner sc = new Scanner(System.in);
+      String option = sc.next();
+      int opcion =Integer.parseInt(option);
       if(opcion == 2){
         System.out.println("ingrese su nombre de usuario: ");
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         String nameOp = sc.next();
         System.out.println("ingrese su contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
         String contraseniaOp = sc.next();
-        for(Usuario us: menu.getUserlist()){
+        for(Usuario us: getUserlist()){
            if((nameOp.equals(us.getNombre()))&(contraseniaOp.equals(us.getPassword()))){
-                menu.getUserlist().remove(us);
+                getUserlist().remove(us);
                 System.out.println("cuenta eliminada");
                 entrar_salirSistema();
            }
         }
       }else if(opcion == 1){
         System.out.println("ingrese su nombre: ");
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         String name = sc.next();
         this.setNombre(name);
         System.out.println("ingrese su nick: ");
@@ -109,14 +114,14 @@ public class Usuario{
         System.out.println("ingrese una contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
         String contrasenia = sc.next();
-        while((contrasenia.length() < 1)&(contrasenia.length() > 4)){
+        while((contrasenia.length() < 8)|(contrasenia.length() > 12)){
            System.out.println("Por favor, ingrese una nueva contrasenia (8-12 caracteres): ");
            sc = new Scanner(System.in);
            contrasenia = sc.next();
         }
         this.setPassword(contrasenia);
         
-        for(Usuario us: menu.getUserlist()){
+        for(Usuario us: getUserlist()){
            if((us.getNombre().equals(name))&(us.getNick().equals(apodo))){
                userRegistered = true;
                System.out.println("usuario ya registrado");
@@ -124,16 +129,27 @@ public class Usuario{
            }
         }
         if(userRegistered == false){
-            String reg = updateRegistro(registro);
             tipoPersonaje = null;
-            menu.getUserlist().add(new Usuario(name,apodo,contrasenia,reg,tipoPersonaje));  
+            try {
+                if(getUserlist().size()==0){                
+                    registro.append("A00AA");
+                    getUserlist().add(new Usuario(name,apodo,contrasenia,registro,tipoPersonaje));
+                    
+                }else{
+                    StringBuilder reg = updateRegistro();
+                    getUserlist().add(new Usuario(name,apodo,contrasenia,reg,tipoPersonaje));
+                }
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
             System.out.println("registrado/a corractamente");
             entrar_salirSistema();
         }
       }
+    
     }
     
-    public void seleccionarOpcionMenu() throws IOException{
+    public void seleccionarOpcionMenu(){
         System.out.println("***BIENVENIDO**");
         System.out.println("3.-registrar/dar de baja un personaje");
         System.out.println("4.-desafiar a otro usuario");
@@ -188,14 +204,12 @@ public class Usuario{
         }
     }
     
-    public void darBaja_Personaje() throws IOException{
-        MenuInicio menu = new MenuInicio();
-        menu.getUserlist().get(index).tipoPersonaje = null;
+    public void darBaja_Personaje(){
+        getUserlist().get(index).tipoPersonaje = null;
         seleccionarOpcionMenu();
     }
     
-    public void registrar_Personaje() throws IOException{
-        MenuInicio menu = new MenuInicio();
+    public void registrar_Personaje(){
         System.out.println("1.-vampiro");
         System.out.println("2.-licantropo");
         System.out.println("3.-cazador");
@@ -205,27 +219,26 @@ public class Usuario{
         int opc =Integer.parseInt(opcion);
         if(opc == 1){
            FabricacionVampiro fabVampiro = new FabricacionVampiro();
-           menu.getUserlist().get(index).tipoPersonaje = fabVampiro.crearPersonaje(); 
+           getUserlist().get(index).tipoPersonaje = fabVampiro.crearPersonaje(); 
            seleccionarOpcionMenu();
         }else if(opc == 2){
            FabricacionLicantropo fabLicantropo = new FabricacionLicantropo();
-           menu.getUserlist().get(index).tipoPersonaje = fabLicantropo.crearPersonaje(); 
+           getUserlist().get(index).tipoPersonaje = fabLicantropo.crearPersonaje(); 
            seleccionarOpcionMenu();
         }else if(opc == 3){
            FabricacionCazador fabCazador = new FabricacionCazador();
-           menu.getUserlist().get(index).tipoPersonaje = fabCazador.crearPersonaje(); 
+           getUserlist().get(index).tipoPersonaje = fabCazador.crearPersonaje(); 
            seleccionarOpcionMenu();
         }
     }
     
     public void apostarOro(){
-        MenuInicio menu = new MenuInicio();
         do{
             System.out.println("introduzca la cantidad de oro a apostar: ");
             Scanner sc = new Scanner(System.in);
             String cantidad = sc.next();
             oroApostado = Integer.parseInt(cantidad);
-        }while((oroApostado < 0)|(oroApostado > menu.getUserlist().get(index).tipoPersonaje.anadirOro()));
+        }while((oroApostado < 0)|(oroApostado > getUserlist().get(index).tipoPersonaje.anadirOro()));
         
     }
 
@@ -233,13 +246,12 @@ public class Usuario{
         return oroApostado;
     }
     
-    public void desafiarUsuario() throws IOException{
-        MenuInicio menu = new MenuInicio();
+    public void desafiarUsuario(){
+        usuarioDesafiante = this;
         System.out.println("introduzca el nick del usuario a desafiar: ");
         Scanner sc = new Scanner(System.in);
         String nickUsuarioDesafiar = sc.next();
-        Operador operador = new Operador();
-        for(Usuario usuarioDesafiado: menu.getUserlist()){
+        for(Usuario usuarioDesafiado: getUserlist()){
            if(usuarioDesafiado.nick.equals(nickUsuarioDesafiar)){
                boolean estaPresente = false;
                for(Usuario us: operador.getUsuariosBaneados()){
@@ -274,8 +286,7 @@ public class Usuario{
        armaduraActiva.set(0, usuarioDesafiar.tipoPersonaje.getArmadurasActivas().get(opcNuevaArmadura--));
     }
     
-    public void cambiarArmas_activas() throws IOException{
-       MenuInicio menu = new MenuInicio(); 
+    public void cambiarArmas_activas(){ 
        List<Arma> armasActivas = usuarioDesafiar.tipoPersonaje.getArmasActivas();
        int cont = 1;
        for(Arma arm: armasActivas){
@@ -290,7 +301,7 @@ public class Usuario{
        }while((opcArma != 1)|(opcArma != 2));
        if((opcArma == 1)|(opcArma == 2)){
            Arma arma = usuarioDesafiar.tipoPersonaje.getArmasActivas().get(opcArma--); 
-           List<Arma> armas = menu.getUserlist().get(index).tipoPersonaje.getListaArmas();
+           List<Arma> armas = getUserlist().get(index).tipoPersonaje.getListaArmas();
            int pos = 1;
            for(Arma a : armas){
               if(a.getManejo() == arma.getManejo()){ 
@@ -309,9 +320,8 @@ public class Usuario{
        }
        seleccionarOpcionMenu();
     }
-    public void elegirArmadura_activa() throws IOException{
-           MenuInicio menu = new MenuInicio();
-           List<Armadura> armaduras = menu.getUserlist().get(index).tipoPersonaje.getListaArmaduras();
+    public void elegirArmadura_activa(){
+           List<Armadura> armaduras = getUserlist().get(index).tipoPersonaje.getListaArmaduras();
            int cont = 1;
            for(Armadura a : armaduras){
               System.out.println(cont + ".-" + a.getNombre());
@@ -321,13 +331,12 @@ public class Usuario{
            Scanner sc = new Scanner(System.in);
            String opc = sc.next();
            int opcArmadura = Integer.parseInt(opc);
-           menu.getUserlist().get(index).tipoPersonaje.getArmadurasActivas().add(armaduras.get(opcArmadura--));
+           getUserlist().get(index).tipoPersonaje.getArmadurasActivas().add(armaduras.get(opcArmadura--));
            seleccionarOpcionMenu();
     }
     
-    public void elegirArmas_activas() throws IOException{
-        MenuInicio menu = new MenuInicio();
-        List<Arma> armas = menu.getUserlist().get(index).tipoPersonaje.getListaArmas();
+    public void elegirArmas_activas(){
+        List<Arma> armas = getUserlist().get(index).tipoPersonaje.getListaArmas();
         int cont = 1;
         int manejoArma = 2;
         while(manejoArma != 0){
@@ -341,7 +350,7 @@ public class Usuario{
            int opcArma = Integer.parseInt(opc);
            String manejo = armas.get(opcArma--).getManejo();
            if(manejo.equals("1 mano")){
-              menu.getUserlist().get(index).tipoPersonaje.getArmasActivas().add(armas.get(opcArma--));
+              getUserlist().get(index).tipoPersonaje.getArmasActivas().add(armas.get(opcArma--));
               manejoArma--;
               cont = 1;
               for(Arma a : armas){
@@ -354,10 +363,10 @@ public class Usuario{
               sc = new Scanner(System.in);
               opc = sc.next();
               opcArma = Integer.parseInt(opc);
-              menu.getUserlist().get(index).tipoPersonaje.getArmasActivas().add(armas.get(opcArma--));
+              getUserlist().get(index).tipoPersonaje.getArmasActivas().add(armas.get(opcArma--));
               manejoArma--;
            }else if(manejo.equals("2 manos")){
-              menu.getUserlist().get(index).tipoPersonaje.getArmasActivas().add(armas.get(opcArma--)); 
+              getUserlist().get(index).tipoPersonaje.getArmasActivas().add(armas.get(opcArma--)); 
               manejoArma = 0;
            }
         }
@@ -365,7 +374,6 @@ public class Usuario{
     }
     
     public void consultarOro(){
-        Operador operador = new Operador();
         System.out.println("usuario: " + this.nombre);
         System.out.print("oro ganado: ");
         for(Combate combate: operador.getListaCombates()){
@@ -378,8 +386,7 @@ public class Usuario{
     }
     
     public void consultarRanking(){
-        MenuInicio menu = new MenuInicio();
-        List<Usuario> listaUsuarios = menu.getUserlist(); 
+        List<Usuario> listaUsuarios = getUserlist(); 
         Usuario [] usuarios = new Usuario[listaUsuarios.size()];
         int pos = 0;       
         for(Usuario usuario: listaUsuarios){
@@ -403,12 +410,10 @@ public class Usuario{
     }
     
     public void mostrarResultadoDesafiante(){
-       Combate combate = new Combate();
        combate.mostrarResultaddo();
     }
     
-    public void aceptar_rechazarDesafio() throws IOException{
-        Desafios desafios = new Desafios();
+    public void aceptar_rechazarDesafio(){
         int cont = 0;
         while(notifDesafio.iterator().hasNext()){
             System.out.println("1.aceptar desafio");
@@ -433,7 +438,7 @@ public class Usuario{
         seleccionarOpcionMenu();
     }
     
-    public void serializar(Object obj) throws FileNotFoundException, IOException{
+    public void serializar(Object obj){
        try{
            String fich = "C:\\Users\\mimit\\Sistema\\sistema.bin";
            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
@@ -444,7 +449,8 @@ public class Usuario{
        }
     }
    
-    public void entrar_salirSistema() throws IOException{
+    @Override
+    public void entrar_salirSistema(){
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
       System.out.println("seleccione una opcion: -1 o 2-");
@@ -452,7 +458,6 @@ public class Usuario{
       String opcion = sc.next();
       int opc = Integer.parseInt(opcion);
       if(opc == 1){
-        MenuInicio menu = new MenuInicio();
         boolean userRegistered = false;
         System.out.println("ingrese su nombre de usuario: ");
         sc = new Scanner(System.in);
@@ -462,10 +467,10 @@ public class Usuario{
         sc = new Scanner(System.in);
         String contraseniaUser = sc.next();
         this.setPassword(contraseniaUser);
-        for(Usuario us: menu.getUserlist()){
+        for(Usuario us: getUserlist()){
            if((nameUser.equals(us.getNombre()))&(contraseniaUser.equals(us.getPassword()))){
                userRegistered = true;
-               index = menu.getUserlist().indexOf(us);
+               index = getUserlist().indexOf(us);
                if(notifDesafio.size() != 0){
                    aceptar_rechazarDesafio();
                }
@@ -495,6 +500,10 @@ public class Usuario{
 
     public int getIndex() {
         return index;
+    }
+
+    public Usuario getUsuarioDesafiante() {
+        return usuarioDesafiante;
     }
 
     public Usuario getUsuarioDesafiar() {

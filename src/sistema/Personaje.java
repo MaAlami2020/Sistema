@@ -39,5 +39,5 @@ public abstract class Personaje {
     public abstract Humano construirHumano();
     public abstract void construirFortaleza();
     public abstract void construirDebilidad();
-    
+    public abstract void anadirSangreAcum(); 
 }

@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -16,10 +17,10 @@ public class Sistema {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
-        
-        Usuario user = new Usuario();
-        Operador operator = new Operador();
+    public static void main(String[] args)throws FileNotFoundException, IOException{
+      Usuario user = new Usuario();
+      Operador operador = new Operador(); 
+      
       int seleccion = 0;  
       do{  
         int opcion1 = 0;
@@ -41,19 +42,18 @@ public class Sistema {
         String  opcion = sc2.next();
         opcion2 = Integer.parseInt(opcion);
         if((opcion1 == 1)&(opcion2 == 1)){
-             operator.registrar_darBaja();
+             operador.registrar_darBaja();
         }else if((opcion1 == 1)&(opcion2 == 2)){
-             operator.entrar_salirSistema();
+             operador.entrar_salirSistema();
         }else if((opcion1 == 2)&(opcion2 == 1)){
-            user.registrar_darBaja();
+             user.registrar_darBaja();
         }else if((opcion1 == 2)&(opcion2 == 2)){
-            user.entrar_salirSistema();
+             user.entrar_salirSistema();
         }
        }else{
            seleccion = opcion1;
        }
       }while(seleccion != 3);
     }
-   
-    
+      
 }

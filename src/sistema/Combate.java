@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,8 +24,11 @@ public class Combate{
     private LocalDateTime fecha = LocalDateTime.now();
     private int oroGanado;
     private List<Usuario> contendientes = new ArrayList<>();
+    private Usuario usuario = new Usuario();
+    private Ronda ronda= new Ronda();
+    private Operador operador = new Operador();
 
-    public Combate() {
+    public Combate()throws FileNotFoundException, IOException{
         listaRondas = new ArrayList<>();
     }
 
@@ -48,15 +52,12 @@ public class Combate{
         return usuarioVencedor;
     }
     
-    public void iniciar() throws IOException{
-        Usuario usuario = new Usuario();
+    public void iniciar(){
         int saludDesafiador = usuarioDesafiado.getTipoPersonaje().anadirSalud();
-        MenuInicio menu = new MenuInicio();
-        Operador operador = new Operador();
-        usuarioDesafiante = menu.getUserlist().get(usuario.getIndex());
+       
+        usuarioDesafiante = usuario.getUsuarioDesafiante();
         int saludDesafiante = usuarioDesafiante.getTipoPersonaje().anadirSalud();
         while((saludDesafiante > 0)&(saludDesafiador > 0)){
-            Ronda ronda = new Ronda();
             ronda.calcularPtencialAtaque();
             ronda.calcularPotencialDefensa();
             ronda.Juego();
