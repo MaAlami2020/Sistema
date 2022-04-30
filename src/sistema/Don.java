@@ -14,10 +14,19 @@ public class Don implements Habilidad{
     private int valorDefensa;
     private int rabiaMin;
 
+    public Don(String nombre, int valorAtaque, int valorDefensa, int rabiaMin) {
+        this.nombre = nombre;
+        this.valorAtaque = valorAtaque;
+        this.valorDefensa = valorDefensa;
+        this.rabiaMin = rabiaMin;
+    }
+    
+    @Override
     public int getRabiaMin() {
         return rabiaMin;
     }
 
+    @Override
     public void setRabiaMin(int rabiaMin) {
         this.rabiaMin = rabiaMin;
     }
@@ -25,6 +34,11 @@ public class Don implements Habilidad{
     @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Override
+    public String getNombre() {
+        return nombre;
     }
     
     @Override
@@ -45,5 +59,15 @@ public class Don implements Habilidad{
     @Override
     public void setValorDefensa(int valorDefensa) {
         this.valorDefensa = valorDefensa;
+    }
+
+    @Override
+    public void setCostePuntosSangre(int costePuntosSangre) {
+        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getCostePuntosSangre() {
+        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
     }
 }

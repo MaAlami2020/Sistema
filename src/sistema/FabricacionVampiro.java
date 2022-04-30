@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class FabricacionVampiro extends Fabrica{
     @Override
     public Personaje crearPersonaje(){
+        /*
         Vampiro vampiro = new Vampiro();
         vampiro.anadirNombre();
         vampiro.anadirEdad();
@@ -48,6 +49,7 @@ public class FabricacionVampiro extends Fabrica{
         }while(opc == "si");
         vampiro.construirGhoul();
         vampiro.construirDemonio();
-        return vampiro;
+        */
+        return new Vampiro();
     }
 }

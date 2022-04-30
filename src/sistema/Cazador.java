@@ -15,17 +15,24 @@ import java.util.Scanner;
 public class Cazador extends Personaje{
     private String nombre;
     private List<Arma> armasActivas = new ArrayList<>();
-    private List<Armadura> armaduraActiva = new ArrayList<>();   
+    private Armadura armaduraActiva;    
     private List<Arma> listaArmas = new ArrayList<>();
     private List<Armadura>listaArmaduras = new ArrayList<>(); 
     private List<Fortaleza> listaFortalezas = new ArrayList<>();
     private List<Debilidad> listaDebilidades = new ArrayList<>();
+    private List<Esbirro> listaEsbirros = new ArrayList<>();  
     private int oro;
     private int salud;
     private int poder;
-    private int voluntad;
+    private Habilidad habilidad;
+    private int voulntad = 3;
     
     public Cazador(){
+    }
+
+    @Override
+    public List<Esbirro> getListaEsbirros() {
+        return listaEsbirros;
     }
 
     @Override
@@ -34,6 +41,7 @@ public class Cazador extends Personaje{
     }
 
     @Override
+
     public int getOro() {
         return oro;
     }
@@ -48,128 +56,71 @@ public class Cazador extends Personaje{
         return poder;
     }
 
-    
-    public int getVoluntad() {
-        return voluntad;
-    }
-
-    public void setVoluntad(int voluntad) {
-        this.voluntad = voluntad;
-    }
-    
     @Override
-    public void anadirNombre(){
-       System.out.println("Introduzca el nombre del cazador: ");
-       Scanner sc = new Scanner(System.in);
-       String nombrePer = sc.next();
-       this.nombre = nombrePer;
-    }
-    
-    @Override
-    public Habilidad construirHabilidad() {
-        Talento talento = new Talento();
-        System.out.println("Introduzca el nombre de la habilidad: ");
-        Scanner sc = new Scanner(System.in);
-        String nombreHab = sc.next();
-        talento.setNombre(nombreHab);
-        int ataque = 0;
-        int defensa = 0;
-        while((ataque < 1)|(ataque > 3)){
-           System.out.println("Introduzca el valor de ataque -1,2 o 3-: ");
-           sc = new Scanner(System.in);
-           String valor = sc.next();
-           ataque = Integer.parseInt(valor);
-        }  
-        talento.setValorAtaque(ataque);
-        while((defensa < 1)|(defensa > 3)){
-           System.out.println("Introduzca el valor de defensa -1,2 o 3-: ");
-           sc = new Scanner(System.in);
-           String valor = sc.next();
-           defensa = Integer.parseInt(valor);
-        }  
-        talento.setValorDefensa(defensa);
-        return talento;
-    
-    }
-    
-    @Override
-    public void anadirArma(){
-        Arma arma = new Arma();
-        System.out.println("introduzca el nombre del arma del vampiro: ");
-        Scanner sc = new Scanner(System.in);
-        String nombre = sc.next();
-        arma.setNombre(nombre);
-        int modifAtaque = 0;
-        do{
-           System.out.println("introduzca el valor del modificador al ataque del arma -1,2 o 3-: ");
-           sc = new Scanner(System.in);
-           String modifAtq = sc.next();
-           modifAtaque = Integer.parseInt(modifAtq);
-        }while((modifAtaque < 1)|(modifAtaque > 3));  
-        arma.setModificadorAtaque(modifAtaque);
-        
-        System.out.println("¿Quiere introducir un modificador a la defensa -si o no-?");
-        sc = new Scanner(System.in);
-        String opcModDef = sc.next();
-        if(opcModDef == "si"){
-           int modifDefensa = 0;
-           while((modifDefensa < 1)|(modifDefensa > 3)){
-              System.out.println("introduzca el valor del modificador a la defensa del arma -1,2 o 3-: ");
-              sc = new Scanner(System.in);
-              String modifDef = sc.next();
-              modifDefensa = Integer.parseInt(modifDef);
-           }   
-           arma.setModificadorDefensa(modifDefensa);
-        }
-        int opcion = 0;
-        while((opcion != 1)&(opcion != 2)){
-              System.out.println("1.- 1 mano: ");
-              System.out.println("2.- 2 manos: ");
-              System.out.println("Escoga el manejo del arma -1 o 2-: ");
-              sc = new Scanner(System.in);
-              String opcManejo = sc.next();
-              opcion = Integer.parseInt(opcManejo);
-              if(opcion == 1)
-                  arma.setManejo("1 mano");
-              else if(opcion == 2)
-                  arma.setManejo("2 manos");
-        }
-        listaArmas.add(arma);
+    public void setArmasActivas(List<Arma> armasActivas) {
+        this.armasActivas = armasActivas;
     }
 
     @Override
-    public int anadirOro() {
-        do{
-            System.out.println("introduzca la cantidad de oro del vampiro no negativa: ");
-            Scanner sc = new Scanner(System.in);
-            String cantidadOro = sc.next();
-            oro = Integer.parseInt(cantidadOro);
-        }while(oro < 0);
-        return oro;
+    public void setArmaduraActiva(Armadura armaduraActiva) {
+        this.armaduraActiva = armaduraActiva;
     }
 
     @Override
-    public int anadirSalud() {
-        do{
-            System.out.println("introduzca la salud del vampiro entre 0 y 5: ");
-            Scanner sc = new Scanner(System.in);
-            String cantidadSalud = sc.next();
-            salud = Integer.parseInt(cantidadSalud);
-        }while((salud < 0)|(salud > 5));
-        return salud;
+    public void setListaArmas(List<Arma> listaArmas) {
+        this.listaArmas = listaArmas;
     }
 
     @Override
-    public int anadirPoder() {
-        do{
-            System.out.println("introduzca el poder del vampiro entre 1 y 5: ");
-            Scanner sc = new Scanner(System.in);
-            String cantidadPoder = sc.next();
-            poder = Integer.parseInt(cantidadPoder);
-        }while((poder < 1)|(poder > 5));
-        return poder;
+    public void setListaArmaduras(List<Armadura> listaArmaduras) {
+        this.listaArmaduras = listaArmaduras;
     }
 
+    @Override
+    public void setListaEsbirros(List<Esbirro> listaEsbirros) {
+        this.listaEsbirros = listaEsbirros;
+    }
+
+    @Override
+    public void setListaFortalezas(List<Fortaleza> listaFortalezas) {
+        this.listaFortalezas = listaFortalezas;
+    }
+
+    @Override
+    public void setListaDebilidades(List<Debilidad> listaDebilidades) {
+        this.listaDebilidades = listaDebilidades;
+    }
+ 
+    @Override
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    @Override
+    public void setOro(int oro) {
+        this.oro = oro;
+    }
+
+    @Override
+    public void setSalud(int salud) {
+        this.salud = salud;
+    }
+
+    @Override
+    public void setPoder(int poder) {
+        this.poder = poder;
+    }
+
+    @Override
+    public Habilidad getHabilidad() {
+        return habilidad;
+    }
+
+    @Override
+    public void setHabilidad(Habilidad habilidad) {
+        this.habilidad = habilidad;
+    }
+    
     @Override
     public List<Arma> getListaArmas() {
         return listaArmas;
@@ -178,35 +129,6 @@ public class Cazador extends Personaje{
     @Override
     public List<Arma> getArmasActivas() {
         return armasActivas;
-    }
-
-    @Override
-    public void construirFortaleza() {
-        String opcion = null;
-        do{
-          Fortaleza fortaleza = new Fortaleza();  
-          System.out.println("introduzca el nombre de la fortaleza: ");
-          Scanner sc = new Scanner(System.in);
-          String nombreMod = sc.next();
-          fortaleza.setNombre(nombreMod);
-          int sensibMod = 0;
-          do{
-             System.out.println("introduzca la sensibilidad: ");
-             sc = new Scanner(System.in);
-             String sensibilidadMod = sc.next();
-             sensibMod = Integer.parseInt(sensibilidadMod);
-          }while((sensibMod<1)|(sensibMod>5));
-          fortaleza.setSensibilidad(sensibMod);
-          listaFortalezas.add(fortaleza);
-          System.out.println("¿quiere añadir otra fortaleza? -si o no-");
-          sc = new Scanner(System.in);
-          opcion = sc.next();
-        }while(opcion=="si");
-    }
-
-    @Override
-    public void construirDebilidad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -219,31 +141,29 @@ public class Cazador extends Personaje{
         return listaDebilidades;
     }
 
-     @Override
-    public Ghoul construirGhoul(){
-        Ghoul ghoul = new Ghoul();
-        ghoul.anadirNombre();
-        ghoul.anadirSalud();
-        ghoul.anadirDependencia();
-        return ghoul;
-    }
-    
     @Override
-    public Demonio construirDemonio(){
-        Demonio demonio = new Demonio();
-        demonio.anadirNombre();
-        demonio.anadirSalud();
-        demonio.anadirPacto();
-        return demonio;
+    public List<Armadura> getListaArmaduras() {
+       return listaArmaduras;
     }
 
     @Override
-    public Humano construirHumano() {
-       Humano humano = new Humano(); 
-       humano.anadirNombre();
-       humano.anadirSalud();
-       humano.anadirLealtad();
-       return humano;
+    public Armadura getArmaduraActiva() {
+        return armaduraActiva;
+    }   
+
+    @Override
+    public int getRabia() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getVoluntad() {
+        return voulntad;
+    }
+
+    @Override
+    public void setEdad(int edad) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -252,55 +172,23 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public void anadirEdad() {
+    public void setReservaPuntosSangre(int sangreAcum) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    @Override
-    public void anadirArmadura() {
-        Armadura armadura = new Armadura();
-        System.out.println("introduzca el nombre del armadura del vampiro: ");
-        Scanner sc = new Scanner(System.in);
-        String nombre = sc.next();
-        armadura.setNombre(nombre);
-        int modifDefensa = 0;
-        do{
-           System.out.println("introduzca el valor del modificador a la defensa del armadura -1,2 o 3-: ");
-           sc = new Scanner(System.in);
-           String modificadorDefensa = sc.next();
-           modifDefensa = Integer.parseInt(modificadorDefensa);
-        }while((modifDefensa < 1)|(modifDefensa > 3));  
-        armadura.setModificadorDefensa(modifDefensa);
-        
-        System.out.println("¿Quiere introducir un modificador al ataque -si o no-?");
-        sc = new Scanner(System.in);
-        String opcModDef = sc.next();
-        if(opcModDef == "si"){
-           int modifAtaque = 0;
-           while((modifAtaque < 1)|(modifAtaque > 3)){
-              System.out.println("introduzca el valor del modificador al ataque del armadura -1,2 o 3-: ");
-              sc = new Scanner(System.in);
-              String modifAtaq = sc.next();
-              modifAtaque = Integer.parseInt(modifAtaq);
-           }   
-           armadura.setModificadorAtaque(modifAtaque);
-        }
-        listaArmaduras.add(armadura);
-    }
 
     @Override
-    public List<Armadura> getListaArmaduras() {
-       return listaArmaduras;
-    }
-
-    @Override
-    public List<Armadura> getArmadurasActivas() {
-        return armaduraActiva;
-    }
-
-    @Override
-    public void anadirSangreAcum() {
+    public int getReservaPuntosSangre() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setRabia(int rabia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setVoluntad(int voluntad) {
+        this.voulntad = voluntad;
     }
     
 }

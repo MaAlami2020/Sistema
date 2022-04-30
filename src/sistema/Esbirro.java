@@ -8,9 +8,12 @@ package sistema;
  *
  * @author mimit
  */
-public interface Esbirro {
+public abstract class Esbirro {
 
-    public abstract void anadirNombre();
-    public abstract void anadirSalud();    
-    
+    public abstract void setNombre(String nombre);
+    public abstract void setSalud(int salud);
+    public abstract void setDependencia(int dependenncia);
+    public abstract void setPacto(String pacto);
+    public abstract void setLealtad(Lealtad lealtad);    
+    public abstract int getSalud();
 }

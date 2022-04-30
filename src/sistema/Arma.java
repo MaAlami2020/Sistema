@@ -14,6 +14,13 @@ public class Arma {
     private int modificadorDefensa;
     private String manejo;
 
+    public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, String manejo) {
+        this.nombre = nombre;
+        this.modificadorAtaque = modificadorAtaque;
+        this.modificadorDefensa = modificadorDefensa;
+        this.manejo = manejo;
+    }
+
     public Arma() {
     }
 

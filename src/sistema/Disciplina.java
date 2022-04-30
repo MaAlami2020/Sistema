@@ -14,6 +14,13 @@ public class Disciplina implements Habilidad{
     private int valorDefensa;
     private int costePuntosSangre;
 
+    public Disciplina(String nombre, int valorAtaque, int valorDefensa, int costePuntosSangre) {
+        this.nombre = nombre;
+        this.valorAtaque = valorAtaque;
+        this.valorDefensa = valorDefensa;
+        this.costePuntosSangre = costePuntosSangre;
+    }
+
     public void setCostePuntosSangre(int costePuntosSangre) {
         this.costePuntosSangre = costePuntosSangre;
     }
@@ -27,6 +34,11 @@ public class Disciplina implements Habilidad{
         this.nombre = nombre;
     }
     
+    @Override
+    public String getNombre() {
+        return nombre;
+    }
+
     @Override
     public void setValorAtaque(int valorAtaque) {
         this.valorAtaque = valorAtaque;
@@ -45,5 +57,15 @@ public class Disciplina implements Habilidad{
     @Override
     public void setValorDefensa(int valorDefensa) {
         this.valorDefensa = valorDefensa;
+    }
+
+    @Override
+    public void setRabiaMin(int rabiaMin) {
+        throw new UnsupportedOperationException("esta habilidad no tiene rabia minima"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getRabiaMin() {
+        throw new UnsupportedOperationException("esta habilidad no tiene rabia minima"); //To change body of generated methods, choose Tools | Templates.
     }
 }

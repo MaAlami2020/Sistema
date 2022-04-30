@@ -13,7 +13,10 @@ public class Armadura {
     private int modificadorAtaque;
     private int modificadorDefensa;
 
-    public Armadura() {
+    public Armadura(String nombre, int modificadorAtaque, int modificadorDefensa) {
+        this.nombre = nombre;
+        this.modificadorAtaque = modificadorAtaque;
+        this.modificadorDefensa = modificadorDefensa;
     }
     
     public void setNombre(String nombre) {
