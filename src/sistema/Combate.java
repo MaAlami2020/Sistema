@@ -4,31 +4,25 @@
  */
 package sistema;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
  *
  * @author mimit
  */
-public class Combate{
+public class Combate extends MenuInicio{
     private List<Ronda> listaRondas;
-    private Usuario usuarioDesafiante;
-    private Usuario usuarioDesafiado; 
+    private Usuario desafiante;
+    private Usuario desafiado; 
     private Usuario usuarioVencedor;
     private LocalDateTime fecha = LocalDateTime.now();
-    private int oroGanado;
+    private double oroGanado;
     private List<Usuario> contendientes = new ArrayList<>();
-    private Usuario usuario = new Usuario();
-    private Ronda ronda= new Ronda();
-    private Operador operador = new Operador();
+    //private Ronda ronda= new Ronda();
 
-    public Combate()throws FileNotFoundException, IOException{
+    public Combate(){
         listaRondas = new ArrayList<>();
     }
 
@@ -36,61 +30,111 @@ public class Combate{
         return fecha;
     }
 
-    public int getOroGanado() {
+    public double getOroGanado() {
         return oroGanado;
     }
 
-    public Usuario getUsuarioDesafiante() {
-        return usuarioDesafiante;
+    public Usuario getDesafiante() {
+        return desafiante;
     }
 
-    public Usuario getUsuarioDesafiado() {
-        return usuarioDesafiado;
+    public Usuario getDesafiado() {
+        return desafiado;
     }
 
     public Usuario getUsuarioVencedor() {
         return usuarioVencedor;
     }
-    
-    public void iniciar(){
-        int saludDesafiador = usuarioDesafiado.getTipoPersonaje().anadirSalud();
-       
-        usuarioDesafiante = usuario.getUsuarioDesafiante();
-        int saludDesafiante = usuarioDesafiante.getTipoPersonaje().anadirSalud();
-        while((saludDesafiante > 0)&(saludDesafiador > 0)){
-            ronda.calcularPtencialAtaque();
-            ronda.calcularPotencialDefensa();
-            ronda.Juego();
-            listaRondas.add(ronda);
-        }
-        int oroApostado = usuarioDesafiante.getOroApostado();  
-        if(saludDesafiante > 0){
-            oroGanado = usuarioDesafiante.getTipoPersonaje().anadirOro();
-            oroGanado += oroApostado; 
-            usuarioVencedor = usuarioDesafiante;
-            operador.banearUsuario(usuarioDesafiado);
-        }else if(saludDesafiador > 0){
-            oroGanado = usuarioDesafiado.getTipoPersonaje().anadirOro();
-            oroGanado += oroApostado;
-            usuarioVencedor = usuarioDesafiado;
-            operador.banearUsuario(usuarioDesafiante);
-        }else if((saludDesafiador == 0)&(saludDesafiante == 0)){
-            usuarioVencedor =  null;
-        }
-        operador.getListaCombates().add(this);
-        int saludDesafianteGhoul = usuarioDesafiante.getTipoPersonaje().construirGhoul().getSalud();
-        int saludDesafianteDemonio = usuarioDesafiante.getTipoPersonaje().construirDemonio().getSalud();
-        int saludDesafianteHumano = usuarioDesafiante.getTipoPersonaje().construirHumano().getSalud(); 
-        if(((saludDesafianteGhoul != 0)|(saludDesafianteDemonio != 0)|(saludDesafianteHumano != 0))){
-            contendientes.add(usuarioDesafiante);
-        }
-        int saludDesafiadoGhoul = usuarioDesafiado.getTipoPersonaje().construirGhoul().getSalud();
-        int saludDesafiadoDemonio = usuarioDesafiado.getTipoPersonaje().construirDemonio().getSalud();
-        int saludDesafiadoHumano = usuarioDesafiado.getTipoPersonaje().construirHumano().getSalud();
-        if(((saludDesafiadoGhoul != 0)|(saludDesafiadoDemonio != 0)|(saludDesafiadoHumano != 0))){
-            contendientes.add(usuarioDesafiado);
-        }
-        usuario.serializar(this);
+    /**
+     * 
+     * @param user1 usuario que acepto el desafio
+     * @param user2 usuario que desafia a otro
+     */
+    public void iniciar(Usuario user1, Usuario user2){
+            desafiante = user2;
+            desafiado = user1;
+            
+            int saludDesafiado = desafiado.getTipoPersonaje().getSalud();
+            int saludDesafiante = desafiante.getTipoPersonaje().getSalud();
+            Ronda ronda = new Ronda();
+            
+            while((saludDesafiante > 0)|(saludDesafiado > 0)){
+                ronda.calcularPotencialAtaque(desafiante,desafiado);
+                ronda.calcularPotencialDefensa(desafiante,desafiado);
+                ronda.Juego(desafiante,desafiado);
+                listaRondas.add(ronda);
+            }
+            if(saludDesafiado == 0 & saludDesafiante == 0){
+                usuarioVencedor = null;
+            }
+            if(saludDesafiante > 0){
+                usuarioVencedor = desafiante;
+                int oroApostado = desafiante.getOroApostado();
+                
+                double oroDesafiado = desafiado.getTipoPersonaje().getOro();
+                double oroDesafiante = desafiante.getTipoPersonaje().getOro();
+                
+                if(oroApostado > oroDesafiado){
+                    desafiado.getTipoPersonaje().setOro(0);    
+                }else{
+                    oroDesafiado -= oroApostado;
+                    desafiado.getTipoPersonaje().setOro(oroDesafiado);
+                }
+                oroDesafiante += oroDesafiado;
+                desafiante.getTipoPersonaje().setOro(oroDesafiante);
+                
+                oroGanado = oroDesafiante;   
+                Operador operador = new Operador();
+                operador.banearUsuario(desafiado);
+                
+            }else if(saludDesafiado > 0){
+                usuarioVencedor = desafiado;
+                int oroApostado = desafiante.getOroApostado();
+                
+                double oroDesafiado = desafiado.getTipoPersonaje().getOro();
+                double oroDesafiante = desafiante.getTipoPersonaje().getOro();
+                
+                if(oroApostado > oroDesafiante){
+                    desafiante.getTipoPersonaje().setOro(0);    
+                }else{
+                    oroDesafiante -= oroApostado;
+                    desafiante.getTipoPersonaje().setOro(oroDesafiante);
+                }
+                oroDesafiado += oroDesafiante;
+                desafiado.getTipoPersonaje().setOro(oroDesafiado);
+                
+                oroGanado = oroDesafiado;   
+                Operador operador = new Operador();
+                operador.banearUsuario(desafiante);
+            }
+            
+            Usuario user = desafiado;
+            while(user != null){
+               boolean saludPerdida = false; 
+               while(user.getTipoPersonaje().getListaEsbirros().iterator().hasNext()&(!saludPerdida)){         
+                  Esbirro EsbirroUsuario = user.getTipoPersonaje().getListaEsbirros().iterator().next();
+                  if(EsbirroUsuario.getSalud() != 0){
+                      saludPerdida = true;
+                      boolean userPresent = false;
+                      for(Usuario us: contendientes){
+                          if(us.equals(user)){
+                             userPresent = true;
+                          }
+                      }
+                      if(!userPresent){
+                          contendientes.add(user);
+                      }
+                  }
+               }           
+               if(user == desafiado){
+                   user = desafiante;
+               }else{
+                   user = null;
+               }
+            }
+            
+            getListaCombates().add(this);
+            serializar(this);  
     }
     
     public void mostrarResultaddo(){
@@ -104,9 +148,9 @@ public class Combate{
             numRonda++;
             System.out.println("ronda " + numRonda + ": ");
             System.out.println("valor al ataque del desafiante: " + rd.getValorAtaqueDesafiante());
-            System.out.println("valor al ataque del desafiador: " + rd.getValorAtaqueDesafiador());
+            System.out.println("valor al ataque del desafiador: " + rd.getValorAtaqueDesafiado());
             System.out.println("valor a la defensa del desafiante: " + rd.getValorDefensaDesafiante());
-            System.out.println("valor a la defensa del desafiador: " + rd.getValorDefensaDesafiador());
+            System.out.println("valor a la defensa del desafiador: " + rd.getValorDefensaDesafiado());
         }
     }
 
