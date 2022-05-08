@@ -13,54 +13,49 @@ import static sistema.Lealtad.NORMAL;
  *
  * @author mimit
  */
-public class Humano implements Esbirro{
+public class Humano extends Esbirro{
     private String nombre;
     private int salud;
     private Lealtad lealtad;
-    
-    @Override
-    public void anadirNombre(){
-       System.out.println("Introduzca el nombre del ghoul: ");
-       Scanner sc = new Scanner(System.in);
-       String nombre = sc.next();
-       this.nombre = nombre;
+
+    public Humano(String nombre, int salud, Lealtad lealtad) {
+        this.nombre = nombre;
+        this.salud = salud;
+        this.lealtad = lealtad;
     }
 
     public String getNombre() {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public int getSalud() {
         return salud;
     }
 
-    @Override
-    public void anadirSalud() {
-        int valorSalud = 0;
-        do{
-           System.out.println("Introduzca el valor de salud del ghoul: ");
-           Scanner sc = new Scanner(System.in);
-           String salud = sc.next();
-           valorSalud = Integer.parseInt(salud);
-        }while((valorSalud < 1)|(valorSalud > 3));
-       this.salud = valorSalud; 
+    public void setSalud(int salud) {
+        this.salud = salud;
     }
-    
-    public void anadirLealtad(){
-        
-       System.out.println("1.-ALTA");
-       System.out.println("2.-NORMAL");
-       System.out.println("3.-BAJA");
-       System.out.println("seleccione al valor de lealtad -1,2 o 3-: ");
-       Scanner sc = new Scanner(System.in);
-       String valor = sc.next();
-       int valorLealtad = Integer.parseInt(valor);
-       if(valorLealtad == 1)
-           lealtad = lealtad.ALTA;
-       else if(valorLealtad == 2)
-           lealtad = lealtad.NORMAL;
-       else if(valorLealtad == 3)
-           lealtad = lealtad.BAJA;
+
+    public Lealtad getLealtad() {
+        return lealtad;
+    }
+
+    public void setLealtad(Lealtad lealtad) {
+        this.lealtad = lealtad;
+    }
+
+    @Override
+    public void setDependencia(int dependenncia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setPacto(String pacto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
      
 }

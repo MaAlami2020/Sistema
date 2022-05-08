@@ -8,15 +8,21 @@ package sistema;
  *
  * @author mimit
  */
-public class Debilidad extends Modificador{
-   @Override
-   public void setNombre(String nombreModif){
-      nombre =  nombreModif;
+public class Debilidad{
+    private String nombre;
+   private int sensibilidad;
+
+    public Debilidad(String nombre, int sensibilidad) {
+        this.nombre = nombre;
+        this.sensibilidad = sensibilidad;
+    }
+   
+   public void setNombre(String nombre){
+      this.nombre =  nombre;
    } 
 
-    @Override
     public void setSensibilidad(int sensibilidadModif) {
-       sensibilidad = sensibilidadModif;
+       this.sensibilidad = sensibilidadModif;
     }
 
     public int getSensibilidad() {
@@ -25,6 +31,5 @@ public class Debilidad extends Modificador{
 
     public String getNombre() {
         return nombre;
-    }
-    
+    }   
 }

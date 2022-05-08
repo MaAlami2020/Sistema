@@ -10,47 +10,49 @@ import java.util.Scanner;
  *
  * @author mimit
  */
-public class Ghoul implements Esbirro{
+public class Ghoul extends Esbirro{
     private String nombre;
     private int salud;
     private int dependencia;
-    
-    @Override
-    public void anadirNombre(){
-       System.out.println("Introduzca el nombre del ghoul: ");
-       Scanner sc = new Scanner(System.in);
-       String nombre = sc.next();
-       this.nombre = nombre;
+
+    public Ghoul(String nombre, int salud, int dependencia) {
+        this.nombre = nombre;
+        this.salud = salud;
+        this.dependencia = dependencia;
     }
 
     public String getNombre() {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
     public int getSalud() {
         return salud;
     }
 
-    @Override
-    public void anadirSalud() {
-        int valorSalud = 0;
-        do{
-           System.out.println("Introduzca el valor de salud del ghoul: ");
-           Scanner sc = new Scanner(System.in);
-           String salud = sc.next();
-           valorSalud = Integer.parseInt(salud);
-        }while((valorSalud < 1)|(valorSalud > 3));
-       this.salud = valorSalud; 
+    public void setSalud(int salud) {
+        this.salud = salud;
     }
-    
-    public void anadirDependencia(){
-        int dep = 0;
-        do{
-           System.out.println("Introduzca el valor de dependencia con el amo (de 1 a 5): ");
-           Scanner sc = new Scanner(System.in);
-           String valorDep = sc.next();
-           dep = Integer.parseInt(valorDep);
-        }while((dep < 1)|(dep > 5));
-        this.dependencia = dep;
+
+    public int getDependencia() {
+        return dependencia;
+    }
+
+    public void setDependencia(int dependencia) {
+        this.dependencia = dependencia;
+    }
+
+    @Override
+    public void setPacto(String pacto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setLealtad(Lealtad lealtad) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

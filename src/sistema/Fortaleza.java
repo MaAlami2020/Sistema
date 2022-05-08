@@ -8,16 +8,21 @@ package sistema;
  *
  * @author mimit
  */
-public class Fortaleza extends Modificador{
-    
-   @Override
-   public void setNombre(String nombreModif){
-      nombre =  nombreModif;
+public class Fortaleza{
+   private String nombre;
+   private int sensibilidad;
+
+    public Fortaleza(String nombre, int sensibilidad) {
+        this.nombre = nombre;
+        this.sensibilidad = sensibilidad;
+    }
+   
+   public void setNombre(String nombre){
+      this.nombre =  nombre;
    } 
 
-    @Override
     public void setSensibilidad(int sensibilidadModif) {
-       sensibilidad = sensibilidadModif;
+       this.sensibilidad = sensibilidadModif;
     }
 
     public int getSensibilidad() {

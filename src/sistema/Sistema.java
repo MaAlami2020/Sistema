@@ -17,7 +17,7 @@ public class Sistema {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)throws FileNotFoundException, IOException{
+    public static void main(String[] args){
       Usuario user = new Usuario();
       Operador operador = new Operador(); 
       
