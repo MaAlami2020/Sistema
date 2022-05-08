@@ -335,4 +335,22 @@ public class ArmaTest {
             System.out.println("C17 correcto");
         }
     }
+    /**
+     * test para comprobar que el manejo del arma no es ni de 1 mano ni de 2 manos
+     */
+    @Test
+    public void setManejoTest2(){
+        Arma a2 = new Arma();
+        try {
+             a2.setManejo("ninguna");
+             assertEquals("ninguna",a2.getManejo());
+             System.out.println("CP18 incorrecto");
+        } catch(Exception ex) {
+            Exception e = null;
+            e = ex;
+            assertEquals(e.getMessage(),"valor manejo invalido");
+            System.out.println("C18 correcto");
+        }
+    }
+
 }
