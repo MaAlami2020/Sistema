@@ -66,7 +66,7 @@ public class Arma {
     
     public void setManejo(String manejo) throws Exception{
         if(!manejo.equals("1 mano") & !manejo.equals("2 manos")){
-             throw new Exception("valor invalido");
+             throw new Exception("valor manejo invalido");
         }
         this.manejo = manejo;
     } 

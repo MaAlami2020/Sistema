@@ -1,0 +1,211 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65011712 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3466), pid=7876, tid=13528
+#
+# JRE version:  (16.0.2+7) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (16.0.2+7-67, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -ea org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner sistema.ArmaTest methods=setManejoTest1 skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mimit\AppData\Local\Temp\TEST-sistema.ArmaTest.xml crashfile=C:\Users\mimit\Sistema\Sistema\build\junitvmwatcher18147158266050242854.properties propsfile=C:\Users\mimit\Sistema\Sistema\build\junit5248163234085015194.properties
+
+Host: Intel(R) Celeron(R) N4020 CPU @ 1.10GHz, 2 cores, 3G,  Windows 10 , 64 bit Build 19041 (10.0.19041.1645)
+Time: Sun May  8 15:37:23 2022 Hora de verano romance elapsed time: 0.024717 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000002754a42c220):  JavaThread "Unknown thread" [_thread_in_vm, id=13528, stack(0x000000784d700000,0x000000784d800000)]
+
+Stack: [0x000000784d700000,0x000000784d800000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6681ca]
+V  [jvm.dll+0x7c9e69]
+V  [jvm.dll+0x7cb61e]
+V  [jvm.dll+0x7cbc73]
+V  [jvm.dll+0x242c55]
+V  [jvm.dll+0x664f89]
+V  [jvm.dll+0x659b75]
+V  [jvm.dll+0x2fbfbb]
+V  [jvm.dll+0x3031b6]
+V  [jvm.dll+0x35299e]
+V  [jvm.dll+0x352bcf]
+V  [jvm.dll+0x2d3028]
+V  [jvm.dll+0x2d4264]
+V  [jvm.dll+0x79c741]
+V  [jvm.dll+0x360791]
+V  [jvm.dll+0x77a3f0]
+V  [jvm.dll+0x3e4e8f]
+V  [jvm.dll+0x3e6961]
+C  [jli.dll+0x52fb]
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17034]
+C  [ntdll.dll+0x52651]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffcc3b1cbb8, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000002754a459090 GCTaskThread "GC Thread#0" [stack: 0x000000784d900000,0x000000784da00000] [id=13268]
+  0x000002754a462b70 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000784da00000,0x000000784db00000] [id=716]
+  0x000002754a463570 ConcurrentGCThread "G1 Conc#0" [stack: 0x000000784db00000,0x000000784dc00000] [id=6364]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffcc32f3ee7]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000002754a427930] Heap_lock - owner thread: 0x000002754a42c220
+
+Heap address: 0x00000000c2c00000, size: 980 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 0.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x00000000c2c00000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffcc36d1eed]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (1 events):
+Event: 0.018 Loaded shared library D:\jdk-16.0.2\bin\java.dll
+
+
+Dynamic libraries:
+0x00007ff69bd30000 - 0x00007ff69bd40000 	D:\jdk-16.0.2\bin\java.exe
+0x00007ffd0fa10000 - 0x00007ffd0fc05000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffd0f1a0000 - 0x00007ffd0f25e000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffd0d580000 - 0x00007ffd0d848000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffd0d480000 - 0x00007ffd0d580000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffd0a8e0000 - 0x00007ffd0a8f8000 	D:\jdk-16.0.2\bin\jli.dll
+0x00007ffd0f8c0000 - 0x00007ffd0f96e000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffd0f100000 - 0x00007ffd0f19e000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffd0ee90000 - 0x00007ffd0ef2c000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffd0f3d0000 - 0x00007ffd0f4f5000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffd0eb40000 - 0x00007ffd0ece0000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffd0d8e0000 - 0x00007ffd0d902000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffd0f610000 - 0x00007ffd0f63a000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffd0d960000 - 0x00007ffd0da6b000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffd0d130000 - 0x00007ffd0d1cd000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffd04fe0000 - 0x00007ffd04ff9000 	D:\jdk-16.0.2\bin\VCRUNTIME140.dll
+0x00007ffd0c4c0000 - 0x00007ffd0c75a000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e\COMCTL32.dll
+0x00007ffd09ba0000 - 0x00007ffd09baa000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffd0f7a0000 - 0x00007ffd0f7d0000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffd03920000 - 0x00007ffd0392c000 	D:\jdk-16.0.2\bin\vcruntime140_1.dll
+0x00007ffce4300000 - 0x00007ffce4391000 	D:\jdk-16.0.2\bin\msvcp140.dll
+0x00007ffcc3010000 - 0x00007ffcc3bbb000 	D:\jdk-16.0.2\bin\server\jvm.dll
+0x00007ffd0f840000 - 0x00007ffd0f848000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffcf17d0000 - 0x00007ffcf17d9000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffd0f7d0000 - 0x00007ffd0f83b000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffcea6d0000 - 0x00007ffcea6f7000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffd0b3e0000 - 0x00007ffd0b3f2000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffd03810000 - 0x00007ffd0381a000 	D:\jdk-16.0.2\bin\jimage.dll
+0x00007ffd0ca60000 - 0x00007ffd0cc44000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffd0c890000 - 0x00007ffd0c8bc000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffd0d850000 - 0x00007ffd0d8d2000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffd038b0000 - 0x00007ffd038d5000 	D:\jdk-16.0.2\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;D:\jdk-16.0.2\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e;D:\jdk-16.0.2\bin\server
+
+VM Arguments:
+jvm_args: -ea 
+java_command: org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner sistema.ArmaTest methods=setManejoTest1 skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mimit\AppData\Local\Temp\TEST-sistema.ArmaTest.xml crashfile=C:\Users\mimit\Sistema\Sistema\build\junitvmwatcher18147158266050242854.properties propsfile=C:\Users\mimit\Sistema\Sistema\build\junit5248163234085015194.properties
+java_class_path (initial): C:\Users\mimit\Sistema\Sistema\build\classes;D:\NetBeans-12.5\netbeans\platform\modules\ext\junit-4.13.2.jar;D:\NetBeans-12.5\netbeans\platform\modules\ext\hamcrest-core-1.3.jar;C:\Users\mimit\Sistema\Sistema\build\test\classes;D:\NetBeans-12.5\netbeans\extide\ant\lib\ant-launcher.jar;D:\NetBeans-12.5\netbeans\extide\ant\lib\ant.jar;D:\NetBeans-12.5\netbeans\extide\ant\lib\ant-junit.jar;D:\NetBeans-12.5\netbeans\extide\ant\lib\ant-junit4.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 2                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 1                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 2                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 65011712                                  {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 1027604480                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5826188                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122916026                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122916026                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 1027604480                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=D:\GAMS\37;D:\GAMS\37\gbin;D:\WINDOWS.X64_213000_db_home\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Intel\TXE Components\DAL\;C:\Program Files (x86)\Intel\TXE Components\DAL\;D:\GITHUB\Git\cmd;C:\Users\mimit\AppData\Local\Programs\Python\Python310-32\Scripts\;C:\Users\mimit\AppData\Local\Programs\Python\Python310-32\;C:\Users\mimit\AppData\Local\Microsoft\WindowsApps;;D:\PYTHON\PyCharm 2021.3.2\bin;;D:\PYTHON\PyCharm Community Edition 2021.3.2\bin;
+USERNAME=mimit
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 122 Stepping 8, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.1645)
+OS uptime: 1 days 15:49 hours
+
+CPU: total 2 (initial active 2) (2 cores per cpu, 1 threads per core) family 6 model 122 stepping 8 microcode 0xc, cx8, cmov, fxsr, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, tsc, tscinvbit, aes, erms, clmul, sha, clflush, clflushopt
+
+Memory: 4k page, system-wide physical 3919M (485M free)
+TotalPageFile size 11235M (AvailPageFile size 30M)
+current process WorkingSet (physical memory assigned to process): 9M, peak: 9M
+current process commit charge ("private bytes"): 47M, peak: 109M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (16.0.2+7-67) for windows-amd64 JRE (16.0.2+7-67), built on Jun  8 2021 23:24:19 by "mach5one" with MS VC++ 16.7 (VS2019)
+
+END.
