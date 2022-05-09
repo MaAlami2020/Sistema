@@ -17,7 +17,6 @@ public class Operador extends MenuInicio{
     private String nombre;
     private String nick;
     private String password;
-    private List<Usuario> usuariosBaneados = new ArrayList<>();
     private int fortalezasVampiro;
     private int debilidadesVampiro;
     private int fortalezasLicantropo;
@@ -59,10 +58,6 @@ public class Operador extends MenuInicio{
         return debilidadesCazador;
     }
     
-    public List<Usuario> getUsuariosBaneados() {
-        return usuariosBaneados;
-    }
-    
     public String getNombre() {
         return nombre;
     }
@@ -80,7 +75,7 @@ public class Operador extends MenuInicio{
     }
 
     //@Override
-    public void registrar_darBaja(){   
+    public void registrar_darBaja()throws Exception{   
       System.out.println("1.registrarse");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
@@ -138,7 +133,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void seleccionarOpcionMenu(){
+    public void seleccionarOpcionMenu()throws Exception{
         System.out.println("***BIENVENIDO**");
         System.out.println("3.-editar un personaje");
         System.out.println("4.-validar desafio");
@@ -156,7 +151,7 @@ public class Operador extends MenuInicio{
             }case 4:{
                Usuario user1 = null;
                Usuario user2 = null;
-               validarDesafio(user1,user2);
+               validarDesafio();
                break;
             }case 5:{
                añadir_atributos_personaje();
@@ -174,7 +169,7 @@ public class Operador extends MenuInicio{
         }
     }
     
-    public void editar_Personaje(){
+    public void editar_Personaje()throws Exception{
         int posPer = 1;
         for(Usuario user: getUserlist()){
             System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
@@ -236,13 +231,16 @@ public class Operador extends MenuInicio{
 
         seleccionarOpcionMenu(); 
     }
-    
-    public void validarDesafio(Usuario desafiante, Usuario desafiado){
+    /**
+     * el primer usuario que se obtiene de la lista de los usuarios pendientes de validar son aquellos
+     * que son  desafiados
+     */
+    public void validarDesafio(){
       Vampiro vampiro = new Vampiro();
       Licantropo licantropo = new Licantropo();
       Cazador cazador = new Cazador();
-      Usuario user;
-      user = desafiado;
+      Usuario desafiado = getDesafiosParaValidar().remove(0);
+      Usuario user = desafiado;
       while(user != null){ 
         if(user.getTipoPersonaje() == vampiro){
            for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
@@ -268,8 +266,9 @@ public class Operador extends MenuInicio{
         }
       }
       if(user == desafiado){
-          boolean desafianteConEquipoActivo = !desafiante.getTipoPersonaje().getArmasActivas().isEmpty() & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
-          boolean desafiadoConEquipoActivo = !desafiado.getTipoPersonaje().getArmasActivas().isEmpty() & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
+          Usuario desafiante = getDesafiosParaValidar().remove(0);
+          boolean desafianteConEquipoActivo = desafiante.getTipoPersonaje().getArmasActivas().length != 0 & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
+          boolean desafiadoConEquipoActivo = desafiado.getTipoPersonaje().getArmasActivas().length != 0 & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
           if(desafianteConEquipoActivo & desafiadoConEquipoActivo){
             user.getUsuarioDesafiar().getNotifDesafio().add("desafio pendiente con: " + desafiante.getNombre());
             getListaUsuariosDesafiantes().add(desafiante);
@@ -280,7 +279,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void añadir_atributos_personaje(){
+    public void añadir_atributos_personaje()throws Exception{
           int posPer = 1;
           for(Usuario user: getUserlist()){
              System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
@@ -311,16 +310,16 @@ public class Operador extends MenuInicio{
                 user.setNuevaArmaduraPersonaje(armaduraPer);  
                 break;
              }case 3:{
-                List<Fortaleza> fortalezas = user.actualizarListaFortalezas();
-                user.setFortalezasPersonaje(fortalezas);
+                Fortaleza fortaleza = user.construirFortaleza();
+                user.setNuevaFortalezaPersonaje(fortaleza);
                 break;
              }case 4:{
-                List<Debilidad> debilidades = user.actualizarListaDebilidades();
-                user.setDebilidadesPersonaje(debilidades);
+                Debilidad debilidad = user.construirDebilidad();
+                user.setNuevaDebilidadPersonaje(debilidad);
                 break;
              }case 5:{     
-                List<Esbirro> esbirros = user.actualizarListaEsbirros();
-                user.setEsbirrosPersonaje(esbirros);
+                Esbirro esbirroPer = user.anadirEsbirro();
+                user.setNuevoEsbirroPersonaje(esbirroPer);
                 break;
              }default:{
                 System.out.println("seleccion erronea");
@@ -335,11 +334,11 @@ public class Operador extends MenuInicio{
      * y se comprueba si hay usuarios para desbanear en la lista de los baneados
      * @param usuarioBaneado es el usuario que ha perdido el combate
      */
-    public void banearUsuario(Usuario usuarioBaneado){
-        usuariosBaneados.add(usuarioBaneado);
+    public void banearUsuario(Usuario usuarioBaneado){       
+        getUsuariosBaneados().add(usuarioBaneado);
         LocalDateTime horaActual = LocalDateTime.now();
         LocalDateTime hora = horaActual.minusHours(24);
-        for(Usuario usBaneado: usuariosBaneados){
+        for(Usuario usBaneado: getUsuariosBaneados()){
             for(Combate combate: getListaCombates()){
                 Usuario desafiante = combate.getDesafiante();
                 Usuario desafiado = combate.getDesafiado();
@@ -366,7 +365,7 @@ public class Operador extends MenuInicio{
         usuariosBaneados.remove(usuarioDesbaneado);
     }
     
-    public void entrar_salirSistema(){
+    public void entrar_salirSistema()throws Exception{
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
       System.out.println("seleccione una opcion: -1 o 2-");

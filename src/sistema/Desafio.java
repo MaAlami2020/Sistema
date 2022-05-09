@@ -18,7 +18,7 @@ public class Desafio implements Iterator{
     }
 
     
-    public void aceptar(Usuario desafiado, Usuario desafiante) {
+    public void aceptar(Usuario desafiado, Usuario desafiante) throws Exception{
         Combate combate = new Combate();
         int opc = 0;
         do{
@@ -29,25 +29,39 @@ public class Desafio implements Iterator{
            String opcion = sc.next();
            opc = Integer.parseInt(opcion);
         }while((opc < 1)|(opc > 3));
-        if(opc == 1){          
-           List<Arma> nuevasArmas = desafiado.cambiarArmas_activas();
-           desafiado.setArmasActivasPersonaje(nuevasArmas);
-        }else if(opc == 2){
-           Armadura nuevaArmadura = desafiado.cambiarArmadura_activa();
-           desafiado.setArmaduraActivaPersonaje(nuevaArmadura);
-        }else if(opc == 3){
-           combate.iniciar(desafiado,desafiante);
-           combate.mostrarResultaddo();
+        Arma [] armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
+        Armadura armaduraDesafiante = desafiante.getTipoPersonaje().getArmaduraActiva();
+        Arma [] armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
+        Armadura armaduraDesafiado = desafiado.getTipoPersonaje().getArmaduraActiva();
+        if(((armasDesafiante.length != 0)|(armaduraDesafiante != null))&((armasDesafiado.length != 0)|(armaduraDesafiado != null))){           
+            switch (opc) {
+                case 1:
+                   Arma [] nuevasArmas = desafiado.cambiarArmas_activas();
+                   desafiado.setArmasActivasPersonaje(nuevasArmas);
+                   break;
+                case 2:
+                   Armadura nuevaArmadura = desafiado.cambiarArmadura_activa();
+                   desafiado.setArmaduraActivaPersonaje(nuevaArmadura);
+                   break;
+                case 3:
+                   combate.iniciar(desafiado,desafiante);
+                   combate.mostrarResultaddo();
+                   break;
+                default:
+                   break;
+            }
+        }else{
+            System.out.println("no tiene armas o armadura activa");
         }
     }
 
     /**
      * al usuario desafiado se le quita el 10% de la cantidad de oro que el desafiante aposto
      */
-    public void rechazar(Usuario desafiado, Usuario desafiante) {
-        double oroPersonaje = desafiado.getTipoPersonaje().getOro();
+    public void rechazar(Usuario desafiado, Usuario desafiante) throws Exception{
+        int oroPersonaje = desafiado.getTipoPersonaje().getOro();
         int oroDesafiante = desafiante.getOroApostado();
-        oroPersonaje -= (double) oroDesafiante * 0.1;
+        oroPersonaje -= oroDesafiante * 0.1;
         desafiado.setOroPersonaje(oroPersonaje);
     }
 

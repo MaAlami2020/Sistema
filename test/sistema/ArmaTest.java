@@ -38,7 +38,7 @@ public class ArmaTest {
 
     /**
      * Test of setModificadorAtaque method, of class Arma.
-     * test para comprobar que el siguiente valor al rango superior
+     * test para comprobar que el siguiente valor al rango [1-3]
      * sobrepasa el valor maximo de modificador al ataque
      */
     @Test
@@ -49,7 +49,7 @@ public class ArmaTest {
             assertEquals(4,a.getModificadorAtaque());
             System.out.println("CP1 incorrecto");
         } catch(Exception ex) {
-            Exception e = null;
+            Exception e;
             e = ex;
             assertEquals(e.getMessage(),"sobrepasó el límite de modificador de ataque");
             System.out.println("CP1 correcto");

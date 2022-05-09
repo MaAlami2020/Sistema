@@ -4,10 +4,10 @@
  */
 package sistema;
 
-import java.util.Scanner;
-import static sistema.Lealtad.ALTA;
-import static sistema.Lealtad.BAJA;
-import static sistema.Lealtad.NORMAL;
+//import java.util.Scanner;
+//import static sistema.Lealtad.ALTA;
+//import static sistema.Lealtad.BAJA;
+//import static sistema.Lealtad.NORMAL;
 
 /**
  *
@@ -28,14 +28,17 @@ public class Humano extends Esbirro{
         return nombre;
     }
 
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    @Override
     public int getSalud() {
         return salud;
     }
 
+    @Override
     public void setSalud(int salud) {
         this.salud = salud;
     }
@@ -44,6 +47,7 @@ public class Humano extends Esbirro{
         return lealtad;
     }
 
+    @Override
     public void setLealtad(Lealtad lealtad) {
         this.lealtad = lealtad;
     }

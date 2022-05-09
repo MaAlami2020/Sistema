@@ -17,7 +17,7 @@ public class Sistema {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args){
+    public static void main(String[] args)throws Exception{
       Usuario user = new Usuario();
       Operador operador = new Operador(); 
       

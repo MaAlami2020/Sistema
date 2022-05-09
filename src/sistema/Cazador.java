@@ -14,14 +14,14 @@ import java.util.Scanner;
  */
 public class Cazador extends Personaje{
     private String nombre;
-    private List<Arma> armasActivas = new ArrayList<>();
+    private Arma [] armasActivas = new Arma [2];
     private Armadura armaduraActiva;    
     private List<Arma> listaArmas = new ArrayList<>();
     private List<Armadura>listaArmaduras = new ArrayList<>(); 
     private List<Fortaleza> listaFortalezas = new ArrayList<>();
     private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
-    private double oro;
+    private int oro;
     private int salud;
     private int poder;
     private Habilidad habilidad;
@@ -41,8 +41,7 @@ public class Cazador extends Personaje{
     }
 
     @Override
-
-    public double getOro() {
+    public int getOro() {
         return oro;
     }
 
@@ -57,7 +56,7 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public void setArmasActivas(List<Arma> armasActivas) {
+    public void setArmasActivas(Arma [] armasActivas) {
         this.armasActivas = armasActivas;
     }
 
@@ -77,17 +76,17 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public void setListaEsbirros(List<Esbirro> listaEsbirros) {
-        this.listaEsbirros = listaEsbirros;
+    public void setListaEsbirros(Esbirro esbirro) {
+        this.listaEsbirros.add(esbirro);
     }
 
     @Override
-    public void setListaFortalezas(List<Fortaleza> listaFortalezas) {
+    public void setListaFortalezas(Fortaleza fortaleza) {
         this.listaFortalezas = listaFortalezas;
     }
 
     @Override
-    public void setListaDebilidades(List<Debilidad> listaDebilidades) {
+    public void setListaDebilidades(Debilidad debilidad) {
         this.listaDebilidades = listaDebilidades;
     }
  
@@ -97,7 +96,7 @@ public class Cazador extends Personaje{
     }
     
     @Override
-    public void setOro(double oro) {
+    public void setOro(int oro) {
         this.oro = oro;
     }
 
@@ -127,7 +126,7 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public List<Arma> getArmasActivas() {
+    public Arma [] getArmasActivas() {
         return armasActivas;
     }
 
