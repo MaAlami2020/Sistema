@@ -14,11 +14,14 @@ public class Talento implements Habilidad{
     private int valorAtaque;
     private int valorDefensa;
 
-    public Talento(int edad, String nombre, int valorAtaque, int valorDefensa) {
+    public Talento(String nombre, int valorAtaque, int valorDefensa, int edad) {
         this.edad = edad;
         this.nombre = nombre;
         this.valorAtaque = valorAtaque;
         this.valorDefensa = valorDefensa;
+    }
+    
+    public Talento(){
     }
     
     @Override
@@ -60,12 +63,12 @@ public class Talento implements Habilidad{
 
     @Override
     public void setCostePuntosSangre(int costePuntosSangre) {
-        throw new UnsupportedOperationException("esta habilidad no tiene coste"); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public int getCostePuntosSangre() {
-        throw new UnsupportedOperationException("esta habilidad no tiene coste"); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

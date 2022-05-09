@@ -9,6 +9,7 @@ package sistema;
  * @author mimit
  */
 public class Disciplina implements Habilidad{
+
     private String nombre;
     private int valorAtaque;
     private int valorDefensa;
@@ -19,6 +20,9 @@ public class Disciplina implements Habilidad{
         this.valorAtaque = valorAtaque;
         this.valorDefensa = valorDefensa;
         this.costePuntosSangre = costePuntosSangre;
+    }
+    
+    public Disciplina() {
     }
 
     public void setCostePuntosSangre(int costePuntosSangre) {
@@ -66,6 +70,16 @@ public class Disciplina implements Habilidad{
 
     @Override
     public int getRabiaMin() {
-        throw new UnsupportedOperationException("esta habilidad no tiene rabia minima"); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("esta habilidad no retorna rabia minima"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setEdad(int edad) {
+        throw new UnsupportedOperationException("esta habilidad no tiene una edad"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getEdad() {
+        throw new UnsupportedOperationException("esta habilidad no retorna una edad"); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -521,13 +521,13 @@ public class Usuario extends MenuInicio{
         }  
         if(tipoPersonaje == new Vampiro()){
             int coste = anadirCosteSangre();
-            return new Disciplina(nombreHab,coste,ataque,defensa);
+            return new Disciplina(nombreHab,ataque,defensa,coste);
         }else if(tipoPersonaje == new Licantropo()){
             int rabiaMin = anadirRabiaMin();
             return new Don(nombreHab,ataque,defensa,rabiaMin);
         }else if(tipoPersonaje == new Cazador()){
             int edadAdquisicion = anadirEdadAdquisicion();
-            return new Talento(edadAdquisicion,nombreHab,ataque,defensa);
+            return new Talento(nombreHab,ataque,defensa,edadAdquisicion);
         }
         return null;
     }

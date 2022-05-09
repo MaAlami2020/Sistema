@@ -67,7 +67,14 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setReservaPuntosSangre(int reservaPuntosSangre) {
-        this.reservaPuntosSangre = reservaPuntosSangre;
+        int sangreAcum = reservaPuntosSangre;
+        if(sangreAcum < 0){
+            this.reservaPuntosSangre = 0;
+        }else if(sangreAcum <= 10){
+            this.reservaPuntosSangre = reservaPuntosSangre;
+        }else{
+            throw new RuntimeException("sobrepasa el valor maximo de la reserva de puntos de sangre");
+        }
     }
 
     @Override
@@ -92,7 +99,14 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setListaEsbirros(Esbirro esbirro) {
+        Lealtad valorLealtad = esbirro.getLealtad();
         this.listaEsbirros.add(esbirro);
+        
+        int valorCoste = habilidad.getCostePuntosSangre();
+        String coste = String.valueOf(valorCoste);
+        if(!coste.equals("esta habilidad no tiene coste")){
+            this.habilidad = habilidad;
+        }
     }
 
     @Override
@@ -126,13 +140,17 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setSalud(int salud) {
-        this.salud = salud;
+        if(salud < 0 | salud > 5){
+            throw new RuntimeException("sobrepasó el límite de salud permitida");
+        }else{
+            this.salud = salud;
+        }
     }
 
     @Override
     public void setPoder(int poder){
         if(poder < 1 | poder > 5){
-            throw new RuntimeException("sobrepasó el límite de modificador de ataque");
+            throw new RuntimeException("sobrepasó el límite de poder permitido");
         }else{
             this.poder = poder;
         }
@@ -145,7 +163,12 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setHabilidad(Habilidad habilidad) {
-        this.habilidad = habilidad;
+        //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no se null    
+        int valorCoste = habilidad.getCostePuntosSangre();
+        String coste = String.valueOf(valorCoste);
+        if(!coste.equals("esta habilidad no tiene coste")){
+            this.habilidad = habilidad;
+        }
     }
     
     @Override
@@ -180,22 +203,22 @@ public class Vampiro extends Personaje{
 
     @Override
     public int getRabia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("este personaje no tiene rabia");
     }
 
     @Override
     public int getVoluntad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("este personaje no tiene voluntad");
     }
 
     @Override
     public void setRabia(int rabia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("este personaje no tiene rabia");
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("este personaje no tiene voluntad");
     }
 
 }

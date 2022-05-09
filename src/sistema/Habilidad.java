@@ -20,4 +20,6 @@ public interface Habilidad {
     public String getNombre();   
     public int getValorAtaque();
     public int getValorDefensa();
+    public void setEdad(int edad);
+    public int getEdad();
 }

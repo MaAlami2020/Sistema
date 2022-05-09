@@ -21,6 +21,9 @@ public class Don implements Habilidad{
         this.rabiaMin = rabiaMin;
     }
     
+    public Don(){
+    }
+    
     @Override
     public int getRabiaMin() {
         return rabiaMin;
@@ -69,5 +72,15 @@ public class Don implements Habilidad{
     @Override
     public int getCostePuntosSangre() {
         throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setEdad(int edad) {
+        throw new UnsupportedOperationException("esta habilidad no tiene una edad"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getEdad() {
+        throw new UnsupportedOperationException("esta habilidad no tiene una edad"); //To change body of generated methods, choose Tools | Templates.
     }
 }
