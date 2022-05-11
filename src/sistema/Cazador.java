@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class Cazador extends Personaje{
     private String nombre;
-    private Arma [] armasActivas = new Arma [2];
+    private List<Arma> armasActivas = new ArrayList<>();
     private Armadura armaduraActiva;    
     private List<Arma> listaArmas = new ArrayList<>();
     private List<Armadura>listaArmaduras = new ArrayList<>(); 
@@ -55,11 +55,38 @@ public class Cazador extends Personaje{
         return poder;
     }
 
-    @Override
-    public void setArmasActivas(Arma [] armasActivas) {
-        this.armasActivas = armasActivas;
+    public boolean comprobarArmaEnLista(Arma arma){
+        for(Arma a: listaArmas){
+            if(a.equals(arma)){
+                return true;
+            }
+        }
+        return false;
     }
-
+    
+    @Override
+    public void setArmasActivas(Arma armaActiva) {
+        int manejo = 2;
+        if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo)){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo--)){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals(manejo--)){    
+            this.armasActivas.add(armaActiva);
+        }else{
+            throw new RuntimeException("ha llegado al tope de armas activas");  
+        }    
+    }
+    
+    @Override
+    public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
+        if(pos == 0 | pos == 1){
+            this.armasActivas.add(pos,nuevaArmaActiva);
+        }else{
+            throw new RuntimeException("posicion fuera del rango del tamaño del array");
+        }
+    }
+    
     @Override
     public void setArmaduraActiva(Armadura armaduraActiva) {
         this.armaduraActiva = armaduraActiva;
@@ -126,7 +153,7 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public Arma [] getArmasActivas() {
+    public List<Arma> getArmasActivas() {
         return armasActivas;
     }
 

@@ -199,10 +199,10 @@ public class Usuario extends MenuInicio{
                System.out.println("seleccione una opcion: -1 o 2-");
                sc = new Scanner(System.in);
                String option = sc.next();
-               Integer opt =Integer.parseInt(option);
+               Integer opt = Integer.parseInt(option);
                if(opt == 1){
-                   Arma [] armasActivas = elegirArmas_activas();
-                   setArmasActivasPersonaje(armasActivas);
+                   Arma armaActiva = elegirArma_activa();
+                   setArmasActivasPersonaje(armaActiva);
                    seleccionarOpcionMenu();
                }else if(opt == 2){
                    Armadura armaduraActiva = elegirArmadura_activa();
@@ -253,8 +253,8 @@ public class Usuario extends MenuInicio{
                 }case 2:{
                     String nombreEsb = anadirNombreEsbirro();
                     int saludEsb = anadirSaludEsbirro();
-                    String descripEsb = anadirPactoEsbirro();
-                    return new Demonio(nombreEsb,saludEsb,descripEsb);
+                    String pactoEsb = anadirPactoEsbirro();
+                    return new Demonio(nombreEsb,saludEsb,pactoEsb);
                 }case 3:{
                   if(tipoPersonaje != vampiro){
                     String nombreEsb = anadirNombreEsbirro();
@@ -744,8 +744,8 @@ public class Usuario extends MenuInicio{
                       int oro = apostarOro();
                       setOroApostado(oro);
                    }while((oroApostado < 0)|(oroApostado > tipoPersonaje.getOro()));
-                   getDesafiosParaValidar().add(this);
                    getDesafiosParaValidar().add(usuarioDesafiar);
+                   getDesafiosParaValidar().add(this);
                }else{
                   System.out.println("no puede desafiar a este usuario");
                }
@@ -756,26 +756,11 @@ public class Usuario extends MenuInicio{
     }
     
     public Armadura cambiarArmadura_activa(){
-       List<Armadura> armaduras = tipoPersonaje.getListaArmaduras();
-       int cont = 1;
-       for(Armadura armd: armaduras){
-          System.out.println(cont + ".-" + armd.getNombre());
-          cont++;
-       }
-       int opcNuevaArmadura = 0;
-       do{
-          System.out.println("escoga el numero de nueva armadura activa: ");
-          Scanner sc = new Scanner(System.in);
-          String opc = sc.next();
-          opcNuevaArmadura = Integer.parseInt(opc);
-       }while((opcNuevaArmadura < 1)|(opcNuevaArmadura > cont));
-       Armadura nuevaArmadura = tipoPersonaje.getListaArmaduras().get(opcNuevaArmadura--);
-       return nuevaArmadura;
+       return elegirArmadura_activa();
     }
     
-    public Arma [] cambiarArmas_activas(){ 
-       Arma [] armasActivas = tipoPersonaje.getArmasActivas();
-       Arma [] nuevasArmasActivas = new Arma [2];
+    public int seleccionarArmaModificar(){ 
+       List<Arma> armasActivas = tipoPersonaje.getArmasActivas();
        int cont = 1;
        for(Arma arm: armasActivas){
           System.out.println(cont + ".-" + arm.getNombre());
@@ -788,25 +773,14 @@ public class Usuario extends MenuInicio{
           String opc = sc.next();
           opcArma = Integer.parseInt(opc);
        }while((opcArma != 1)&(opcArma != 2));
-       Arma armaAntigua = tipoPersonaje.getArmasActivas()[opcArma--];
        
-       List<Arma> armas = tipoPersonaje.getListaArmas();
-       int pos = 1;
-       for(Arma a : armas){
-           if(a.getManejo().equals(armaAntigua.getManejo())){ 
-                 System.out.println(pos + ".-" + a.getNombre());
-           pos++;
-           }
-       }
-       int opcNuevaArma = 0;
-       do{
-          System.out.println("escoga el numero de nueva arma activa: ");
-          Scanner sc = new Scanner(System.in);
-          String opc = sc.next();
-          opcNuevaArma = Integer.parseInt(opc);
-       }while(!tipoPersonaje.getArmasActivas()[opcNuevaArma--].getManejo().equals(armaAntigua.getManejo()));
-       nuevasArmasActivas[opcArma--] = tipoPersonaje.getListaArmas().get(opcNuevaArma--);
-       return nuevasArmasActivas;
+       return opcArma;
+    }
+    
+    public void ActualizarArmasActivasPersonaje(){
+        int posArmaModificar = seleccionarArmaModificar();
+        Arma nuevaArma = elegirArma_activa();
+        tipoPersonaje.setNuevasArmasActivas(posArmaModificar, nuevaArma);
     }
         
     public Armadura elegirArmadura_activa(){
@@ -831,12 +805,9 @@ public class Usuario extends MenuInicio{
         tipoPersonaje.setArmaduraActiva(armaduraActiva);
     }
     
-    public Arma [] elegirArmas_activas(){
+    public Arma elegirArma_activa(){
         List<Arma> armas = tipoPersonaje.getListaArmas();
-        Arma [] armasActivas = new Arma [2];
         int cont = 1;
-        int manejoArma = 2;
-        while(manejoArma != 0){
            for(Arma a : armas){
               System.out.println(cont + ".-" + a.getNombre());
               cont++;
@@ -849,36 +820,11 @@ public class Usuario extends MenuInicio{
               opcArma = Integer.parseInt(opc);
            }while((opcArma < 1)|(opcArma > cont));
            
-           String manejo = armas.get(opcArma--).getManejo();
-           if(manejo.equals("1 mano")){
-              armasActivas[0] = armas.get(opcArma--);
-              manejoArma--;
-              int opcArma1 = 0;
-              do{
-                 cont = 1;
-                 for(Arma a : armas){
-                     if(a.getManejo().equals("1 mano")){
-                        System.out.println(cont + ".-" + a.getNombre());
-                     cont++;
-                     }
-                 }
-                 System.out.println("escoga el numero de arma activa");
-                 Scanner sc = new Scanner(System.in);
-                 String opc = sc.next();
-                 opcArma1 = Integer.parseInt(opc);
-              }while(opcArma == opcArma1);
-              armasActivas[1] = armas.get(opcArma1--);
-              manejoArma--;
-           }else if(manejo.equals("2 manos")){
-              armasActivas[0] = armas.get(opcArma--); 
-              manejoArma = 0;
-           }
-        }
-        return armasActivas;
+        return armas.get(opcArma--);
     }
     
-    public void setArmasActivasPersonaje(Arma [] armasActivas){
-        tipoPersonaje.setArmasActivas(armasActivas);
+    public void setArmasActivasPersonaje(Arma armaActiva){
+        tipoPersonaje.setArmasActivas(armaActiva);
     }
     
     public void consultarOro(){

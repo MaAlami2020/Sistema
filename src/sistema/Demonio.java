@@ -59,11 +59,11 @@ public class Demonio extends Esbirro{
 
     @Override
     public Lealtad getLealtad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return null;
     }
 
     @Override
     public int getDependencia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
 }

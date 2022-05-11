@@ -15,7 +15,7 @@ public class Vampiro extends Personaje{
     private String nombre;
     private int reservaPuntosSangre;
     private int edad;
-    private Arma [] armasActivas = new Arma [2];
+    private List<Arma> armasActivas = new ArrayList<>();
     private Armadura armaduraActiva;    
     private List<Arma> listaArmas = new ArrayList<>();
     private List<Armadura>listaArmaduras = new ArrayList<>(); 
@@ -77,10 +77,38 @@ public class Vampiro extends Personaje{
         }
     }
 
-    @Override
-    public void setArmasActivas(Arma [] armasActivas) {
-        this.armasActivas = armasActivas;
+    public boolean comprobarArmaEnLista(Arma arma){
+        for(Arma a: listaArmas){
+            if(a.equals(arma)){
+                return true;
+            }
+        }
+        return false;
     }
+    
+    @Override
+    public void setArmasActivas(Arma armaActiva) {
+        //int manejo = 2;
+        if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("2 manos")){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("1 mano")){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals("1 mano")){    
+            this.armasActivas.add(armaActiva);
+        }else{
+            throw new RuntimeException("ha llegado al tope de armas activas");  
+        }    
+    }
+    
+    @Override
+    public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
+        if(pos == 0 | pos == 1){
+            this.armasActivas.add(pos,nuevaArmaActiva);
+        }else{
+            throw new RuntimeException("posicion fuera del rango del tamaño del array");
+        }
+    }
+            
 
     @Override
     public void setArmaduraActiva(Armadura armaduraActiva) {
@@ -94,29 +122,31 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setListaArmaduras(Armadura armadura) {
-        this.listaArmaduras.add(armadura);
+        if(listaArmaduras.isEmpty()){
+           this.listaArmaduras.add(armadura);
+        }else{
+           throw new RuntimeException("se ha llegado al tope de armaduras activas"); 
+        }
     }
 
     @Override
     public void setListaEsbirros(Esbirro esbirro) {
         Lealtad valorLealtad = esbirro.getLealtad();
-        this.listaEsbirros.add(esbirro);
-        
-        int valorCoste = habilidad.getCostePuntosSangre();
-        String coste = String.valueOf(valorCoste);
-        if(!coste.equals("esta habilidad no tiene coste")){
-            this.habilidad = habilidad;
+        if(valorLealtad == null){
+            this.listaEsbirros.add(esbirro);
+        }else{
+            throw new RuntimeException("este personaje no tiene esbirros humanos");
         }
     }
 
     @Override
     public void setListaFortalezas(Fortaleza fortaleza) {
-        this.listaFortalezas = listaFortalezas;
+        this.listaFortalezas.add(fortaleza);
     }
 
     @Override
     public void setListaDebilidades(Debilidad debilidad) {
-        this.listaDebilidades = listaDebilidades;
+        this.listaDebilidades.add(debilidad);
     }
  
     @Override
@@ -177,7 +207,7 @@ public class Vampiro extends Personaje{
     }
 
     @Override
-    public Arma [] getArmasActivas() {
+    public List<Arma> getArmasActivas() {
         return armasActivas;
     }
 

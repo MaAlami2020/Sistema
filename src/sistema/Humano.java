@@ -64,12 +64,12 @@ public class Humano extends Esbirro{
 
     @Override
     public String getPacto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "este esbirro no tiene un pacto";
     }
 
     @Override
     public int getDependencia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
      
 }

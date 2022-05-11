@@ -267,8 +267,8 @@ public class Operador extends MenuInicio{
       }
       if(user == desafiado){
           Usuario desafiante = getDesafiosParaValidar().remove(0);
-          boolean desafianteConEquipoActivo = desafiante.getTipoPersonaje().getArmasActivas().length != 0 & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
-          boolean desafiadoConEquipoActivo = desafiado.getTipoPersonaje().getArmasActivas().length != 0 & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
+          boolean desafianteConEquipoActivo = !desafiante.getTipoPersonaje().getArmasActivas().isEmpty() & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
+          boolean desafiadoConEquipoActivo = !desafiado.getTipoPersonaje().getArmasActivas().isEmpty() & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
           if(desafianteConEquipoActivo & desafiadoConEquipoActivo){
             user.getUsuarioDesafiar().getNotifDesafio().add("desafio pendiente con: " + desafiante.getNombre());
             getListaUsuariosDesafiantes().add(desafiante);

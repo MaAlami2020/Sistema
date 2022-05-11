@@ -29,15 +29,14 @@ public class Desafio implements Iterator{
            String opcion = sc.next();
            opc = Integer.parseInt(opcion);
         }while((opc < 1)|(opc > 3));
-        Arma [] armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
+        List<Arma> armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
         Armadura armaduraDesafiante = desafiante.getTipoPersonaje().getArmaduraActiva();
-        Arma [] armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
+        List<Arma> armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
         Armadura armaduraDesafiado = desafiado.getTipoPersonaje().getArmaduraActiva();
-        if(((armasDesafiante.length != 0)|(armaduraDesafiante != null))&((armasDesafiado.length != 0)|(armaduraDesafiado != null))){           
+        if((!(armasDesafiante.isEmpty())|(armaduraDesafiante != null))&((!armasDesafiado.isEmpty())|(armaduraDesafiado != null))){           
             switch (opc) {
                 case 1:
-                   Arma [] nuevasArmas = desafiado.cambiarArmas_activas();
-                   desafiado.setArmasActivasPersonaje(nuevasArmas);
+                   desafiado.ActualizarArmasActivasPersonaje();
                    break;
                 case 2:
                    Armadura nuevaArmadura = desafiado.cambiarArmadura_activa();

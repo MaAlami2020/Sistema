@@ -11,6 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static sistema.Lealtad.ALTA;
+import static sistema.Lealtad.NORMAL;
+import static sistema.Lealtad.BAJA;
 
 /**
  *
@@ -129,54 +132,100 @@ public class VampiroTest {
 
     /**
      * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que se puede seleccionar un arma activa de 1 mano
      */
     @Test
     public void testSetArmasActivas() {
-        System.out.println("setArmasActivas");
-        Arma[] armasActivas = null;
-        Vampiro instance = new Vampiro();
-        instance.setArmasActivas(armasActivas);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try{
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            Vampiro vampiro = new Vampiro();
+            vampiro.setListaArmas(arma1);
+        
+            vampiro.setArmasActivas(arma1);
+            System.out.println("CP1 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            System.out.println("CP1 correcto");
+        }
     }
-
+    
     /**
-     * Test of setArmaduraActiva method, of class Vampiro.
+     * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que se ha llegado al tope de armas activas
      */
     @Test
-    public void testSetArmaduraActiva() {
-        System.out.println("setArmaduraActiva");
-        Armadura armaduraActiva = null;
-        Vampiro instance = new Vampiro();
-        instance.setArmaduraActiva(armaduraActiva);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSetArmasActivas1() {
+        try{          
+            Vampiro vampiro = new Vampiro();
+            
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            vampiro.setListaArmas(arma1);
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            vampiro.setListaArmas(arma2);
+            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            vampiro.setListaArmas(arma3);
+        
+            vampiro.setArmasActivas(arma1);
+            vampiro.setArmasActivas(arma2);
+            vampiro.setArmasActivas(arma3);
+            System.out.println("CP2 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            System.out.println("CP2 correcto");
+        }
     }
-
+    
     /**
-     * Test of setListaArmas method, of class Vampiro.
+     * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que se puede cambiar un arma activa por otra
      */
     @Test
-    public void testSetListaArmas() {
-        System.out.println("setListaArmas");
-        Arma arma = null;
-        Vampiro instance = new Vampiro();
-        instance.setListaArmas(arma);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSetNuevasArmasActivas() {
+        try{          
+            Vampiro vampiro = new Vampiro();
+            
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            vampiro.setListaArmas(arma1);
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            vampiro.setListaArmas(arma2);
+            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            vampiro.setListaArmas(arma3);
+        
+            vampiro.setArmasActivas(arma1);
+            vampiro.setArmasActivas(arma2);
+            vampiro.setNuevasArmasActivas(0, arma3);
+            System.out.println("CP1 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
+            System.out.println("CP1 correcto");
+        }
     }
-
+    
     /**
-     * Test of setListaArmaduras method, of class Vampiro.
+     * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que no se puede cambiar un arma activa por otra porque el arma seleccionada
+     * a cambiar esta fuera del rango del array
      */
     @Test
-    public void testSetListaArmaduras() {
-        System.out.println("setListaArmaduras");
-        Armadura armadura = null;
-        Vampiro instance = new Vampiro();
-        instance.setListaArmaduras(armadura);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSetNuevasArmasActivas1() {
+        try{          
+            Vampiro vampiro = new Vampiro();
+            
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            vampiro.setListaArmas(arma1);
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            vampiro.setListaArmas(arma2);
+            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            vampiro.setListaArmas(arma3);
+        
+            vampiro.setArmasActivas(arma1);
+            vampiro.setArmasActivas(arma2);
+            vampiro.setNuevasArmasActivas(2, arma3);
+            System.out.println("CP2 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
+            System.out.println("CP2 correcto");
+        }
     }
 
     /**
@@ -193,7 +242,7 @@ public class VampiroTest {
             assertSame(disciplina,vampiro.getHabilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"este personaje no tiene esa habilidad");
+            assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
             System.out.println("CP1 correcto");
         }
     }
@@ -238,41 +287,59 @@ public class VampiroTest {
     
     /**
      * Test of setListaEsbirros method, of class Vampiro.
+     * test que prueba que este personaje no puede tener un esbirro humano
      */
     @Test
+
     public void testSetListaEsbirros() {
-        System.out.println("setListaEsbirros");
-        Esbirro esbirro = null;
-        Vampiro instance = new Vampiro();
-        instance.setListaEsbirros(esbirro);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try{
+            Humano humano = new Humano("octipus",1,ALTA);
+            Vampiro vampiro = new Vampiro();
+            vampiro.setListaEsbirros(humano);
+            assertEquals(humano,vampiro.getListaEsbirros().get(vampiro.getListaEsbirros().size()));
+            System.out.println("CP1 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"este personaje no tiene esbirros humanos");
+            System.out.println("CP1 correcto");
+        }
     }
-
+    
     /**
-     * Test of setListaFortalezas method, of class Vampiro.
+     * Test of setListaEsbirros method, of class Vampiro.
+     * test que prueba que este personaje puede tener un esbirro ghoul
      */
     @Test
-    public void testSetListaFortalezas() {
-        System.out.println("setListaFortalezas");
-        Fortaleza fortaleza = null;
-        Vampiro instance = new Vampiro();
-        instance.setListaFortalezas(fortaleza);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
+    public void testSetListaEsbirros1() {
+        try{
+            Ghoul ghoul = new Ghoul("haskell",1,4);
+            Vampiro vampiro = new Vampiro();
+            vampiro.setListaEsbirros(ghoul);
+            assertEquals(ghoul,vampiro.getListaEsbirros().get(vampiro.getListaEsbirros().size()-1));
+            System.out.println("CP2 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"este esbirro no tiene esbirros humanos");
+            System.out.println("CP2 correcto");
+        }
+    }
+    
     /**
-     * Test of setListaDebilidades method, of class Vampiro.
+     * Test of setListaEsbirros method, of class Vampiro.
+     * test que prueba que este personaje puede tener un esbirro demonio
      */
     @Test
-    public void testSetListaDebilidades() {
-        System.out.println("setListaDebilidades");
-        Debilidad debilidad = null;
-        Vampiro instance = new Vampiro();
-        instance.setListaDebilidades(debilidad);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+    public void testSetListaEsbirros2() {
+        try{
+            Demonio demonio = new Demonio("hastex",5,"infundir miedo");
+            Vampiro vampiro = new Vampiro();
+            vampiro.setListaEsbirros(demonio);
+            assertEquals(demonio,vampiro.getListaEsbirros().get(vampiro.getListaEsbirros().size()-1));
+            System.out.println("CP3 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"este personaje no tiene esbirros humanos");
+            System.out.println("CP3 correcto");
+        }
     }
 
     /**

@@ -4,9 +4,7 @@
  */
 package sistema;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -25,13 +23,14 @@ public abstract class Personaje {
     public abstract int getOro();
     public abstract int getPoder();                    
     public abstract int getSalud();
-    public abstract void setArmasActivas(Arma [] armasActivas);
+    public abstract void setArmasActivas(Arma armaActiva);
+    public abstract void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva);
     public abstract void setArmaduraActiva(Armadura armaduraActiva);
     public abstract void setListaArmas(Arma arma);
     public abstract void setListaArmaduras(Armadura armadura);
     public abstract List<Arma> getListaArmas();
     public abstract List<Armadura> getListaArmaduras();
-    public abstract Arma [] getArmasActivas();
+    public abstract List<Arma> getArmasActivas();
     public abstract Armadura getArmaduraActiva();
     public abstract void setListaEsbirros(Esbirro esbirro);
     public abstract List<Esbirro> getListaEsbirros();

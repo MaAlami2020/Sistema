@@ -48,21 +48,21 @@ public class Ghoul extends Esbirro{
 
     @Override
     public void setPacto(String pacto) {
-        throw new UnsupportedOperationException("este esbirro no tiene un pacto"); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("este esbirro no tiene un pacto");
     }
 
     @Override
     public void setLealtad(Lealtad lealtad) {
-        throw new UnsupportedOperationException("este esbirro no tiene lealtad"); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("este esbirro no tiene una lealtad");
     }
 
     @Override
     public Lealtad getLealtad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return null;
     }
 
     @Override
     public String getPacto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "este esbirro no tiene un pacto";
     }
 }
