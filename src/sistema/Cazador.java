@@ -6,7 +6,6 @@ package sistema;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -123,18 +122,30 @@ public class Cazador extends Personaje{
     }
     
     @Override
-    public void setOro(int oro) {
-        this.oro = oro;
+    public void setOro(int oro) throws Exception{
+        if(oro >= 0){ 
+            this.oro = oro;
+        }else{
+            throw new Exception("la cantidad de oro no puede ser negativa");
+        }
     }
 
     @Override
     public void setSalud(int salud) {
-        this.salud = salud;
+        if(salud < 0 | salud > 5){
+            throw new RuntimeException("sobrepasó el límite de salud permitida");
+        }else{
+            this.salud = salud;
+        }
     }
 
     @Override
-    public void setPoder(int poder) {
-        this.poder = poder;
+    public void setPoder(int poder){
+        if(poder < 1 | poder > 5){
+            throw new RuntimeException("sobrepasó el límite de poder permitido");
+        }else{
+            this.poder = poder;
+        }
     }
 
     @Override
@@ -144,7 +155,11 @@ public class Cazador extends Personaje{
 
     @Override
     public void setHabilidad(Habilidad habilidad) {
-        this.habilidad = habilidad;
+        int valorEdad = habilidad.getEdad();
+        String edadAdquisicion = String.valueOf(valorEdad);
+        if(!edadAdquisicion.equals("esta habilidad no tiene una edad de adquisicion")){
+            this.habilidad = habilidad;
+        }
     }
     
     @Override
@@ -179,7 +194,7 @@ public class Cazador extends Personaje{
 
     @Override
     public int getRabia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene rabia");
     }
 
     @Override
@@ -189,32 +204,36 @@ public class Cazador extends Personaje{
 
     @Override
     public void setEdad(int edad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene una edad");
     }
 
     @Override
     public int getEdad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene una edad");
     }
 
     @Override
     public void setReservaPuntosSangre(int sangreAcum) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene reserva de puntos de sangre");
     }
 
     @Override
     public int getReservaPuntosSangre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene reserva de puntos de sangre");
     }
 
     @Override
     public void setRabia(int rabia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene rabia");
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        this.voulntad = voluntad;
+        if(voluntad >= 0){
+           this.voulntad = voluntad;
+        }else{
+           throw new RuntimeException("no se puede quitar mas voluntad");
+        }
     }
     
 }

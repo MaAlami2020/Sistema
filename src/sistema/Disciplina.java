@@ -75,11 +75,11 @@ public class Disciplina implements Habilidad{
 
     @Override
     public void setEdad(int edad) {
-        throw new UnsupportedOperationException("esta habilidad no tiene una edad"); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("esta habilidad no tiene una edad de adquisicion"); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public int getEdad() {
-        throw new UnsupportedOperationException("esta habilidad no retorna una edad"); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("esta habilidad no retorna una edad de adquisicion"); //To change body of generated methods, choose Tools | Templates.
     }
 }

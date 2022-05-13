@@ -25,6 +25,7 @@ public class Ghoul extends Esbirro{
         return nombre;
     }
 
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -34,16 +35,27 @@ public class Ghoul extends Esbirro{
         return salud;
     }
 
+    @Override
     public void setSalud(int salud) {
-        this.salud = salud;
+        if(salud >= 1 & salud <= 3){
+           this.salud = salud;
+        }else{
+           throw new RuntimeException("sobrepasa el  valor limite de salud");
+        }
     }
 
+    @Override
     public int getDependencia() {
         return dependencia;
     }
 
+    @Override
     public void setDependencia(int dependencia) {
-        this.dependencia = dependencia;
+        if(dependencia >= 1 & dependencia <= 5){
+           this.dependencia = dependencia;
+        }else{
+           throw new RuntimeException("sobrepasa el valor limite de dependencia");
+        }
     }
 
     @Override

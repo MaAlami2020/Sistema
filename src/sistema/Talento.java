@@ -29,14 +29,21 @@ public class Talento implements Habilidad{
         this.nombre = nombre;
     }
 
+    @Override
     public void setEdad(int edad) {
-        this.edad = edad;
+        if(edad >= 0){
+           this.edad = edad;
+        }else{
+           throw new RuntimeException("la edad de adquisicion no puede tomar un valor negativo");
+        }
     }
 
+    @Override
     public int getEdad() {
         return edad;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
