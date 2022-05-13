@@ -122,11 +122,7 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setListaArmaduras(Armadura armadura) {
-        if(listaArmaduras.isEmpty()){
-           this.listaArmaduras.add(armadura);
-        }else{
-           throw new RuntimeException("se ha llegado al tope de armaduras activas"); 
-        }
+        this.listaArmaduras.add(armadura);
     }
 
     @Override
@@ -193,7 +189,7 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setHabilidad(Habilidad habilidad) {
-        //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no se null    
+        //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no sea null    
         int valorCoste = habilidad.getCostePuntosSangre();
         String coste = String.valueOf(valorCoste);
         if(!coste.equals("esta habilidad no tiene coste")){
