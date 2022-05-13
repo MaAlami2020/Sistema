@@ -27,34 +27,43 @@ public class Demonio extends Esbirro{
         return nombre;
     }
 
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    @Override
     public int getSalud() {
         return salud;
     }
 
+    @Override
     public void setSalud(int salud) {
-        this.salud = salud;
+        if(salud >= 1 & salud <= 3){
+           this.salud = salud;
+        }else{
+           throw new RuntimeException("sobrepasa el valor limite de salud"); 
+        }
     }
 
+    @Override
     public String getPacto() {
         return pacto;
     }
 
+    @Override
     public void setPacto(String pacto) {
         this.pacto = pacto;
     }
    
     @Override
     public void setDependencia(int dependenncia) {
-        throw new UnsupportedOperationException("este esbirro  no tiene una dependencia"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este esbirro  no tiene una dependencia"); 
     }
 
     @Override
     public void setLealtad(Lealtad lealtad) {
-        throw new UnsupportedOperationException("este esbirro no tiene una lealtad"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este esbirro no tiene una lealtad"); 
     }
 
     @Override
