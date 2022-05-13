@@ -46,7 +46,11 @@ public class Don implements Habilidad{
     
     @Override
     public void setValorAtaque(int valorAtaque) {
-        this.valorAtaque = valorAtaque;
+        if(valorAtaque >= 1 & valorAtaque <= 3){
+           this.valorAtaque = valorAtaque;
+        }else{
+           throw new RuntimeException("se sobrepasa el valor limite de valor de ataque");
+        }
     }
 
     @Override
@@ -61,26 +65,30 @@ public class Don implements Habilidad{
 
     @Override
     public void setValorDefensa(int valorDefensa) {
-        this.valorDefensa = valorDefensa;
+        if(valorDefensa >= 1 & valorDefensa <= 3){
+           this.valorDefensa = valorDefensa;
+        }else{
+           throw new RuntimeException("se sobrepasa el valor limite de valor de defensa"); 
+        }
     }
 
     @Override
     public void setCostePuntosSangre(int costePuntosSangre) {
-        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene un coste"); 
     }
 
     @Override
     public int getCostePuntosSangre() {
-        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
 
     @Override
     public void setEdad(int edad) {
-        throw new UnsupportedOperationException("esta habilidad no tiene una edad"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene una edad de adquisicion"); 
     }
 
     @Override
     public int getEdad() {
-        throw new UnsupportedOperationException("esta habilidad no tiene una edad"); //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
 }

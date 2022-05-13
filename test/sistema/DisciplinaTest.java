@@ -230,7 +230,7 @@ public class DisciplinaTest {
             assertEquals(edad,disciplina.getEdad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
+            assertEquals(e.getMessage(),"esta habilidad no retorna rabia minima");
             System.out.println("CP1 correcto");
         }
     }
