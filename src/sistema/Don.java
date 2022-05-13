@@ -79,7 +79,7 @@ public class Don implements Habilidad{
 
     @Override
     public int getCostePuntosSangre() {
-        return -1;
+        throw new RuntimeException("esta habilidad no tiene un coste"); 
     }
 
     @Override
@@ -89,6 +89,6 @@ public class Don implements Habilidad{
 
     @Override
     public int getEdad() {
-        return -1;
+        throw new RuntimeException("esta habilidad no tiene una edad de adquisicion");
     }
 }
