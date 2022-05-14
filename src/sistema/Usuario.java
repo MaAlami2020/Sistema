@@ -228,43 +228,64 @@ public class Usuario extends MenuInicio{
         seleccionarOpcionMenu();
     }
     
-    public Esbirro anadirEsbirro(){
+    @SuppressWarnings("empty-statement")
+    public Esbirro anadirEsbirro(){  
+        int opcion = 0;
         System.out.println("1.-ghoul");
         System.out.println("2.-demonio");
-        int costePer = tipoPersonaje.getHabilidad().getCostePuntosSangre();
-        String coste = String.valueOf(costePer);
-        if(!coste.equals("esta habilidad no tiene coste")){
-             System.out.println("3.-humano");
-             System.out.println("seleccione una opcion -1 o 2-");
-             //Scanner sc = new Scanner(System.in);
-             //String selec = sc.next();
-             //int opcion = Integer.parseInt(selec);
-        }else{
-            System.out.println("seleccione una opcion -1,2 o 3-");
-        }
+        System.out.println("3.-humano");
+        System.out.println("seleccione una opcion -1, 2 o 3-");
         Scanner sc = new Scanner(System.in);
         String selec = sc.next();
-        int opcion = Integer.parseInt(selec);
+        opcion = Integer.parseInt(selec);
         switch(opcion){
                 case 1:{
+                     Ghoul ghoul = new Ghoul("",0,0);
                      String nombreEsb = anadirNombreEsbirro();
-                     int saludEsb = anadirSaludEsbirro();
-                     int depEsb = anadirDependenciaEsbirro();
-                     return new Ghoul(nombreEsb,saludEsb,depEsb);
+                     ghoul.setNombre(nombreEsb);
+                     int saludEsb = 0;
+                     do{
+                        saludEsb = anadirSaludEsbirro();
+                        ghoul.setSalud(saludEsb);
+                     }while(saludEsb < 1 | saludEsb > 3);   
+                        
+                     int depEsb = 0;
+                     do{
+                        depEsb = anadirDependenciaEsbirro();
+                        ghoul.setDependencia(depEsb);
+                     }while(depEsb > 1 | depEsb > 5); 
+                     return ghoul;
                 }case 2:{
+                    Demonio demonio = new Demonio("",0,"");
                     String nombreEsb = anadirNombreEsbirro();
-                    int saludEsb = anadirSaludEsbirro();
+                    demonio.setNombre(nombreEsb);
+                    
+                    int saludEsb = 0;
+                    do{
+                       saludEsb = anadirSaludEsbirro();
+                       demonio.setSalud(saludEsb);
+                    }while(saludEsb < 1 | saludEsb > 3);
+                    
                     String pactoEsb = anadirPactoEsbirro();
-                    return new Demonio(nombreEsb,saludEsb,pactoEsb);
+                    demonio.setPacto(pactoEsb);
+                    return demonio;
                 }case 3:{
-                  if(!coste.equals("esta habilidad no tiene coste")){
+                    Humano humano = new Humano("",0,null);
                     String nombreEsb = anadirNombreEsbirro();
-                    int saludEsb = anadirSaludEsbirro();
-                    Lealtad lealtadEsb = anadirLealtadEsbirro();
-                    return new Humano(nombreEsb,saludEsb,lealtadEsb);
-                  }else{
-                       System.out.println("seleccion erronea");
-                  }
+                    humano.setNombre(nombreEsb);
+                    
+                    int saludEsb = 0;
+                    do{
+                       saludEsb = anadirSaludEsbirro();
+                       humano.setSalud(saludEsb);
+                    }while(saludEsb < 1 | saludEsb > 3);
+                    
+                    Lealtad lealtadEsb = null;
+                    do{
+                       lealtadEsb = anadirLealtadEsbirro();
+                       humano.setLealtad(lealtadEsb);
+                    }while(lealtadEsb != ALTA | lealtadEsb != NORMAL | lealtadEsb != BAJA);
+                    return humano;
                 }default:{
                     System.out.println("seleccion erronea");
                 }
@@ -365,15 +386,26 @@ public class Usuario extends MenuInicio{
     }
     
     public Arma anadirArma(){
+        Arma arma = new Arma(null,0,0,null);
         System.out.println("introduzca el nombre del arma del personaje: ");
         Scanner sc = new Scanner(System.in);
         String nombreArma = sc.next();
+        try{
+            arma.setNombre(nombreArma);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
         int modifAtaque = 0;
         do{
            System.out.println("introduzca el valor del modificador al ataque del arma -1,2 o 3-: ");
            sc = new Scanner(System.in);
            String modifAtq = sc.next();
            modifAtaque = Integer.parseInt(modifAtq);
+           try{
+               arma.setModificadorAtaque(modifAtaque);
+           }catch(RuntimeException e){
+               System.out.println(e.getMessage());
+           }
         }while((modifAtaque < 1)|(modifAtaque > 3)); 
         
         System.out.println("¿Quiere introducir un modificador a la defensa -si o no-?");
@@ -387,7 +419,13 @@ public class Usuario extends MenuInicio{
               sc = new Scanner(System.in);
               String modifDef = sc.next();
               modifDefensa = Integer.parseInt(modifDef);
+              try{
+                  arma.setModificadorDefensa(modifDefensa);
+              }catch(RuntimeException e){
+                  System.out.println(e.getMessage());
+              }
            }   
+           
         }else{
               modifDefensa = 0;
         }
@@ -406,11 +444,13 @@ public class Usuario extends MenuInicio{
               
               else if(opcion == 2)
                   manejo = "2 manos";
-              else{
-                  System.out.println("valor manejo invalido");
+              try{
+                  arma.setManejo(manejo);
+              }catch(RuntimeException e){
+                  System.out.println(e.getMessage());
               }
         }
-        return new Arma(nombreArma,modifAtaque,modifDefensa,manejo);
+        return arma;
     }
     
     public void setNuevaArmaPersonaje(Arma armaPer){
@@ -432,25 +472,19 @@ public class Usuario extends MenuInicio{
     }
     
     public int anadirSaludEsbirro() {
-        int valorSalud = 0;
-        do{
-           System.out.println("Introduzca el valor de salud del esbirro: ");
+           System.out.println("Introduzca el valor de salud del esbirro (1-3): ");
            Scanner sc = new Scanner(System.in);
            String salud = sc.next();
-           valorSalud = Integer.parseInt(salud);
-        }while((valorSalud < 1)|(valorSalud > 3));
-       return valorSalud; 
+           int valorSalud = Integer.parseInt(salud); 
+           return valorSalud;
     }
     
     public int anadirDependenciaEsbirro(){
-        int dep = 0;
-        do{
            System.out.println("Introduzca el valor de dependencia con el amo (de 1 a 5): ");
            Scanner sc = new Scanner(System.in);
            String valorDep = sc.next();
-           dep = Integer.parseInt(valorDep);
-        }while((dep < 1)|(dep > 5));
-        return dep;
+           int dep = Integer.parseInt(valorDep);
+           return dep;
     }
     
     public Lealtad anadirLealtadEsbirro(){
@@ -473,6 +507,7 @@ public class Usuario extends MenuInicio{
                 lealtad = BAJA;
                 break;
             default:
+                lealtad = null;
                 break;
         }
        return lealtad;
@@ -487,13 +522,10 @@ public class Usuario extends MenuInicio{
     }
  
     public int anadirCosteSangre(){
-        int coste = 0;
-        while((coste < 1)|(coste > 3)){
-           System.out.println("Introduzca el coste en puntos de sangre -1,2 o 3-: ");
-           Scanner sc = new Scanner(System.in);
-           String valor = sc.next();
-           coste = Integer.parseInt(valor);
-        }  
+        System.out.println("Introduzca el coste en puntos de sangre -1,2 o 3-: ");
+        Scanner sc = new Scanner(System.in);
+        String valor = sc.next();
+        int coste = Integer.parseInt(valor); 
         return coste;
     }
     public int anadirRabiaMin(){
@@ -531,14 +563,29 @@ public class Usuario extends MenuInicio{
            defensa = Integer.parseInt(valor);
         }  
         if(tipoPersonaje == new Vampiro()){
-            int coste = anadirCosteSangre();
-            return new Disciplina(nombreHab,ataque,defensa,coste);
+            int coste = 0;
+            do{
+               coste = anadirCosteSangre();
+            }while((coste < 1)|(coste > 3));
+            try{
+                return new Disciplina(nombreHab,ataque,defensa,coste);
+            }catch(RuntimeException e){
+                System.out.println(e.getMessage());
+            }
         }else if(tipoPersonaje == new Licantropo()){
             int rabiaMin = anadirRabiaMin();
-            return new Don(nombreHab,ataque,defensa,rabiaMin);
+            try{
+                return new Don(nombreHab,ataque,defensa,rabiaMin);
+            }catch(RuntimeException e){
+                System.out.println(e.getMessage());
+            }
         }else if(tipoPersonaje == new Cazador()){
             int edadAdquisicion = anadirEdadAdquisicion();
-            return new Talento(nombreHab,ataque,defensa,edadAdquisicion);
+            try{
+                return new Talento(nombreHab,ataque,defensa,edadAdquisicion);
+            }catch(RuntimeException e){
+                System.out.println(e.getMessage());
+            }
         }
         return null;
     }
@@ -564,7 +611,7 @@ public class Usuario extends MenuInicio{
     }
     
     public int anadirSangreAcum(){
-        System.out.println("Introduzca los puntos de sanngre acumulados del vampiro: ");
+        System.out.println("Introduzca los puntos de sangre acumulados del vampiro (0-10): ");
         Scanner sc = new Scanner(System.in);
         String reservaSangre = sc.next();
         int sangreAcum = Integer.parseInt(reservaSangre);
@@ -686,8 +733,6 @@ public class Usuario extends MenuInicio{
         Fabrica fabrica = new FabricacionVampiro();
         this.setTipoPersonaje(fabrica.crearPersonaje());
         
-        atributosComunesPersonaje();
-        
         int edad = 0;
         do{
            edad = anadirEdad();
@@ -698,7 +743,9 @@ public class Usuario extends MenuInicio{
         do{
            sangreAcum = anadirSangreAcum();
            setSangreAcumPersonaje(sangreAcum);
-        }while(sangreAcum < 0 & sangreAcum > 10);
+        }while(sangreAcum < 0 | sangreAcum > 10);
+        
+        atributosComunesPersonaje();
         
         seleccionarOpcionMenu();
     }

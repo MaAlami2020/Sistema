@@ -4,7 +4,6 @@
  */
 package sistema;
 
-import java.util.Scanner;
 
 /**
  *
