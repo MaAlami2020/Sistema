@@ -354,15 +354,26 @@ public class Usuario extends MenuInicio{
     }
       
     public Armadura anadirArmadura() {
+        Armadura armadura = new Armadura("",0,0);
         System.out.println("introduzca el nombre del armadura del personaje: ");
         Scanner sc = new Scanner(System.in);
-        String nombreArmadura = sc.next();
+        try{
+            String nombreArmadura = sc.next();
+            armadura.setNombre(nombreArmadura);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
         int modifDefensa = 0;
         do{
            System.out.println("introduzca el valor del modificador a la defensa del armadura -1,2 o 3-: ");
            sc = new Scanner(System.in);
            String modificadorDefensa = sc.next();
-           modifDefensa = Integer.parseInt(modificadorDefensa);
+           try{
+               modifDefensa = Integer.parseInt(modificadorDefensa);
+               armadura.setModificadorDefensa(modifDefensa);
+           }catch(RuntimeException e){
+               System.out.println(e.getMessage());
+           }
         }while((modifDefensa < 1)|(modifDefensa > 3)); 
         
         System.out.println("¿Quiere introducir un modificador al ataque -si o no-?");
@@ -375,10 +386,14 @@ public class Usuario extends MenuInicio{
               System.out.println("introduzca el valor del modificador al ataque del armadura -1,2 o 3-: ");
               sc = new Scanner(System.in);
               String modifAtaq = sc.next();
-              modifAtaque = Integer.parseInt(modifAtaq);
+              try{
+                  modifAtaque = Integer.parseInt(modifAtaq);
+              }catch(RuntimeException e){
+                  System.out.println(e.getMessage());
+              }
            }
         }
-        return new Armadura(nombreArmadura,modifDefensa,modifAtaque);
+        return armadura;
     }
     
     public void setNuevaArmaduraPersonaje(Armadura armaduraPer){
