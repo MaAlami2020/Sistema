@@ -18,7 +18,7 @@ public class Desafio implements Iterator{
     }
 
     
-    public void aceptar(Usuario desafiado, Usuario desafiante) throws Exception{
+    public void aceptar(Usuario desafiado, Usuario desafiante){
         Combate combate = new Combate();
         int opc = 0;
         do{
@@ -57,7 +57,7 @@ public class Desafio implements Iterator{
     /**
      * al usuario desafiado se le quita el 10% de la cantidad de oro que el desafiante aposto
      */
-    public void rechazar(Usuario desafiado, Usuario desafiante) throws Exception{
+    public void rechazar(Usuario desafiado, Usuario desafiante){
         int oroPersonaje = desafiado.getTipoPersonaje().getOro();
         int oroDesafiante = desafiante.getOroApostado();
         oroPersonaje -= oroDesafiante * 0.1;

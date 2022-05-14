@@ -79,7 +79,7 @@ public class Usuario extends MenuInicio{
     }
 
     //@Override
-    public void registrar_darBaja() throws Exception{
+    public void registrar_darBaja(){
       
       boolean userRegistered = false;  
       System.out.println("1.registrarse");
@@ -151,7 +151,7 @@ public class Usuario extends MenuInicio{
         usuario.setTipoPersonaje(tipoPersonaje);
         getUserlist().add(usuario);
     }
-    public void seleccionarOpcionMenu() throws Exception{
+    public void seleccionarOpcionMenu(){
         System.out.println("***BIENVENIDO**");
         System.out.println("3.-registrar/dar de baja un personaje");
         System.out.println("4.-desafiar a otro usuario");
@@ -223,22 +223,23 @@ public class Usuario extends MenuInicio{
         }
     }
     
-    public void darBaja_Personaje() throws Exception{
+    public void darBaja_Personaje(){
         tipoPersonaje = null;
         seleccionarOpcionMenu();
     }
     
     public Esbirro anadirEsbirro(){
-        Vampiro vampiro = new Vampiro();
         System.out.println("1.-ghoul");
         System.out.println("2.-demonio");
-        if(tipoPersonaje == vampiro){
+        int costePer = tipoPersonaje.getHabilidad().getCostePuntosSangre();
+        String coste = String.valueOf(costePer);
+        if(!coste.equals("esta habilidad no tiene coste")){
              System.out.println("3.-humano");
              System.out.println("seleccione una opcion -1 o 2-");
              //Scanner sc = new Scanner(System.in);
              //String selec = sc.next();
              //int opcion = Integer.parseInt(selec);
-        }else if(tipoPersonaje!= vampiro){
+        }else{
             System.out.println("seleccione una opcion -1,2 o 3-");
         }
         Scanner sc = new Scanner(System.in);
@@ -256,7 +257,7 @@ public class Usuario extends MenuInicio{
                     String pactoEsb = anadirPactoEsbirro();
                     return new Demonio(nombreEsb,saludEsb,pactoEsb);
                 }case 3:{
-                  if(tipoPersonaje != vampiro){
+                  if(!coste.equals("esta habilidad no tiene coste")){
                     String nombreEsb = anadirNombreEsbirro();
                     int saludEsb = anadirSaludEsbirro();
                     Lealtad lealtadEsb = anadirLealtadEsbirro();
@@ -291,38 +292,44 @@ public class Usuario extends MenuInicio{
             return oroPer;
     }
 
-    public void setOroPersonaje(int oro) throws Exception{
+    public void setOroPersonaje(int oro){
+        try{
             tipoPersonaje.setOro(oro);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public int anadirSalud() {
-        int saludPer = 0;
-        do{
-            System.out.println("introduzca la salud del personaje entre 0 y 5: ");
-            Scanner sc = new Scanner(System.in);
-            String cantidadSalud = sc.next();
-            saludPer = Integer.parseInt(cantidadSalud);
-        }while((saludPer < 0)|(saludPer > 5));
+        System.out.println("introduzca la salud del personaje entre 0 y 5: ");
+        Scanner sc = new Scanner(System.in);
+        String cantidadSalud = sc.next();
+        int saludPer = Integer.parseInt(cantidadSalud);
         return saludPer;
     }
 
     public void setSaludPersonaje(int salud){
-        tipoPersonaje.setSalud(salud);
+        try{
+            tipoPersonaje.setSalud(salud);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     public int anadirPoder() {
-        int poderPer = 0;
-        do{
-            System.out.println("introduzca el poder del personaje entre 1 y 5: ");
-            Scanner sc = new Scanner(System.in);
-            String cantidadPoder = sc.next();
-            poderPer = Integer.parseInt(cantidadPoder);
-        }while((poderPer < 1)|(poderPer > 5));
+        System.out.println("introduzca el poder del personaje entre 1 y 5: ");
+        Scanner sc = new Scanner(System.in);
+        String cantidadPoder = sc.next();
+        int poderPer = Integer.parseInt(cantidadPoder);
         return poderPer;
     }
     
-    public void setPoderPersonaje(int salud){
-        tipoPersonaje.setSalud(salud);
+    public void setPoderPersonaje(int poder){
+        try{
+            tipoPersonaje.setPoder(poder);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
       
     public Armadura anadirArmadura() {
@@ -387,8 +394,8 @@ public class Usuario extends MenuInicio{
         int opcion = 0;
         String manejo = null;
         while((opcion != 1)&(opcion != 2)){
-              System.out.println("1.- 1 mano: ");
-              System.out.println("2.- 2 manos: ");
+              System.out.println("1.- 1 mano ");
+              System.out.println("2.- 2 manos ");
               System.out.println("Escoga el manejo del arma -1 o 2-: ");
               sc = new Scanner(System.in);
               String opcManejo = sc.next();
@@ -400,7 +407,7 @@ public class Usuario extends MenuInicio{
               else if(opcion == 2)
                   manejo = "2 manos";
               else{
-                  throw new RuntimeException("valor manejo invalido");
+                  System.out.println("valor manejo invalido");
               }
         }
         return new Arma(nombreArma,modifAtaque,modifDefensa,manejo);
@@ -472,7 +479,11 @@ public class Usuario extends MenuInicio{
     }
  
     public void setNuevoEsbirroPersonaje(Esbirro esbirroPer){
-        tipoPersonaje.setListaEsbirros(esbirroPer);
+        try{
+            tipoPersonaje.setListaEsbirros(esbirroPer);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
  
     public int anadirCosteSangre(){
@@ -545,26 +556,27 @@ public class Usuario extends MenuInicio{
     }
     
     public void setEdadPersonaje(int edadPer){
-        if(tipoPersonaje.equals(new Vampiro())){
+        try{
             tipoPersonaje.setEdad(edadPer);
-        }else{
-            throw new RuntimeException("este personaje no tiene edad");
+        }catch(UnsupportedOperationException e){
+            System.out.println(e.getMessage());
         }
     }
     
     public int anadirSangreAcum(){
-       int sangreAcum = -1;
-       while((sangreAcum < 0)&(sangreAcum > 10)){
-          System.out.println("Introduzca los puntos de sanngre acumulados del vampiro: ");
-          Scanner sc = new Scanner(System.in);
-          String reservaSangre = sc.next();
-          sangreAcum = Integer.parseInt(reservaSangre);
-       }
+        System.out.println("Introduzca los puntos de sanngre acumulados del vampiro: ");
+        Scanner sc = new Scanner(System.in);
+        String reservaSangre = sc.next();
+        int sangreAcum = Integer.parseInt(reservaSangre);
        return sangreAcum;
     }
     
     public void setSangreAcumPersonaje(int sagreAcumPer){
-        tipoPersonaje.setReservaPuntosSangre(sagreAcumPer);
+        try{
+            tipoPersonaje.setReservaPuntosSangre(sagreAcumPer);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     public Fortaleza construirFortaleza() { 
@@ -603,20 +615,27 @@ public class Usuario extends MenuInicio{
         tipoPersonaje.setListaDebilidades(debilidadPer);
     }
     
-    public void atributosComunesPersonaje() throws Exception{
+    public void atributosComunesPersonaje(){
         String nombrePer = anadirNombre();
         setNombrePersonaje(nombrePer);
         
-        int oroPer;
+        int oroPer = 0;
         do{
            oroPer = anadirOro();
            setOroPersonaje(oroPer);
         }while(oroPer < 0);
         
-        int poderPer = anadirPoder();
-        setPoderPersonaje(poderPer);
-        int saludPer = anadirSalud();
-        setSaludPersonaje(saludPer);
+        int poderPer = 0;
+        do{
+           poderPer = anadirPoder();
+           setPoderPersonaje(poderPer);
+        }while(poderPer < 0 | poderPer > 5);
+        
+        int saludPer = 0;
+        do{
+           saludPer = anadirSalud();
+           setSaludPersonaje(saludPer);
+        }while(saludPer < 0 | saludPer > 5);
         
         String insertar;
         do{
@@ -663,20 +682,28 @@ public class Usuario extends MenuInicio{
         }while(!insertar.equals("no"));
     }
     
-    public void registrar_vampiro() throws Exception{
+    public void registrar_vampiro(){
         Fabrica fabrica = new FabricacionVampiro();
         this.setTipoPersonaje(fabrica.crearPersonaje());
         
         atributosComunesPersonaje();
-        int edad = anadirEdad();
-        setEdadPersonaje(edad);
-        int sangreAcum = anadirSangreAcum();
-        setSangreAcumPersonaje(sangreAcum);
+        
+        int edad = 0;
+        do{
+           edad = anadirEdad();
+           setEdadPersonaje(edad);
+        }while(edad < 0);
+        
+        int sangreAcum = -1;
+        do{
+           sangreAcum = anadirSangreAcum();
+           setSangreAcumPersonaje(sangreAcum);
+        }while(sangreAcum < 0 & sangreAcum > 10);
         
         seleccionarOpcionMenu();
     }
     
-    public void registrar_licantropo()throws Exception{
+    public void registrar_licantropo(){
         Fabrica fabrica = new FabricacionLicantropo();
         this.setTipoPersonaje(fabrica.crearPersonaje());
         
@@ -684,7 +711,7 @@ public class Usuario extends MenuInicio{
         seleccionarOpcionMenu();
     }
     
-    public void registrar_cazador() throws Exception{
+    public void registrar_cazador(){
         Fabrica fabrica = new FabricacionCazador();
         this.setTipoPersonaje(fabrica.crearPersonaje());
         
@@ -731,7 +758,7 @@ public class Usuario extends MenuInicio{
         return false;
     }
     
-    public void desafiarUsuario() throws Exception{
+    public void desafiarUsuario(){
         System.out.println("introduzca el nick del usuario a desafiar: ");
         Scanner sc = new Scanner(System.in);
         String nickUsuarioDesafiar = sc.next();
@@ -867,7 +894,7 @@ public class Usuario extends MenuInicio{
         }
     }
     
-    public void aceptar_rechazarDesafio() throws Exception{
+    public void aceptar_rechazarDesafio(){
         Desafio desafio = new Desafio(); 
         int cont = 0;
         int iter = 0;
@@ -896,7 +923,7 @@ public class Usuario extends MenuInicio{
     }
    
     //@Override
-    public void entrar_salirSistema() throws Exception{
+    public void entrar_salirSistema(){
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
       System.out.println("seleccione una opcion: -1 o 2-");

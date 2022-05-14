@@ -122,11 +122,11 @@ public class Cazador extends Personaje{
     }
     
     @Override
-    public void setOro(int oro) throws Exception{
+    public void setOro(int oro){
         if(oro >= 0){ 
             this.oro = oro;
         }else{
-            throw new Exception("la cantidad de oro no puede ser negativa");
+            throw new RuntimeException("la cantidad de oro no puede ser negativa");
         }
     }
 

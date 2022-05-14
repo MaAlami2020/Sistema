@@ -73,7 +73,7 @@ public class Operador extends MenuInicio{
     }
 
     //@Override
-    public void registrar_darBaja()throws Exception{   
+    public void registrar_darBaja(){   
       System.out.println("1.registrarse");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
@@ -131,7 +131,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void seleccionarOpcionMenu()throws Exception{
+    public void seleccionarOpcionMenu(){
         System.out.println("***BIENVENIDO**");
         System.out.println("3.-editar un personaje");
         System.out.println("4.-validar desafio");
@@ -165,7 +165,7 @@ public class Operador extends MenuInicio{
         }
     }
     
-    public void editar_Personaje()throws Exception{
+    public void editar_Personaje(){
         int posPer = 1;
         for(Usuario user: getUserlist()){
             System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
@@ -275,7 +275,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void añadir_atributos_personaje()throws Exception{
+    public void añadir_atributos_personaje(){
           int posPer = 1;
           for(Usuario user: getUserlist()){
              System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
@@ -361,7 +361,7 @@ public class Operador extends MenuInicio{
         usuariosBaneados.remove(usuarioDesbaneado);
     }
     
-    public void entrar_salirSistema()throws Exception{
+    public void entrar_salirSistema(){
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
       System.out.println("seleccione una opcion: -1 o 2-");
