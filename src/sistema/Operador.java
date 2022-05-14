@@ -5,8 +5,6 @@
 package sistema;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -149,8 +147,6 @@ public class Operador extends MenuInicio{
                editar_Personaje();
                break;
             }case 4:{
-               Usuario user1 = null;
-               Usuario user2 = null;
                validarDesafio();
                break;
             }case 5:{
@@ -400,7 +396,11 @@ public class Operador extends MenuInicio{
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password){
+        if(password.length() >= 8 & password.length() <= 12){
+           this.password = password;
+        }else{
+           throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
+        }
     }
 }
