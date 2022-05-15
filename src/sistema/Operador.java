@@ -397,10 +397,14 @@ public class Operador extends MenuInicio{
     }
 
     public void setPassword(String password){
-        if(password.length() >= 8 & password.length() <= 12){
-           this.password = password;
-        }else{
-           throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
+        try{
+            if(password.length() >= 8 & password.length() <= 12){
+                this.password = password;
+            }else{
+                throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
+            }
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -237,22 +237,22 @@ public class Vampiro extends Personaje{
 
     @Override
     public int getRabia() {
-        throw new UnsupportedOperationException("este personaje no tiene rabia");
+        throw new RuntimeException("este personaje no tiene rabia");
     }
 
     @Override
     public int getVoluntad() {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
+        throw new RuntimeException("este personaje no tiene voluntad");
     }
 
     @Override
     public void setRabia(int rabia) {
-        throw new UnsupportedOperationException("este personaje no tiene rabia");
+        throw new RuntimeException("este personaje no tiene rabia");
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
+        throw new RuntimeException("este personaje no tiene voluntad");
     }
 
 }
