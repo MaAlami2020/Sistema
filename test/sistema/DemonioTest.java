@@ -57,7 +57,6 @@ public class DemonioTest {
     
     /**
      * Test of setSalud method, of class Demonio.
-
      * test que prueba que la salud no alcanza por 1 unidad el valor minimo de salud
      */
     @Test
@@ -66,7 +65,7 @@ public class DemonioTest {
             int salud = 0;
             Demonio demonio = new Demonio("lexus",salud," ");
             demonio.setSalud(salud);
-            fail("la salud esta entre 1 y 3");
+            assertEquals(salud,demonio.getSalud());
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
