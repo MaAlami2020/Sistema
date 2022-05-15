@@ -49,7 +49,7 @@ public class DonTest {
             assertEquals(valorAtaque,don.getValorAtaque());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
+            fail("se sobrepasa el valor limite de valor de ataque");
             System.out.println("CP1 correcto");
         }
     }
@@ -64,7 +64,7 @@ public class DonTest {
             int valorAtaque = 4;
             Don don = new Don();
             don.setValorAtaque(valorAtaque);
-            assertEquals(valorAtaque,don.getValorAtaque());
+            fail("el valor de ataque esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
@@ -82,7 +82,7 @@ public class DonTest {
             int valorAtaque = 9;
             Don don = new Don();
             don.setValorAtaque(valorAtaque);
-            assertEquals(valorAtaque,don.getValorAtaque());
+            fail("el valor de ataque esta entre 1 y 3");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
@@ -103,7 +103,7 @@ public class DonTest {
             assertEquals(valorDefensa,don.getValorDefensa());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
+            fail("se sobrepasa el valor limite de valor de defensa");
             System.out.println("CP1 correcto");
         }
     }
@@ -118,7 +118,7 @@ public class DonTest {
             int valorDefensa = 4;
             Don don = new Don();
             don.setValorDefensa(valorDefensa);
-            assertEquals(valorDefensa,don.getValorDefensa());
+            fail("el valor de defensa esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
@@ -136,7 +136,7 @@ public class DonTest {
             int valorDefensa = 9;
             Don don = new Don();
             don.setValorDefensa(valorDefensa);
-            assertEquals(valorDefensa,don.getValorDefensa());
+            fail("el valor de defensa esta entre 1 y 3");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
@@ -154,7 +154,7 @@ public class DonTest {
             int costePuntosSangre = 0;
             Don don = new Don();
             don.setCostePuntosSangre(costePuntosSangre);
-            assertEquals(costePuntosSangre,don.getCostePuntosSangre());
+            fail("la habilidad tiene un coste en puntos de sangre");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
@@ -172,7 +172,7 @@ public class DonTest {
             int edad = 0;
             Don don = new Don();
             don.setEdad(edad);
-            assertEquals(edad,don.getEdad());
+            fail("la habilidad tiene una edad de adquisicion");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
