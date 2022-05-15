@@ -12,37 +12,13 @@ import java.util.List;
  * @author mimit
  */
 public class Demonio extends Esbirro{
-    private String nombre;
-    private int salud;
+ 
     private String pacto;
     protected List<Esbirro> hijos = new ArrayList<>();
     
     public Demonio(String nombre, int salud, String pacto) {
-        this.nombre = nombre;
-        this.salud = salud;
+        super(nombre,salud);
         this.pacto = pacto;
-    }
-    public String getNombre() {
-        return nombre;
-    }
-
-    @Override
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    @Override
-    public int getSalud() {
-        return salud;
-    }
-
-    @Override
-    public void setSalud(int salud) {
-        if(salud >= 1 & salud <= 3){
-           this.salud = salud;
-        }else{
-           throw new RuntimeException("sobrepasa el valor limite de salud"); 
-        }
     }
 
     @Override
@@ -73,5 +49,9 @@ public class Demonio extends Esbirro{
     @Override
     public int getDependencia() {
         return -1;
+    }
+    
+    public void addHijos(Esbirro e){
+        this.hijos.add(e);
     }
 }
