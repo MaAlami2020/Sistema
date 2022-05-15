@@ -64,7 +64,7 @@ public class FortalezaTest {
             Fortaleza fortaleza = new Fortaleza("luz solar",6);
             int sensib = 6;
             fortaleza.setSensibilidad(sensib);
-            assertEquals(6,fortaleza.getSensibilidad());
+            fail("el valor de la sensibilidad no esta entre 1 y 5");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"sobrepasa el valor limite de sensibilidad");
@@ -85,7 +85,7 @@ public class FortalezaTest {
             assertEquals(1,fortaleza.getSensibilidad());
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de sensibilidad");
+            fail("sobrepasa el valor limite de sensibilidad");
             System.out.println("CP3 correcto");
         }
     }
