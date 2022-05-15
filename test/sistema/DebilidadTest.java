@@ -49,7 +49,7 @@ public class DebilidadTest {
             assertEquals(4,debilidad.getSensibilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de sensibilidad");
+            fail("sobrepasa el valor limite de sensibilidad");
             System.out.println("CP1 correcto");
         }
     }
@@ -64,7 +64,7 @@ public class DebilidadTest {
             Debilidad debilidad = new Debilidad("marea alta",6);
             int sensib = 6;
             debilidad.setSensibilidad(sensib);
-            assertEquals(6,debilidad.getSensibilidad());
+            fail("la sensibilidad esta entre 1 y 5");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"sobrepasa el valor limite de sensibilidad");
@@ -85,7 +85,7 @@ public class DebilidadTest {
             assertEquals(5,debilidad.getSensibilidad());
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de sensibilidad");
+            fail("sobrepasa el valor limite de sensibilidad");
             System.out.println("CP3 correcto");
         }
     }
