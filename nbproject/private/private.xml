@@ -3,11 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/test/sistema/DemonioTest.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/test/sistema/FortalezaTest.java</file>
+=======
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Sistema.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Vampiro.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Personaje.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/MenuInicio.java</file>
+>>>>>>> main
+=======
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Sistema.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Vampiro.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Personaje.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/MenuInicio.java</file>
+>>>>>>> main
         </group>
     </open-files>
 </project-private>

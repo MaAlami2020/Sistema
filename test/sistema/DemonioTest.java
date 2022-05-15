@@ -57,7 +57,7 @@ public class DemonioTest {
     
     /**
      * Test of setSalud method, of class Demonio.
-     * test que prueba que la salud noo alcanza por 1 unidad el valor minimo de salud
+     * test que prueba que la salud no alcanza por 1 unidad el valor minimo de salud
      */
     @Test
     public void testSetSalud1() {
