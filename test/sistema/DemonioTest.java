@@ -50,7 +50,7 @@ public class DemonioTest {
             assertEquals(salud,demonio.getSalud());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
+            fail("sobrepasa el valor limite de salud");
             System.out.println("CP1 correcto");
         }
     }
