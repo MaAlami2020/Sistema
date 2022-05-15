@@ -6,55 +6,39 @@ package sistema;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
  * @author mimit
  */
 public class Demonio extends Esbirro{
-    private String nombre;
-    private int salud;
+ 
     private String pacto;
     protected List<Esbirro> hijos = new ArrayList<>();
     
     public Demonio(String nombre, int salud, String pacto) {
-        this.nombre = nombre;
-        this.salud = salud;
+        super(nombre,salud);
         this.pacto = pacto;
     }
-    public String getNombre() {
-        return nombre;
-    }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getSalud() {
-        return salud;
-    }
-
-    public void setSalud(int salud) {
-        this.salud = salud;
-    }
-
+    @Override
     public String getPacto() {
         return pacto;
     }
 
+    @Override
     public void setPacto(String pacto) {
         this.pacto = pacto;
     }
    
     @Override
     public void setDependencia(int dependenncia) {
-        throw new UnsupportedOperationException("este esbirro  no tiene una dependencia"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este esbirro  no tiene una dependencia"); 
     }
 
     @Override
     public void setLealtad(Lealtad lealtad) {
-        throw new UnsupportedOperationException("este esbirro no tiene una lealtad"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este esbirro no tiene una lealtad"); 
     }
 
     @Override
@@ -65,5 +49,9 @@ public class Demonio extends Esbirro{
     @Override
     public int getDependencia() {
         return -1;
+    }
+    
+    public void addHijos(Esbirro e){
+        this.hijos.add(e);
     }
 }

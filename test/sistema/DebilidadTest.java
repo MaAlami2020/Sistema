@@ -64,7 +64,7 @@ public class DebilidadTest {
             Debilidad debilidad = new Debilidad("marea alta",6);
             int sensib = 6;
             debilidad.setSensibilidad(sensib);
-            fail("la sensibilidad esta entre 1 y 5");
+            fail("el valor de sensibilidad esta entre 1 y 5");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"sobrepasa el valor limite de sensibilidad");

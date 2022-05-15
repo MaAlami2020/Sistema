@@ -15,7 +15,7 @@ public abstract class Personaje {
     
     public abstract void setNombre(String nombre);
     public abstract void setEdad(int edad);
-    public abstract void setOro(int oro) throws Exception;
+    public abstract void setOro(int oro);
     public abstract void setPoder(int pooder);                    
     public abstract void setSalud(int salud);
     public abstract String getNombre();

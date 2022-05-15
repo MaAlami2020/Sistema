@@ -50,7 +50,7 @@ public class Combate extends MenuInicio{
      * @param user1 usuario que acepto el desafio
      * @param user2 usuario que desafia a otro
      */
-    public void iniciar(Usuario user1, Usuario user2)throws Exception{
+    public void iniciar(Usuario user1, Usuario user2){
             desafiante = user2;
             desafiado = user1;
             

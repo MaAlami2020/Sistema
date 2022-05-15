@@ -30,7 +30,6 @@ public class Vampiro extends Personaje{
     public Vampiro(){
     }
 
-    @Override
     public int getReservaPuntosSangre() {
         return reservaPuntosSangre;
     }
@@ -45,7 +44,6 @@ public class Vampiro extends Personaje{
         return nombre;
     }
 
-    @Override
     public int getEdad() {
         return edad;
     }
@@ -65,7 +63,6 @@ public class Vampiro extends Personaje{
         return poder;
     }
 
-    @Override
     public void setReservaPuntosSangre(int reservaPuntosSangre) {
         int sangreAcum = reservaPuntosSangre;
         if(sangreAcum < 0){
@@ -122,11 +119,7 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setListaArmaduras(Armadura armadura) {
-        if(listaArmaduras.isEmpty()){
-           this.listaArmaduras.add(armadura);
-        }else{
-           throw new RuntimeException("se ha llegado al tope de armaduras activas"); 
-        }
+        this.listaArmaduras.add(armadura);
     }
 
     @Override
@@ -154,17 +147,20 @@ public class Vampiro extends Personaje{
         this.nombre = nombre;
     }
 
-    @Override
     public void setEdad(int edad) {
-        this.edad = edad;
+        if(edad >= 0){
+           this.edad = edad;
+        }else{
+           throw new UnsupportedOperationException("la edad no puede ser negativa");
+        }
     }
     
     @Override
-    public void setOro(int oro) throws Exception{
+    public void setOro(int oro){
         if(oro >= 0){ 
             this.oro = oro;
         }else{
-            throw new Exception("la cantidad de oro no puede ser negativa");
+            throw new RuntimeException("la cantidad de oro no puede ser negativa");
         }
     }
 
@@ -193,11 +189,15 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setHabilidad(Habilidad habilidad) {
-        //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no se null    
-        int valorCoste = habilidad.getCostePuntosSangre();
-        String coste = String.valueOf(valorCoste);
-        if(!coste.equals("esta habilidad no tiene coste")){
-            this.habilidad = habilidad;
+        //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no sea null    
+        try{
+            int valorCoste = habilidad.getCostePuntosSangre();
+            String coste = String.valueOf(valorCoste);
+            if(!coste.equals("esta habilidad no tiene coste")){
+                this.habilidad = habilidad;
+            }
+        }catch(RuntimeException e){
+            System.out.println("este personaje no tiene esta habilidad");
         }
     }
     
@@ -232,23 +232,23 @@ public class Vampiro extends Personaje{
     }   
 
     @Override
-    public int getRabia() {
-        throw new UnsupportedOperationException("este personaje no tiene rabia");
-    }
-
-    @Override
-    public int getVoluntad() {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
-    }
-
-    @Override
     public void setRabia(int rabia) {
-        throw new UnsupportedOperationException("este personaje no tiene rabia");
+        throw new RuntimeException("este personaje no tiene rabia"); 
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
+        throw new RuntimeException("este personaje no tiene voluntad"); 
+    }
+
+    @Override
+    public int getRabia() {
+        throw new RuntimeException("este personaje no tiene rabia"); 
+    }
+
+    @Override
+    public int getVoluntad() {
+        throw new RuntimeException("este personaje no tiene voluntad"); 
     }
 
 }

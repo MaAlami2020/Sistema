@@ -122,18 +122,30 @@ public class Licantropo extends Personaje{
     }
     
     @Override
-    public void setOro(int oro) {
-        this.oro = oro;
+    public void setOro(int oro){
+        if(oro >= 0){ 
+            this.oro = oro;
+        }else{
+            throw new RuntimeException("la cantidad de oro no puede ser negativa");
+        }
     }
 
     @Override
     public void setSalud(int salud) {
-        this.salud = salud;
+        if(salud < 0 | salud > 5){
+            throw new RuntimeException("sobrepasó el límite de salud permitida");
+        }else{
+            this.salud = salud;
+        }
     }
 
     @Override
-    public void setPoder(int poder) {
-        this.poder = poder;
+    public void setPoder(int poder){
+        if(poder < 1 | poder > 5){
+            throw new RuntimeException("sobrepasó el límite de poder permitido");
+        }else{
+            this.poder = poder;
+        }
     }
 
     @Override
@@ -143,7 +155,11 @@ public class Licantropo extends Personaje{
 
     @Override
     public void setHabilidad(Habilidad habilidad) {
-        this.habilidad = habilidad;
+        int valorRabia = habilidad.getEdad();
+        String rabiaMin = String.valueOf(valorRabia);
+        if(!rabiaMin.equals("esta habilidad no tiene rabia minima")){
+            this.habilidad = habilidad;
+        }
     }
     
     @Override
@@ -183,36 +199,40 @@ public class Licantropo extends Personaje{
 
     @Override
     public int getVoluntad() {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad"); 
+        throw new RuntimeException("este personaje no tiene voluntad"); 
     }
 
     @Override
     public void setEdad(int edad) {
-        throw new UnsupportedOperationException("este personje no tiene edad"); 
+        throw new RuntimeException("este personje no tiene edad"); 
     }
 
     @Override
     public int getEdad() {
-        throw new UnsupportedOperationException("este personaje no tiene edad");
+        throw new RuntimeException("este personaje no tiene edad");
     }
 
     @Override
     public void setReservaPuntosSangre(int sangreAcum) {
-        throw new UnsupportedOperationException("este personaje no tiene puntos de sangre"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene puntos de sangre");
     }
 
     @Override
     public int getReservaPuntosSangre() {
-        throw new UnsupportedOperationException("este personaje no tiene puntos de sangre"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene puntos de sangre"); 
     }
 
     @Override
     public void setRabia(int rabia) {
-        this.rabia = rabia;
+        if(rabia <= 3){
+           this.rabia = rabia;
+        }else{
+           throw new RuntimeException("ha llegado al tope de rabia");
+        }  
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
+        throw new RuntimeException("este personaje no tiene voluntad");
     }
 }

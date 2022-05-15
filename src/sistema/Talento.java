@@ -50,7 +50,11 @@ public class Talento implements Habilidad{
     
     @Override
     public void setValorAtaque(int valorAtaque) {
-        this.valorAtaque = valorAtaque;
+        if(valorAtaque >= 1 & valorAtaque <= 3){
+           this.valorAtaque = valorAtaque;
+        }else{
+           throw new RuntimeException("se sobrepasa el valor limite de valor de ataque");
+        }
     }
 
     @Override
@@ -65,27 +69,31 @@ public class Talento implements Habilidad{
 
     @Override
     public void setValorDefensa(int valorDefensa) {
-        this.valorDefensa = valorDefensa;
+        if(valorDefensa >= 1 & valorDefensa <= 3){
+           this.valorDefensa = valorDefensa;
+        }else{
+           throw new RuntimeException("se sobrepasa el valor limite de valor de defensa"); 
+        }
     }
 
     @Override
     public void setCostePuntosSangre(int costePuntosSangre) {
-        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene un coste"); 
     }
 
     @Override
     public int getCostePuntosSangre() {
-        throw new UnsupportedOperationException("esta habilidad no tiene un coste"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene un coste");
     }
 
     @Override
     public void setRabiaMin(int rabiaMin) {
-        throw new UnsupportedOperationException("esta habilidad no tiene rabia minima"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene rabia minima");
     }
 
     @Override
     public int getRabiaMin() {
-        throw new UnsupportedOperationException("esta habilidad no tiene rabia minima"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene rabia minima"); 
     }
 
 }
