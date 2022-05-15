@@ -49,7 +49,7 @@ public class FortalezaTest {
             assertEquals(2,fortaleza.getSensibilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de sensibilidad");
+            fail("sobrepasa el valor limite de sensibilidad");
             System.out.println("CP1 correcto");
         }
     }
