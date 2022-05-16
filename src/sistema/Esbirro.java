@@ -22,7 +22,19 @@ public abstract class Esbirro {
     }
     
     public void setSalud(int salud){
-        this.salud = salud;
+        if(salud >= 1 & salud <= 3) {
+            this.salud = salud;
+        }else{
+            throw new RuntimeException("sobrepasa el valor limite de salud");
+        }
+    }
+    
+    public String getNombre(){
+        return nombre;
+    }
+    
+    public int getSalud(){
+        return salud;
     }
     
     public abstract void setDependencia(int dependenncia);
@@ -36,6 +48,7 @@ public abstract class Esbirro {
     public int getSalud(){
         return salud;
     }
+    public abstract void setLealtad(Lealtad lealtad)
     public abstract Lealtad getLealtad();
     public abstract String getPacto();
     public abstract int getDependencia();

@@ -354,15 +354,26 @@ public class Usuario extends MenuInicio{
     }
       
     public Armadura anadirArmadura() {
+        Armadura armadura = new Armadura("",0,0);
         System.out.println("introduzca el nombre del armadura del personaje: ");
         Scanner sc = new Scanner(System.in);
-        String nombreArmadura = sc.next();
+        try{
+            String nombreArmadura = sc.next();
+            armadura.setNombre(nombreArmadura);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
         int modifDefensa = 0;
         do{
            System.out.println("introduzca el valor del modificador a la defensa del armadura -1,2 o 3-: ");
            sc = new Scanner(System.in);
            String modificadorDefensa = sc.next();
-           modifDefensa = Integer.parseInt(modificadorDefensa);
+           try{
+               modifDefensa = Integer.parseInt(modificadorDefensa);
+               armadura.setModificadorDefensa(modifDefensa);
+           }catch(RuntimeException e){
+               System.out.println(e.getMessage());
+           }
         }while((modifDefensa < 1)|(modifDefensa > 3)); 
         
         System.out.println("¿Quiere introducir un modificador al ataque -si o no-?");
@@ -375,10 +386,14 @@ public class Usuario extends MenuInicio{
               System.out.println("introduzca el valor del modificador al ataque del armadura -1,2 o 3-: ");
               sc = new Scanner(System.in);
               String modifAtaq = sc.next();
-              modifAtaque = Integer.parseInt(modifAtaq);
+              try{
+                  modifAtaque = Integer.parseInt(modifAtaq);
+              }catch(RuntimeException e){
+                  System.out.println(e.getMessage());
+              }
            }
         }
-        return new Armadura(nombreArmadura,modifDefensa,modifAtaque);
+        return armadura;
     }
     
     public void setNuevaArmaduraPersonaje(Armadura armaduraPer){
@@ -544,54 +559,96 @@ public class Usuario extends MenuInicio{
     }
     
     public Habilidad construirHabilidad() {
-        System.out.println("Introduzca el nombre de la habilidad: ");
-        Scanner sc = new Scanner(System.in);
-        String nombreHab = sc.next();
-        int ataque = 0;
-        int defensa = 0;
+            Class personaje = tipoPersonaje.getClass();
+            Disciplina disciplina = new Disciplina(null,0,0,0);
+            Don don = new Don(null,0,0,0);
+            Talento talento = new Talento(null,0,0,0);
         
-        while((ataque < 1)|(ataque > 3)){
-           System.out.println("Introduzca el valor de ataque -1,2 o 3-: ");
-           sc = new Scanner(System.in);
-           String valor = sc.next();
-           ataque = Integer.parseInt(valor);
-        }  
-        while((defensa < 1)|(defensa > 3)){
-           System.out.println("Introduzca el valor de defensa -1,2 o 3-: ");
-           sc = new Scanner(System.in);
-           String valor = sc.next();
-           defensa = Integer.parseInt(valor);
-        }  
-        if(tipoPersonaje == new Vampiro()){
-            int coste = 0;
-            do{
-               coste = anadirCosteSangre();
-            }while((coste < 1)|(coste > 3));
-            try{
-                return new Disciplina(nombreHab,ataque,defensa,coste);
-            }catch(RuntimeException e){
-                System.out.println(e.getMessage());
+            System.out.println("Introduzca el nombre de la habilidad: ");
+            Scanner sc = new Scanner(System.in);
+            String nombreHab = sc.next();
+            if(personaje == Vampiro.class){
+                disciplina.setNombre(nombreHab);
+            }else if(personaje == Licantropo.class){
+                don.setNombre(nombreHab);
+            }else if(personaje == Cazador.class){
+                talento.setNombre(nombreHab);
             }
-        }else if(tipoPersonaje == new Licantropo()){
-            int rabiaMin = anadirRabiaMin();
-            try{
-                return new Don(nombreHab,ataque,defensa,rabiaMin);
-            }catch(RuntimeException e){
-                System.out.println(e.getMessage());
-            }
-        }else if(tipoPersonaje == new Cazador()){
-            int edadAdquisicion = anadirEdadAdquisicion();
-            try{
-                return new Talento(nombreHab,ataque,defensa,edadAdquisicion);
-            }catch(RuntimeException e){
-                System.out.println(e.getMessage());
-            }
-        }
-        return null;
+        
+            int ataque = 0;
+            int defensa = 0;
+        
+            while((ataque < 1)|(ataque > 3)){
+                System.out.println("Introduzca el valor de ataque -1,2 o 3-: ");
+                sc = new Scanner(System.in);
+                String valor = sc.next();
+                try{
+                    ataque = Integer.parseInt(valor);
+                    if(personaje == Vampiro.class){
+                        disciplina.setValorAtaque(ataque);
+                    }else if(personaje == Licantropo.class){
+                        don.setValorAtaque(ataque);
+                    }else if(personaje == Cazador.class){
+                        talento.setValorAtaque(ataque);
+                    }
+                }catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+            }  
+            while((defensa < 1)|(defensa > 3)){
+                System.out.println("Introduzca el valor de defensa -1,2 o 3-: ");
+                sc = new Scanner(System.in);
+                String valor = sc.next();
+                try{
+                    defensa = Integer.parseInt(valor);
+                    if(personaje == Vampiro.class){
+                        disciplina.setValorDefensa(defensa);
+                    }else if(personaje == Licantropo.class){
+                        don.setValorDefensa(defensa);
+                    }else if(personaje == Cazador.class){
+                        talento.setValorDefensa(defensa);
+                    }
+                }catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+           } 
+            
+           if(personaje == Vampiro.class){
+               int coste = 0;
+               do{
+                  try{
+                      coste = anadirCosteSangre();
+                      disciplina.setCostePuntosSangre(coste);
+                  }catch(RuntimeException e){
+                      System.out.println(e.getMessage());
+                  }
+               }while((coste < 1)|(coste > 3));
+               return disciplina; 
+           }else if(personaje == Licantropo.class){
+               int rabiaMin = anadirRabiaMin();
+               don.setRabiaMin(rabiaMin);
+               return don;
+           }else if(personaje == Cazador.class){
+               int edadAdquisicion = 0;
+               do{
+                  try{
+                      edadAdquisicion = anadirEdadAdquisicion();
+                      talento.setEdad(edadAdquisicion);
+                  }catch(RuntimeException e){
+                      System.out.println(e.getMessage());
+                  }
+               }while(edadAdquisicion < 0);
+               return talento;
+           }
+           return null;
     }
     
     public void setHabilidadPersonaje(Habilidad habilidad){
-        tipoPersonaje.setHabilidad(habilidad);
+        try{
+            tipoPersonaje.setHabilidad(habilidad);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
   
     public int anadirEdad(){
@@ -605,7 +662,7 @@ public class Usuario extends MenuInicio{
     public void setEdadPersonaje(int edadPer){
         try{
             tipoPersonaje.setEdad(edadPer);
-        }catch(UnsupportedOperationException e){
+        }catch(RuntimeException e){
             System.out.println(e.getMessage());
         }
     }
@@ -626,18 +683,25 @@ public class Usuario extends MenuInicio{
         }
     }
     
-    public Fortaleza construirFortaleza() { 
+    public Fortaleza construirFortaleza() {
+          int sensibilidad = 0;
+          Fortaleza fortaleza = new Fortaleza(null,sensibilidad);
           System.out.println("introduzca el nombre de la fortaleza: ");
           Scanner sc = new Scanner(System.in);
           String nombreFortaleza = sc.next();
-          int sensibilidad = 0;
+          fortaleza.setNombre(nombreFortaleza);
           do{
              System.out.println("introduzca la sensibilidad: ");
              sc = new Scanner(System.in);
              String sensibilidadMod = sc.next();
              sensibilidad = Integer.parseInt(sensibilidadMod);
+             try{
+                 fortaleza.setSensibilidad(sensibilidad);
+             }catch(RuntimeException e){
+                 System.out.println(e.getMessage());
+             }
           }while((sensibilidad<1)|(sensibilidad>5));
-          return new Fortaleza(nombreFortaleza,sensibilidad);
+          return fortaleza;
     }
     
     public void setNuevaFortalezaPersonaje(Fortaleza fortalezaPer){
@@ -645,17 +709,24 @@ public class Usuario extends MenuInicio{
     }
     
     public Debilidad construirDebilidad() { 
+          int sensibilidad = 0;
+          Debilidad debilidad = new Debilidad(null,sensibilidad);
           System.out.println("introduzca el nombre de la debilidad: ");
           Scanner sc = new Scanner(System.in);
           String nombreDebilidad = sc.next();
-          int sensibilidad = 0;
+          debilidad.setNombre(nombreDebilidad);
           do{
              System.out.println("introduzca la sensibilidad: ");
              sc = new Scanner(System.in);
              String sensibilidadMod = sc.next();
              sensibilidad = Integer.parseInt(sensibilidadMod);
+             try{
+                 debilidad.setSensibilidad(sensibilidad);
+             }catch(RuntimeException e){
+                 System.out.println(e.getMessage());
+             }
           }while((sensibilidad<1)|(sensibilidad>5));
-          return new Debilidad(nombreDebilidad,sensibilidad);
+          return debilidad;
     }
     
     public void setNuevaDebilidadPersonaje(Debilidad debilidadPer){
@@ -717,7 +788,7 @@ public class Usuario extends MenuInicio{
             setNuevaFortalezaPersonaje(fortaleza);
             System.out.println("¿quiere anadir otra fortaleza? -si o no-");
             Scanner sc = new Scanner(System.in);
-           insertar = sc.next();
+            insertar = sc.next();
         }while(!insertar.equals("no"));
          
          do{
@@ -725,7 +796,7 @@ public class Usuario extends MenuInicio{
             setNuevaDebilidadPersonaje(debilidad);
             System.out.println("¿quiere anadir otra debilidad? -si o no-");
             Scanner sc = new Scanner(System.in);
-           insertar = sc.next();
+            insertar = sc.next();
         }while(!insertar.equals("no"));
     }
     
@@ -773,11 +844,10 @@ public class Usuario extends MenuInicio{
         int oro = Integer.parseInt(cantidad);
         return oro;
     }
-    
-    //
+
     public void setOroApostado(int oroApostar){
-        if((oroApostar < 0)|(oroApostar > tipoPersonaje.getOro())){
-            throw new RuntimeException("cantidad apostada no valida");
+        if(oroApostar < 0 | oroApostar > tipoPersonaje.getOro()){
+            System.out.println("cantidad apostada no valida");
         }else{
             this.oroApostado = oroApostar;
         }
@@ -1009,10 +1079,14 @@ public class Usuario extends MenuInicio{
     }
 
     public void setPassword(String password){
-        if(password.length() >= 8 & password.length() <= 12){
-           this.password = password;
-        }else{
-           throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
+        try{
+            if(password.length() >= 8 & password.length() <= 12){
+                this.password = password;
+            }else{
+                throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
+            }
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
         }
     }
 

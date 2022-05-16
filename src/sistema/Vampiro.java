@@ -30,7 +30,6 @@ public class Vampiro extends Personaje{
     public Vampiro(){
     }
 
-    @Override
     public int getReservaPuntosSangre() {
         return reservaPuntosSangre;
     }
@@ -45,7 +44,6 @@ public class Vampiro extends Personaje{
         return nombre;
     }
 
-    @Override
     public int getEdad() {
         return edad;
     }
@@ -65,7 +63,6 @@ public class Vampiro extends Personaje{
         return poder;
     }
 
-    @Override
     public void setReservaPuntosSangre(int reservaPuntosSangre) {
         int sangreAcum = reservaPuntosSangre;
         if(sangreAcum < 0){
@@ -150,7 +147,6 @@ public class Vampiro extends Personaje{
         this.nombre = nombre;
     }
 
-    @Override
     public void setEdad(int edad) {
         if(edad >= 0){
            this.edad = edad;
@@ -236,23 +232,23 @@ public class Vampiro extends Personaje{
     }   
 
     @Override
-    public int getRabia() {
-        throw new UnsupportedOperationException("este personaje no tiene rabia");
-    }
-
-    @Override
-    public int getVoluntad() {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
-    }
-
-    @Override
     public void setRabia(int rabia) {
-        throw new UnsupportedOperationException("este personaje no tiene rabia");
+        throw new RuntimeException("este personaje no tiene rabia"); 
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
+        throw new RuntimeException("este personaje no tiene voluntad"); 
+    }
+
+    @Override
+    public int getRabia() {
+        throw new RuntimeException("este personaje no tiene rabia"); 
+    }
+
+    @Override
+    public int getVoluntad() {
+        throw new RuntimeException("este personaje no tiene voluntad"); 
     }
 
 }

@@ -13,14 +13,13 @@ import static sistema.Lealtad.NORMAL;
  * @author mimit
  */
 public class Humano extends Esbirro{
- 
     private Lealtad lealtad;
 
     public Humano(String nombre, int salud, Lealtad lealtad) {
         super(nombre,salud);
         this.lealtad = lealtad;
     }
-    
+
     public Lealtad getLealtad() {
         return lealtad;
     }

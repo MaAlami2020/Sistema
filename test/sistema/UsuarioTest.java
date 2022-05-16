@@ -103,7 +103,7 @@ public class UsuarioTest {
      * test para probar que el oro apostado supera la cantidad de oro quee tiene el personaje
      */
     @Test
-    public void testSetOroApostado() throws Exception {
+    public void testSetOroApostado(){
         Usuario user = new Usuario();
         Vampiro vampiro = new Vampiro();
         user.setTipoPersonaje(vampiro);
