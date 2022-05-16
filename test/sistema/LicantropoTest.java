@@ -45,22 +45,85 @@ public class LicantropoTest {
         try{
             Arma arma1 = new Arma("KFH121",2,1,"1 mano");
             Licantropo licantropo = new Licantropo();
-            licantropo.setListaArmas(arma1);
-        
+            licantropo.setListaArmas(arma1);        
             licantropo.setArmasActivas(arma1);
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            fail("no se puede tener 1 arma activa de 1 mano");
             System.out.println("CP1 correcto");
         }
     }
-    
     /**
      * Test of setArmasActivas method, of class Licantropo.
-     * test que prueba que se ha llegado al tope de armas activas
+     * test que prueba que se pueden tener 2 armas activas de 1 mano
      */
     @Test
     public void testSetArmasActivas1() {
+        try{
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            Arma arma2 = new Arma("killer",1,2,"1 mano");
+            Licantropo licantropo = new Licantropo();
+            licantropo.setListaArmas(arma1); 
+            licantropo.setListaArmas(arma2);
+            licantropo.setArmasActivas(arma1);
+            licantropo.setArmasActivas(arma2);
+            System.out.println("CP2 incorrecto");
+        }catch(Exception e){
+            fail("no se pueden tener 2 armas activas de 1 mano");
+            System.out.println("CP2 correcto");
+        }
+    }
+    /**
+     * Test of setArmasActivas method, of class Licantropo.
+     * test que prueba que no se pueden tener 3 armas activas de 1 mano
+     */
+    @Test
+    public void testSetArmasActivas2() {
+        try{
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            Arma arma2 = new Arma("killer",1,2,"1 mano");
+            Arma arma3 = new Arma(" ",1,2,"1 mano");
+            Licantropo licantropo = new Licantropo();
+            licantropo.setListaArmas(arma1); 
+            licantropo.setListaArmas(arma2);
+            licantropo.setListaArmas(arma3);
+            licantropo.setArmasActivas(arma1);
+            licantropo.setArmasActivas(arma2);
+            licantropo.setArmasActivas(arma3);
+            fail("se pueden tener 3 armas activas de 1 mano");
+            System.out.println("CP3 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            System.out.println("CP3 correcto");
+        }
+    }
+    /**
+     * Test of setArmasActivas method, of class Licantropo.
+     * test que prueba que no se pueden tener 2 armas activas de 2 manos
+     */
+    @Test
+    public void testSetArmasActivas3() {
+        try{
+            Arma arma1 = new Arma("KFH121",2,1,"2 manos");
+            Arma arma3 = new Arma(" ",1,2,"2 manos");
+            Licantropo licantropo = new Licantropo();
+            licantropo.setListaArmas(arma1);
+            licantropo.setListaArmas(arma3);
+            licantropo.setArmasActivas(arma1);
+            licantropo.setArmasActivas(arma3);
+            fail("se pueden tener 2 armas activas de 2 manos");
+            System.out.println("CP4 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            System.out.println("CP4 correcto");
+        }
+    }    
+    /**
+     * Test of setArmasActivas method, of class Licantropo.
+     * test que prueba que no se puede cambiar un arma activa por otra porque los manejos no son iguales
+     */
+    @Test
+    public void testSetNuevasArmasActivas() {
         try{          
             Licantropo licantropo = new Licantropo();
             
@@ -68,25 +131,25 @@ public class LicantropoTest {
             licantropo.setListaArmas(arma1);
             Arma arma2 = new Arma("Kgc",1,1,"1 mano");
             licantropo.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            Arma arma3 = new Arma("satan",3,3,"2 manos");
             licantropo.setListaArmas(arma3);
         
             licantropo.setArmasActivas(arma1);
             licantropo.setArmasActivas(arma2);
-            licantropo.setArmasActivas(arma3);
-            System.out.println("CP2 incorrecto");
+            licantropo.setNuevasArmasActivas(0, arma3);
+            fail("se pueden intercambiar 2 armas de distinto manejo");
+            System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
-            System.out.println("CP2 correcto");
+            assertEquals(e.getMessage(),"no se pueden intercambiar las armas");
+            System.out.println("CP1 correcto");
         }
     }
-    
     /**
      * Test of setArmasActivas method, of class Licantropo.
-     * test que prueba que se puede cambiar un arma activa por otra
+     * test que prueba que se puede cambiar un arma activa por otra porque los manejos son iguales
      */
     @Test
-    public void testSetNuevasArmasActivas() {
+    public void testSetNuevasArmasActivas1() {
         try{          
             Licantropo licantropo = new Licantropo();
             
@@ -100,10 +163,11 @@ public class LicantropoTest {
             licantropo.setArmasActivas(arma1);
             licantropo.setArmasActivas(arma2);
             licantropo.setNuevasArmasActivas(0, arma3);
-            System.out.println("CP1 incorrecto");
+            assertEquals("1 mano",arma3.getManejo());
+            System.out.println("CP2 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
-            System.out.println("CP1 correcto");
+            fail("no se pueden intercambiar las armas");
+            System.out.println("CP2 correcto");
         }
     }
     
@@ -113,7 +177,8 @@ public class LicantropoTest {
      * a cambiar esta fuera del rango del array
      */
     @Test
-    public void testSetNuevasArmasActivas1() {
+
+    public void testSetNuevasArmasActivas2() {
         try{          
             Licantropo licantropo = new Licantropo(); 
             
@@ -127,10 +192,11 @@ public class LicantropoTest {
             licantropo.setArmasActivas(arma1);
             licantropo.setArmasActivas(arma2);
             licantropo.setNuevasArmasActivas(2, arma3);
-            System.out.println("CP2 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
-            System.out.println("CP2 correcto");
+            fail("no se ha superado el tamaño maximo de armas activas");
+            System.out.println("CP3 incorrecto");
+        }catch(RuntimeException e){
+            assertEquals(e.getMessage(),"fuera del limite de armas activas");
+            System.out.println("CP3 correcto");
         }
     }
 
@@ -145,10 +211,10 @@ public class LicantropoTest {
             Don don = new Don("extirpacion",3,1,2);
             Licantropo licantropo = new Licantropo();
             licantropo.setHabilidad(don);
-            assertSame(don,licantropo.getHabilidad());
+            assertEquals(don,licantropo.getHabilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene una rabia minima");
+            fail("esta habilidad no tiene una rabia minima");
             System.out.println("CP1 correcto");
         }
     }
@@ -156,7 +222,7 @@ public class LicantropoTest {
     /**
      * Test of setHabilidad method, of class Licantropo.
      * test para probar que este personaje no tiene como habilidad especial la disciplina 
-     * porque esa habilidad no tiene un coste
+     * porque el Don no tiene un coste
      */
     @Test
     public void testSetHabilidad1() {
@@ -164,10 +230,10 @@ public class LicantropoTest {
             Disciplina disciplina = new Disciplina();
             Licantropo licantropo = new Licantropo();
             licantropo.setHabilidad(disciplina);
-            assertSame(disciplina,licantropo.getHabilidad());
+            fail("el personaje tiene como habilidad la disciplina");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
+            assertEquals(e.getMessage(),"no tiene esta habilidad");
             System.out.println("CP2 correcto");
         }
     }
@@ -182,10 +248,10 @@ public class LicantropoTest {
             Talento talento = new Talento();
             Licantropo licantropo = new Licantropo();
             licantropo.setHabilidad(talento);
-            assertSame(talento,licantropo.getHabilidad());
+            fail("el personaje tiene como habilidad el talento");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
+            assertEquals(e.getMessage(),"no tiene esta habilidad");
             System.out.println("CP3 correcto");
         }
     }
@@ -205,7 +271,7 @@ public class LicantropoTest {
         }catch(Exception ex){
             Exception e;
             e = ex;
-            assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
+            fail("la cantidad de oro no puede ser negativa");
             System.out.println("CP1 correcto");
         }
     }
@@ -220,7 +286,7 @@ public class LicantropoTest {
         try{
             int oro = -1;     
             licantropo.setOro(oro);
-            assertEquals(-1,licantropo.getOro());
+            fail("se puede introducir un valor de oro negativo");
             System.out.println("CP2 incorrecto");
         }catch(Exception ex){
             Exception e;
@@ -245,7 +311,7 @@ public class LicantropoTest {
         }catch(Exception ex){
             Exception e;
             e = ex;
-            assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
+            fail("la cantidad de oro no puede ser negativa");
             System.out.println("CP3 correcto");
         }
     }
@@ -260,7 +326,7 @@ public class LicantropoTest {
             int salud = 6;
             Licantropo licantropo = new Licantropo();
             licantropo.setSalud(salud);
-            assertEquals(6,licantropo.getSalud());
+            fail("el valor de saluud esta en los limites permitidos");
             System.out.println("CP4 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
@@ -278,7 +344,7 @@ public class LicantropoTest {
             int salud = -1;
             Licantropo licantropo = new Licantropo();
             licantropo.setSalud(salud);
-            assertEquals(-1,licantropo.getSalud());
+            fail("la salud esta en los limites permitidos");
             System.out.println("CP5 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
@@ -299,7 +365,7 @@ public class LicantropoTest {
             assertEquals(0,licantropo.getSalud());
             System.out.println("CP7 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
+            fail("sobrepasó el límite de salud permitida");
             System.out.println("CP7 correcto");
         }
     }
@@ -318,7 +384,7 @@ public class LicantropoTest {
             assertEquals(4,licantropo.getSalud());
             System.out.println("CP8 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
+            fail("sobrepasó el límite de salud permitida");
             System.out.println("CP8 correcto");
         }
     }
@@ -333,7 +399,7 @@ public class LicantropoTest {
             int poder = 6;
             Licantropo licantropo = new Licantropo();
             licantropo.setPoder(poder);
-            assertEquals(6, licantropo.getPoder());
+            fail("el poder esta dentro del limite");
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
@@ -351,7 +417,7 @@ public class LicantropoTest {
             int poder = 0;
             Licantropo licantropo = new Licantropo();
             licantropo.setPoder(poder);
-            assertEquals(0,licantropo.getPoder());
+            fail("el poder esta dentro del limite");
             System.out.println("CP2 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
@@ -369,7 +435,7 @@ public class LicantropoTest {
             int poder = 9;
             Licantropo licantropo = new Licantropo();
             licantropo.setPoder(poder);
-            assertEquals(9,licantropo.getPoder());
+            fail("el poder esta dentro de los limites");
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
@@ -390,7 +456,7 @@ public class LicantropoTest {
             assertEquals(3,licantropo.getPoder());
             System.out.println("CP4 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
+            fail("sobrepasó el límite de poder permitido");
             System.out.println("CP4 correcto");
         }
     }
@@ -408,7 +474,7 @@ public class LicantropoTest {
             assertEquals(5,licantropo.getPoder());
             System.out.println("CP5 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
+            fail("sobrepasó el límite de poder permitido");
             System.out.println("CP5 correcto");
         }
     }
@@ -423,7 +489,7 @@ public class LicantropoTest {
             int voluntad = 8;
             Licantropo licantropo = new Licantropo();
             licantropo.setVoluntad(voluntad);
-            assertEquals(8,licantropo.getVoluntad());
+            fail("el personaje tiene voluntad");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"este personaje no tiene voluntad");
@@ -439,13 +505,13 @@ public class LicantropoTest {
     public void testSetRabia() {
         try{
             Licantropo licantropo = new Licantropo();
-            int rabia = licantropo.getRabia();
+            int rabia = 0;
             rabia++;
             licantropo.setRabia(rabia);
             assertEquals(1,licantropo.getRabia());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"ha llegado al tope de rabia");
+            fail("ha llegado al tope de rabia");
             System.out.println("CP1 correcto");
         }
     }
@@ -489,5 +555,38 @@ public class LicantropoTest {
             System.out.println("CP3 correcto");
         }
     }
-
+/**
+     * Test of setEdad method, of class Licantropo.
+     * test en el que se intenta meter un valor de edad cualquiera pese a que este personaje no tiene
+     */
+    @Test
+    public void testSetEdad() {
+        try{
+            int edad = 8;
+            Licantropo licantropo = new Licantropo();
+            licantropo.setEdad(edad);
+            fail("el personaje tiene edad");
+            System.out.println("CP1 incorrecto");
+        }catch(RuntimeException e){
+            assertEquals(e.getMessage(),"este personje no tiene edad");
+            System.out.println("CP1 correcto");
+        }
+    }
+    /**
+     * Test of setReservaPunntosCoste method, of class Licantropo.
+     * test en el que se intenta meter un valor de coste cualquiera pese a que este personaje no tiene
+     */
+    @Test
+    public void testSeReservaPuntosCoste() {
+        try{
+            int coste = 8;
+            Licantropo licantropo = new Licantropo();
+            licantropo.setReservaPuntosSangre(coste);
+            fail("el personaje tiene reserva");
+            System.out.println("CP1 incorrecto");
+        }catch(RuntimeException e){
+            assertEquals(e.getMessage(),"este personaje no tiene puntos de sangre");
+            System.out.println("CP1 correcto");
+        }
+    }
 }

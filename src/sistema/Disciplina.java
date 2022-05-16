@@ -84,7 +84,7 @@ public class Disciplina implements Habilidad{
 
     @Override
     public int getRabiaMin() {
-        throw new RuntimeException("esta habilidad no tiene rabia minima"); 
+        return -1;
     }
 
     @Override
@@ -94,6 +94,6 @@ public class Disciplina implements Habilidad{
 
     @Override
     public int getEdad() {
-        throw new RuntimeException("esta habilidad no tiene una edad de adquisicion");
+        return -1;
     }
 }
