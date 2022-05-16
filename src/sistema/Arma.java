@@ -24,11 +24,11 @@ public class Arma {
     public Arma() {
     }
 
-    public void setNombre(String nombre) throws Exception{
+    public void setNombre(String nombre){
         if(!nombre.equals(" ")){
             this.nombre = nombre;
         }else{
-            throw new Exception("nombre invalido");
+            throw new RuntimeException("nombre invalido");
         }
     }
 
@@ -40,9 +40,9 @@ public class Arma {
         return nombre;
     }
     
-    public void setModificadorAtaque(int modificadorAtaque) throws Exception{
+    public void setModificadorAtaque(int modificadorAtaque){
         if(modificadorAtaque < 1 | modificadorAtaque > 3){
-            throw new Exception("sobrepasó el límite de modificador de ataque");
+            throw new RuntimeException("sobrepasó el límite de modificador de ataque");
         }else{
             this.modificadorAtaque = modificadorAtaque;
         }
@@ -56,17 +56,17 @@ public class Arma {
         return modificadorDefensa;
     }
 
-    public void setModificadorDefensa(int modificadorDefensa) throws Exception{
+    public void setModificadorDefensa(int modificadorDefensa){
         if(modificadorDefensa < 0 | modificadorDefensa > 3){
-            throw new Exception("sobrepasó el límite del modificador de defensa");
+            throw new RuntimeException("sobrepasó el límite del modificador de defensa");
         }else{
             this.modificadorDefensa = modificadorDefensa;
         }
     }   
     
-    public void setManejo(String manejo) throws Exception{
+    public void setManejo(String manejo){
         if(!manejo.equals("1 mano") & !manejo.equals("2 manos")){
-             throw new Exception("valor manejo invalido");
+             throw new RuntimeException("valor manejo invalido");
         }
         this.manejo = manejo;
     } 

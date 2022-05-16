@@ -13,37 +13,11 @@ import static sistema.Lealtad.NORMAL;
  * @author mimit
  */
 public class Humano extends Esbirro{
-    private String nombre;
-    private int salud;
     private Lealtad lealtad;
 
     public Humano(String nombre, int salud, Lealtad lealtad) {
-        this.nombre = nombre;
-        this.salud = salud;
+        super(nombre,salud);
         this.lealtad = lealtad;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    @Override
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    @Override
-    public int getSalud() {
-        return salud;
-    }
-
-    @Override
-    public void setSalud(int salud) {
-        if(salud >= 1 & salud <= 3){
-            this.salud = salud;
-        }else{
-            throw new RuntimeException("sobrepasa el valor de salud permitido");
-        }
     }
 
     public Lealtad getLealtad() {

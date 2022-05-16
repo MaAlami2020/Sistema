@@ -351,7 +351,7 @@ public class VampiroTest {
             vampiro.setOro(oro);
             assertEquals(32,vampiro.getOro());
             System.out.println("CP1 incorrecto");
-        }catch(Exception ex){
+        }catch(RuntimeException ex){
             Exception e;
             e = ex;
             assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
@@ -371,7 +371,7 @@ public class VampiroTest {
             vampiro.setOro(oro);
             assertEquals(-1,vampiro.getOro());
             System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
+        }catch(RuntimeException ex){
             Exception e;
             e = ex;
             assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
@@ -391,7 +391,7 @@ public class VampiroTest {
             vampiro.setOro(oro);
             assertEquals(0,vampiro.getOro());
             System.out.println("CP3 incorrecto");
-        }catch(Exception ex){
+        }catch(RuntimeException ex){
             Exception e;
             e = ex;
             assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");

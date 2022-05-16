@@ -65,12 +65,11 @@ public class Cazador extends Personaje{
     
     @Override
     public void setArmasActivas(Arma armaActiva) {
-        int manejo = 2;
-        if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo)){
+        if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("2 manos")){
             this.armasActivas.add(armaActiva);
-        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo--)){
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("1 mano")){
             this.armasActivas.add(armaActiva);
-        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals(manejo--)){    
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals("1 mano")){    
             this.armasActivas.add(armaActiva);
         }else{
             throw new RuntimeException("ha llegado al tope de armas activas");  
@@ -82,7 +81,7 @@ public class Cazador extends Personaje{
         if(pos == 0 | pos == 1){
             this.armasActivas.add(pos,nuevaArmaActiva);
         }else{
-            throw new RuntimeException("posicion fuera del rango del tamaño del array");
+            throw new RuntimeException("posicion fuera del rango del tamaño de la lista de armas activas");
         }
     }
     
@@ -122,11 +121,11 @@ public class Cazador extends Personaje{
     }
     
     @Override
-    public void setOro(int oro) throws Exception{
+    public void setOro(int oro){
         if(oro >= 0){ 
             this.oro = oro;
         }else{
-            throw new Exception("la cantidad de oro no puede ser negativa");
+            throw new RuntimeException("la cantidad de oro no puede ser negativa");
         }
     }
 
