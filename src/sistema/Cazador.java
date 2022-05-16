@@ -197,7 +197,7 @@ public class Cazador extends Personaje{
 
     @Override
     public int getRabia() {
-        throw new RuntimeException("este personaje no tiene rabia");
+        return -1;
     }
 
     @Override
