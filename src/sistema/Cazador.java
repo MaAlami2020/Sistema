@@ -79,7 +79,11 @@ public class Cazador extends Personaje{
     @Override
     public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
         if(pos == 0 | pos == 1){
-            this.armasActivas.add(pos,nuevaArmaActiva);
+            if(armasActivas.get(pos).getManejo().equals(nuevaArmaActiva.getManejo())){
+                this.armasActivas.add(pos,nuevaArmaActiva);
+            }else{
+                throw new RuntimeException("no se pueden intercambiar las armas");
+            }
         }else{
             throw new RuntimeException("posicion fuera del rango del tamaño de la lista de armas activas");
         }
@@ -208,7 +212,7 @@ public class Cazador extends Personaje{
 
     @Override
     public int getEdad() {
-        throw new RuntimeException("este personaje no tiene una edad");
+        return -1;
     }
 
     @Override
@@ -218,7 +222,7 @@ public class Cazador extends Personaje{
 
     @Override
     public int getReservaPuntosSangre() {
-        throw new RuntimeException("este personaje no tiene reserva de puntos de sangre");
+        return -1;
     }
 
     @Override
