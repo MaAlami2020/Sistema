@@ -228,7 +228,6 @@ public class Usuario extends MenuInicio{
         seleccionarOpcionMenu();
     }
     
-    @SuppressWarnings("empty-statement")
     public Esbirro anadirEsbirro(){  
         int opcion = 0;
         System.out.println("1.-ghoul");
@@ -313,7 +312,7 @@ public class Usuario extends MenuInicio{
             return oroPer;
     }
 
-    public void setOroPersonaje(int oro){
+    public void setOroPersonaje(double oro){
         try{
             tipoPersonaje.setOro(oro);
         }catch(RuntimeException e){
@@ -1103,3 +1102,5 @@ public class Usuario extends MenuInicio{
     }
         
 }
+
+

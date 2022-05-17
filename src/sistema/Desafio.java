@@ -17,7 +17,6 @@ public class Desafio implements Iterator{
     public Desafio(){
     }
 
-    
     public void aceptar(Usuario desafiado, Usuario desafiante){
         Combate combate = new Combate();
         int opc = 0;
@@ -29,6 +28,16 @@ public class Desafio implements Iterator{
            String opcion = sc.next();
            opc = Integer.parseInt(opcion);
         }while((opc < 1)|(opc > 3));
+        if(opc == 1){          
+           List<Arma> nuevasArmas = desafiado.cambiarArmas_activas();
+           desafiado.setArmasActivasPersonaje(nuevasArmas);
+        }else if(opc == 2){
+           Armadura nuevaArmadura = desafiado.cambiarArmadura_activa();
+           desafiado.setArmaduraActivaPersonaje(nuevaArmadura);
+        }else if(opc == 3){
+           combate.iniciar(desafiado,desafiante);
+           combate.mostrarResultaddo();
+        }
         List<Arma> armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
         Armadura armaduraDesafiante = desafiante.getTipoPersonaje().getArmaduraActiva();
         List<Arma> armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
@@ -56,11 +65,12 @@ public class Desafio implements Iterator{
 
     /**
      * al usuario desafiado se le quita el 10% de la cantidad de oro que el desafiante aposto
-     */
+    */
+
     public void rechazar(Usuario desafiado, Usuario desafiante){
-        int oroPersonaje = desafiado.getTipoPersonaje().getOro();
+        double oroPersonaje = desafiado.getTipoPersonaje().getOro();
         int oroDesafiante = desafiante.getOroApostado();
-        oroPersonaje -= oroDesafiante * 0.1;
+        oroPersonaje -= (double) oroDesafiante * 0.1;
         desafiado.setOroPersonaje(oroPersonaje);
     }
 

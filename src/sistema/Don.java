@@ -8,20 +8,13 @@ package sistema;
  *
  * @author mimit
  */
-public class Don implements Habilidad{
-    private String nombre;
-    private int valorAtaque;
-    private int valorDefensa;
+public class Don extends Habilidad{
+ 
     private int rabiaMin;
 
     public Don(String nombre, int valorAtaque, int valorDefensa, int rabiaMin) {
-        this.nombre = nombre;
-        this.valorAtaque = valorAtaque;
-        this.valorDefensa = valorDefensa;
+        super(nombre,valorAtaque,valorDefensa);
         this.rabiaMin = rabiaMin;
-    }
-    
-    public Don(){
     }
     
     @Override
@@ -32,44 +25,6 @@ public class Don implements Habilidad{
     @Override
     public void setRabiaMin(int rabiaMin) {
         this.rabiaMin = rabiaMin;
-    }
-    
-    @Override
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    @Override
-    public String getNombre() {
-        return nombre;
-    }
-    
-    @Override
-    public void setValorAtaque(int valorAtaque) {
-        if(valorAtaque >= 1 & valorAtaque <= 3){
-           this.valorAtaque = valorAtaque;
-        }else{
-           throw new RuntimeException("se sobrepasa el valor limite de valor de ataque");
-        }
-    }
-
-    @Override
-    public int getValorAtaque() {
-        return valorAtaque;
-    }
-
-    @Override
-    public int getValorDefensa() {
-        return valorDefensa;
-    }
-
-    @Override
-    public void setValorDefensa(int valorDefensa) {
-        if(valorDefensa >= 1 & valorDefensa <= 3){
-           this.valorDefensa = valorDefensa;
-        }else{
-           throw new RuntimeException("se sobrepasa el valor limite de valor de defensa"); 
-        }
     }
 
     @Override

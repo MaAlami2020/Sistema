@@ -15,12 +15,12 @@ public abstract class Personaje {
     
     public abstract void setNombre(String nombre);
     public abstract void setEdad(int edad);
-    public abstract void setOro(int oro);
+    public abstract void setOro(double oro);
     public abstract void setPoder(int pooder);                    
     public abstract void setSalud(int salud);
     public abstract String getNombre();
     public abstract int getEdad();
-    public abstract int getOro();
+    public abstract double getOro();
     public abstract int getPoder();                    
     public abstract int getSalud();
     public abstract void setArmasActivas(Arma armaActiva);

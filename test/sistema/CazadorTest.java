@@ -225,7 +225,7 @@ public class CazadorTest {
     @Test
     public void testSetHabilidad1() {
         try{
-            Don don = new Don();
+            Don don = new Don("adkgxv",3,1,455);
             Cazador cazador = new Cazador(); 
             cazador.setHabilidad(don);
             fail("esta habilidad tiene una edad de adquisicion");
@@ -244,7 +244,7 @@ public class CazadorTest {
     @Test
     public void testSetHabilidad2() {
         try{
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
             Cazador cazador = new Cazador();
             cazador.setHabilidad(disciplina);
             fail("esta habilidad tiene una edad de adquisicion");
