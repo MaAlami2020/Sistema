@@ -23,7 +23,7 @@ public class Don implements Habilidad{
     
     public Don(){
     }
-    
+
     @Override
     public int getRabiaMin() {
         return rabiaMin;

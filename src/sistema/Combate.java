@@ -71,8 +71,8 @@ public class Combate extends MenuInicio{
                 usuarioVencedor = desafiante;
                 int oroApostado = desafiante.getOroApostado();
                 
-                int oroDesafiado = desafiado.getTipoPersonaje().getOro();
-                int oroDesafiante = desafiante.getTipoPersonaje().getOro();
+                double oroDesafiado = desafiado.getTipoPersonaje().getOro();
+                double oroDesafiante = desafiante.getTipoPersonaje().getOro();
                 
                 if(oroApostado > oroDesafiado){
                     desafiado.getTipoPersonaje().setOro(0);    
@@ -91,8 +91,8 @@ public class Combate extends MenuInicio{
                 usuarioVencedor = desafiado;
                 int oroApostado = desafiante.getOroApostado();
                 
-                int oroDesafiado = desafiado.getTipoPersonaje().getOro();
-                int oroDesafiante = desafiante.getTipoPersonaje().getOro();
+                double oroDesafiado = desafiado.getTipoPersonaje().getOro();
+                double oroDesafiante = desafiante.getTipoPersonaje().getOro();
                 
                 if(oroApostado > oroDesafiante){
                     desafiante.getTipoPersonaje().setOro(0);    

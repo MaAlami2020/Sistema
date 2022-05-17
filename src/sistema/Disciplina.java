@@ -96,4 +96,5 @@ public class Disciplina implements Habilidad{
     public int getEdad() {
         throw new RuntimeException("esta habilidad no tiene una edad de adquisicion");
     }
+
 }

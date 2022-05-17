@@ -3,11 +3,45 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+            <file>file:/D:/Sistema/test/sistema/ArmaTest.java</file>
+            <file>file:/D:/Sistema/src/sistema/Usuario.java</file>
+            <file>file:/D:/Sistema/src/sistema/Cazador.java</file>
+=======
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Demonio.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Sistema.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Desafio.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/FabricacionCazador.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Combate.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Armadura.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Operador.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/MenuInicio.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Ghoul.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Don.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Vampiro.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Arma.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Fortaleza.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Lealtad.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Cazador.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Debilidad.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Iterator.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Disciplina.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Talento.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Habilidad.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Licantropo.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Personaje.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Humano.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Esbirro.java</file>
+>>>>>>> Stashed changes
+=======
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Sistema.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Vampiro.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Personaje.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/MenuInicio.java</file>
+>>>>>>> main
         </group>
     </open-files>
 </project-private>

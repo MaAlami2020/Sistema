@@ -20,6 +20,7 @@ public class Armadura {
     }
     
     public Armadura(){
+
     }
     
     public void setNombre(String nombre) {

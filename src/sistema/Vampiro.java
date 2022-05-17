@@ -22,7 +22,7 @@ public class Vampiro extends Personaje{
     private List<Fortaleza> listaFortalezas = new ArrayList<>();
     private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
-    private int oro;
+    private double oro;
     private int salud;
     private int poder;
     private Habilidad habilidad;
@@ -30,7 +30,6 @@ public class Vampiro extends Personaje{
     public Vampiro(){
     }
 
-    @Override
     public int getReservaPuntosSangre() {
         return reservaPuntosSangre;
     }
@@ -45,13 +44,12 @@ public class Vampiro extends Personaje{
         return nombre;
     }
 
-    @Override
     public int getEdad() {
         return edad;
     }
 
     @Override
-    public int getOro(){
+    public double getOro(){
         return oro;
     }
 
@@ -65,7 +63,6 @@ public class Vampiro extends Personaje{
         return poder;
     }
 
-    @Override
     public void setReservaPuntosSangre(int reservaPuntosSangre) {
         int sangreAcum = reservaPuntosSangre;
         if(sangreAcum < 0){
@@ -103,7 +100,11 @@ public class Vampiro extends Personaje{
     @Override
     public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
         if(pos == 0 | pos == 1){
-            this.armasActivas.add(pos,nuevaArmaActiva);
+            if(armasActivas.get(pos).getManejo().equals(nuevaArmaActiva.getManejo())){
+                this.armasActivas.add(pos,nuevaArmaActiva);
+            }else{
+                throw new RuntimeException("no se pueden intercambiar las armas");
+            }
         }else{
             throw new RuntimeException("posicion fuera del rango del tamaño del array");
         }
@@ -150,17 +151,16 @@ public class Vampiro extends Personaje{
         this.nombre = nombre;
     }
 
-    @Override
     public void setEdad(int edad) {
         if(edad >= 0){
            this.edad = edad;
         }else{
-           throw new UnsupportedOperationException("la edad no puede ser negativa");
+           throw new RuntimeException("la edad no puede ser negativa");
         }
     }
     
     @Override
-    public void setOro(int oro){
+    public void setOro(double oro){
         if(oro >= 0){ 
             this.oro = oro;
         }else{
@@ -237,12 +237,12 @@ public class Vampiro extends Personaje{
 
     @Override
     public int getRabia() {
-        throw new RuntimeException("este personaje no tiene rabia");
+        return -1;
     }
 
     @Override
     public int getVoluntad() {
-        throw new RuntimeException("este personaje no tiene voluntad");
+        return -1;
     }
 
     @Override

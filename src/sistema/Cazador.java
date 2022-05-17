@@ -20,7 +20,7 @@ public class Cazador extends Personaje{
     private List<Fortaleza> listaFortalezas = new ArrayList<>();
     private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
-    private int oro;
+    private double oro;
     private int salud;
     private int poder;
     private Habilidad habilidad;
@@ -40,7 +40,7 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public int getOro() {
+    public double getOro() {
         return oro;
     }
 
@@ -108,12 +108,11 @@ public class Cazador extends Personaje{
 
     @Override
     public void setListaFortalezas(Fortaleza fortaleza) {
-        this.listaFortalezas = listaFortalezas;
+        this.listaFortalezas.add(fortaleza);
     }
-
-    @Override
+    
     public void setListaDebilidades(Debilidad debilidad) {
-        this.listaDebilidades = listaDebilidades;
+        this.listaDebilidades.add(debilidad);
     }
  
     @Override
@@ -122,7 +121,7 @@ public class Cazador extends Personaje{
     }
     
     @Override
-    public void setOro(int oro){
+    public void setOro(double oro){
         if(oro >= 0){ 
             this.oro = oro;
         }else{
@@ -194,13 +193,13 @@ public class Cazador extends Personaje{
 
     @Override
     public int getRabia() {
-        throw new RuntimeException("este personaje no tiene rabia");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public int getVoluntad() {
         return voulntad;
-    }
+    }   
 
     @Override
     public void setEdad(int edad) {
@@ -209,7 +208,7 @@ public class Cazador extends Personaje{
 
     @Override
     public int getEdad() {
-        throw new RuntimeException("este personaje no tiene una edad");
+        return -1;
     }
 
     @Override
@@ -219,7 +218,7 @@ public class Cazador extends Personaje{
 
     @Override
     public int getReservaPuntosSangre() {
-        throw new RuntimeException("este personaje no tiene reserva de puntos de sangre");
+        return -1;
     }
 
     @Override
