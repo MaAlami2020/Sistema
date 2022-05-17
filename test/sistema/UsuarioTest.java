@@ -48,7 +48,7 @@ public class UsuarioTest {
         try{
             String password = "micontr";
             user.setPassword(password);
-            assertEquals(password,user.getPassword());
+            fail("longitud de la contrasenia esta en el rango[8-12]");
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
             Exception e;
@@ -68,7 +68,7 @@ public class UsuarioTest {
         try{
             String password = "micontrasenia";
             user1.setPassword(password);
-            assertEquals(password,user1.getPassword());
+            fail("longitud de la contrasenia esta en el rango[8-12]");
             System.out.println("CP2 incorrecto");
         }catch(Exception ex){
             Exception e;
@@ -91,9 +91,7 @@ public class UsuarioTest {
             assertEquals(password,user2.getPassword());
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
-            Exception e;
-            e = ex;
-            assertEquals(e.getMessage(),"longitud de la contrasenia fuera del rango[8-12]");
+            fail("longitud de la contrasenia fuera del rango[8-12]");
             System.out.println("CP3 correcto");
         }
     }
@@ -103,7 +101,7 @@ public class UsuarioTest {
      * test para probar que el oro apostado supera la cantidad de oro quee tiene el personaje
      */
     @Test
-    public void testSetOroApostado() throws Exception {
+    public void testSetOroApostado(){
         Usuario user = new Usuario();
         Vampiro vampiro = new Vampiro();
         user.setTipoPersonaje(vampiro);
@@ -126,7 +124,7 @@ public class UsuarioTest {
      * y menor que 0
      */
     @Test
-    public void testSetOroApostado1() throws Exception {
+    public void testSetOroApostado1() {
         Usuario user1 = new Usuario();
         Licantropo licantropo = new Licantropo();
         user1.setTipoPersonaje(licantropo);
@@ -150,7 +148,7 @@ public class UsuarioTest {
      */
     @Test
 
-    public void testSetOroApostado2() throws Exception {
+    public void testSetOroApostado2() {
         Usuario user2 = new Usuario();
         Cazador cazador = new Cazador();
         user2.setTipoPersonaje(cazador);
@@ -173,7 +171,7 @@ public class UsuarioTest {
      * personaje
      */
     @Test
-    public void testSetOroApostado3() throws Exception {
+    public void testSetOroApostado3() {
         Usuario user3 = new Usuario();
         Cazador cazador = new Cazador();
         user3.setTipoPersonaje(cazador);
