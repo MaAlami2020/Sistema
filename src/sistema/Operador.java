@@ -5,6 +5,8 @@
 package sistema;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -15,6 +17,7 @@ public class Operador extends MenuInicio{
     private String nombre;
     private String nick;
     private String password;
+    private List<Usuario> usuariosBaneados = new ArrayList<>();
     private int fortalezasVampiro;
     private int debilidadesVampiro;
     private int fortalezasLicantropo;

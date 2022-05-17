@@ -20,7 +20,7 @@ public class Licantropo extends Personaje{
     private List<Fortaleza> listaFortalezas = new ArrayList<>();
     private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
-    private int oro;
+    private double oro;
     private int salud;
     private int poder;
     private Habilidad habilidad;
@@ -40,7 +40,7 @@ public class Licantropo extends Personaje{
     }
 
     @Override
-    public int getOro() {
+    public double getOro() {
         return oro;
     }
 
@@ -101,7 +101,6 @@ public class Licantropo extends Personaje{
         this.listaArmaduras.add(armadura);
     }
 
-    @Override
     public void setListaEsbirros(Esbirro esbirro) {
         this.listaEsbirros.add(esbirro);
     }
@@ -111,7 +110,6 @@ public class Licantropo extends Personaje{
         this.listaFortalezas = listaFortalezas;
     }
 
-    @Override
     public void setListaDebilidades(Debilidad debilidad) {
         this.listaDebilidades = listaDebilidades;
     }
@@ -122,7 +120,7 @@ public class Licantropo extends Personaje{
     }
     
     @Override
-    public void setOro(int oro){
+    public void setOro(double oro){
         if(oro >= 0){ 
             this.oro = oro;
         }else{

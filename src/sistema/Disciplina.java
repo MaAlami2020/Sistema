@@ -50,4 +50,5 @@ public class Disciplina extends Habilidad{
     public int getEdad() {
         return -1;
     }
+
 }

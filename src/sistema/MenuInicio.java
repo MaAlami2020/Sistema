@@ -21,7 +21,6 @@ public class MenuInicio implements Serializable{
     protected List<Combate> listaCombates = new ArrayList<>();
     protected List<Usuario> usuariosBaneados = new ArrayList<>();
     protected List<Usuario> desafiosParaValidar = new ArrayList<>();
-
     public MenuInicio(){// throws FileNotFoundException, IOException{
         
     }

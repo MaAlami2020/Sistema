@@ -46,7 +46,6 @@ public class ArmaTest {
         Arma a = new Arma();
         try {
             a.setModificadorAtaque(4);
-            fail("no se sobrepasó el límite de modificador de ataque");
             System.out.println("CP1 incorrecto");
         } catch(Exception ex) {
             Exception e;
@@ -142,6 +141,17 @@ public class ArmaTest {
         }
     }
     
+    @Test
+    public void anadirModifDefensa(){
+        Arma a3 = new Arma();
+        Exception e = null;
+        try {
+             a3.setModificadorDefensa(0);
+        } catch(Exception ex) {
+             e = ex;
+        } 
+        assertNull(e);
+    }
     /**
      * Test of setModificadorDefensa method, of class Arma.
      * test para comprobar que el siguiente valor al rango superior [1-3]

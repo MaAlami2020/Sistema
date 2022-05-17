@@ -39,7 +39,7 @@ public class Arma {
     public String getNombre() {
         return nombre;
     }
-    
+
     public void setModificadorAtaque(int modificadorAtaque){
         if(modificadorAtaque < 1 | modificadorAtaque > 3){
             throw new RuntimeException("sobrepasó el límite de modificador de ataque");
@@ -63,11 +63,12 @@ public class Arma {
             this.modificadorDefensa = modificadorDefensa;
         }
     }   
-    
+
     public void setManejo(String manejo){
         if(!manejo.equals("1 mano") & !manejo.equals("2 manos")){
-             throw new RuntimeException("valor manejo invalido");
+             throw new RuntimeException("valor invalido");
+        }else{
+            this.manejo = manejo;
         }
-        this.manejo = manejo;
     } 
 }
