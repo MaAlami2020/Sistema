@@ -390,7 +390,7 @@ public class VampiroTest {
     @Test
     public void testSetHabilidad1() {
         try{
-            Don don = new Don();
+            Don don = new Don("silsavd",2,3,-1);
             Vampiro vampiro = new Vampiro();
             vampiro.setHabilidad(don);
             fail("el personaje tiene como habilidad el don");
@@ -409,7 +409,7 @@ public class VampiroTest {
     @Test
     public void testSetHabilidad2() {
         try{
-            Talento talento = new Talento();
+            Talento talento = new Talento("chupar la sangre",3,1,91);
             Vampiro vampiro = new Vampiro();
             vampiro.setHabilidad(talento);
             fail("el personaje tiene como habilidad el talento");

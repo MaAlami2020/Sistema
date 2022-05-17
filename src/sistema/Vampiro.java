@@ -191,6 +191,10 @@ public class Vampiro extends Personaje{
         return habilidad;
     }
 
+    /**
+     *
+     * @param habilidad
+     */
     @Override
     public void setHabilidad(Habilidad habilidad) {
         //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no sea null    
@@ -247,12 +251,12 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setRabia(int rabia) {
-        throw new RuntimeException("este personaje no tiene rabia");
+        throw new RuntimeException("este personaje no tiene rabia"); 
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        throw new RuntimeException("este personaje no tiene voluntad");
+        throw new RuntimeException("este personaje no tiene voluntad"); 
     }
 
 }

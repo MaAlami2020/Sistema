@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static sistema.Lealtad.ALTA;
 
 /**
  *
@@ -39,46 +38,109 @@ public class CazadorTest {
 
     /**
      * Test of setArmasActivas method, of class Cazador.
-     * test que prueba que se puede seleccionar un arma activa de 1 mano
+     * test que prueba que se pueden tener 2 armas activas de 1 mano
      */
     @Test
     public void testSetArmasActivas() {
         try{
             Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            Arma arma2 = new Arma("zimmer",1,2,"1 mano");
             Cazador cazador = new Cazador();
             cazador.setListaArmas(arma1);
+            cazador.setListaArmas(arma2);
         
             cazador.setArmasActivas(arma1);
+            cazador.setArmasActivas(arma2);
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            fail("no se pueden tener 2 armas activas de 1 mano");
             System.out.println("CP1 correcto");
         }
     }
     
     /**
      * Test of setArmasActivas method, of class Cazador.
-     * test que prueba que se ha llegado al tope de armas activas
+     * test que prueba que no se pueden tener 3 armas activas de 1 mano
      */
     @Test
-    public void testSetArmasActivas1() {
-        try{          
-            Cazador cazador = new Cazador();
-            
+    public void testSetArmasActivas4() {
+        try{
             Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            Arma arma2 = new Arma("zimmer",1,2,"1 mano");
+            Arma arma3 = new Arma("killer",2,1,"1 mano");
+            Cazador cazador = new Cazador();
             cazador.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
             cazador.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
             cazador.setListaArmas(arma3);
-        
+            
             cazador.setArmasActivas(arma1);
             cazador.setArmasActivas(arma2);
             cazador.setArmasActivas(arma3);
-            System.out.println("CP2 incorrecto");
+            fail("se pueden tener 3 armas activas de 1 mano");
+            System.out.println("CP5 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
-            System.out.println("CP2 correcto");
+            System.out.println("CP5 correcto");
+        }
+    }
+    /**
+     * Test of setArmasActivas method, of class Cazador.
+     * test que prueba que no se pueden tener 2 armas activas de 2 manos
+     */
+    @Test
+    public void testSetArmasActivas5() {
+        try{
+            Arma arma2 = new Arma("zimmer",1,2,"2 manos");
+            Arma arma3 = new Arma("killer",2,1,"2 manos");
+            Cazador cazador = new Cazador();
+            cazador.setListaArmas(arma2);
+            cazador.setListaArmas(arma3);
+            
+            cazador.setArmasActivas(arma2);
+            cazador.setArmasActivas(arma3);
+            fail("se pueden tener 2 armas activas de 2 manos");
+            System.out.println("CP6 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            System.out.println("CP6 correcto");
+        }
+    }
+    
+    /**
+     * Test of setArmasActivas method, of class Cazador.
+     * test que prueba que se puede tener 1 arma activa de 1 mano
+     */
+    @Test
+    public void testSetArmasActivas3() {
+        try{
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            Cazador cazador = new Cazador();
+            cazador.setListaArmas(arma1);
+        
+            cazador.setArmasActivas(arma1);
+            System.out.println("CP4 incorrecto");
+        }catch(Exception e){
+            fail("no se pueden tener 1 arma activa de 1 mano");
+            System.out.println("CP4 correcto");
+        }
+    }
+    
+    /**
+     * Test of setArmasActivas method, of class Cazador.
+     * test que prueba que se pueden tener 1 arma activa de 2 manos
+     */
+    @Test
+    public void testSetArmasActivas2() {
+        try{
+            Arma arma1 = new Arma("KFH121",2,1,"2 manos");
+            Cazador cazador = new Cazador();
+            cazador.setListaArmas(arma1);
+        
+            cazador.setArmasActivas(arma1);
+            System.out.println("CP3 incorrecto");
+        }catch(Exception e){
+            fail("no se puede tener 1 arma activa de 2 manos");
+            System.out.println("CP3 correcto");
         }
     }
     
@@ -103,7 +165,7 @@ public class CazadorTest {
             cazador.setNuevasArmasActivas(0, arma3);
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
+            fail("posicion fuera del rango del tamaño del array");
             System.out.println("CP1 correcto");
         }
     }
@@ -111,7 +173,7 @@ public class CazadorTest {
     /**
      * Test of setArmasActivas method, of class Cazador.
      * test que prueba que no se puede cambiar un arma activa por otra porque el arma seleccionada
-     * a cambiar esta fuera del rango del array
+     * a cambiar esta fuera del rango del tamaño de la lista de armas activas
      */
     @Test
     public void testSetNuevasArmasActivas1() {
@@ -128,9 +190,10 @@ public class CazadorTest {
             cazador.setArmasActivas(arma1);
             cazador.setArmasActivas(arma2);
             cazador.setNuevasArmasActivas(2, arma3);
+            fail("posicion dentro del rango del tamaño de la lista de armas activas");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
+            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño de la lista de armas activas");
             System.out.println("CP2 correcto");
         }
     }
@@ -149,7 +212,7 @@ public class CazadorTest {
             assertSame(talento,cazador.getHabilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene una edad de  adquisicion");
+            fail("esta habilidad no tiene una edad de adquisicion");
             System.out.println("CP1 correcto");
         }
     }
@@ -162,10 +225,10 @@ public class CazadorTest {
     @Test
     public void testSetHabilidad1() {
         try{
-            Don don = new Don();
+            Don don = new Don("adkgxv",3,1,455);
             Cazador cazador = new Cazador(); 
             cazador.setHabilidad(don);
-            assertSame(don,cazador.getHabilidad());
+            fail("esta habilidad tiene una edad de adquisicion");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
@@ -181,10 +244,10 @@ public class CazadorTest {
     @Test
     public void testSetHabilidad2() {
         try{
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
             Cazador cazador = new Cazador();
             cazador.setHabilidad(disciplina);
-            assertSame(disciplina,cazador.getHabilidad());
+            fail("esta habilidad tiene una edad de adquisicion");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
@@ -202,12 +265,10 @@ public class CazadorTest {
         try{
             int oro = 32;     
             cazador.setOro(oro);
-            assertEquals(32,cazador.getOro());
+            assertEquals(oro,cazador.getOro());
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
-            Exception e;
-            e = ex;
-            assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
+            fail("la cantidad de oro no puede ser negativa");
             System.out.println("CP1 correcto");
         }
     }
@@ -222,7 +283,7 @@ public class CazadorTest {
         try{
             int oro = -1;     
             cazador.setOro(oro);
-            assertEquals(-1,cazador.getOro());
+            fail("la cantidad de oro puede ser negativa");
             System.out.println("CP2 incorrecto");
         }catch(Exception ex){
             Exception e;
@@ -245,9 +306,7 @@ public class CazadorTest {
             assertEquals(0,cazador.getOro());
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
-            Exception e;
-            e = ex;
-            assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
+            fail("la cantidad de oro no puede ser negativa");
             System.out.println("CP3 correcto");
         }
     }
@@ -262,11 +321,11 @@ public class CazadorTest {
             int salud = 6;
             Cazador cazador = new Cazador();
             cazador.setSalud(salud);
-            assertEquals(6,cazador.getSalud());
-            System.out.println("CP4 incorrecto");
+            fail("la cantidad de salud esta entre 0 y 5");
+            System.out.println("CP1 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP4 correcto");
+            System.out.println("CP1 correcto");
         }
     }
 
@@ -280,11 +339,11 @@ public class CazadorTest {
             int salud = -1;
             Cazador cazador = new Cazador();
             cazador.setSalud(salud);
-            assertEquals(-1,cazador.getSalud());
-            System.out.println("CP5 incorrecto");
+            fail("la cantidad de salud esta entre 0 y 5");
+            System.out.println("CP2 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP5 correcto");
+            System.out.println("CP2 correcto");
         }
     }
     
@@ -299,10 +358,10 @@ public class CazadorTest {
             Cazador cazador = new Cazador();
             cazador.setSalud(salud);
             assertEquals(0,cazador.getSalud());
-            System.out.println("CP7 incorrecto");
+            System.out.println("CP3 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP7 correcto");
+            fail("sobrepasó el límite de salud permitida");
+            System.out.println("CP3 correcto");
         }
     }
     
@@ -318,10 +377,10 @@ public class CazadorTest {
             Cazador cazador = new Cazador();
             cazador.setSalud(salud);
             assertEquals(4,cazador.getSalud());
-            System.out.println("CP8 incorrecto");
+            System.out.println("CP4 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP8 correcto");
+            fail("sobrepasó el límite de salud permitida");
+            System.out.println("CP4 correcto");
         }
     }
     
@@ -335,7 +394,7 @@ public class CazadorTest {
             int poder = 6;
             Cazador cazador = new Cazador();
             cazador.setPoder(poder);
-            assertEquals(6, cazador.getPoder());
+            fail("la cantidad de poder esta entre 1 y 5");
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
@@ -353,7 +412,7 @@ public class CazadorTest {
             int poder = 0;
             Cazador cazador = new Cazador();
             cazador.setPoder(poder);
-            assertEquals(0,cazador.getPoder());
+            fail("la cantidad de poder esta entre 1 y 5");
             System.out.println("CP2 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
@@ -371,7 +430,7 @@ public class CazadorTest {
             int poder = 9;
             Cazador cazador = new Cazador();
             cazador.setPoder(poder);
-            assertEquals(9,cazador.getPoder());
+            fail("la cantidad de poder esta entre 1 y 5");
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
             assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
@@ -392,7 +451,7 @@ public class CazadorTest {
             assertEquals(3,cazador.getPoder());
             System.out.println("CP4 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
+            fail("sobrepasó el límite de poder permitido");
             System.out.println("CP4 correcto");
         }
     }
@@ -410,7 +469,7 @@ public class CazadorTest {
             assertEquals(5,cazador.getPoder());
             System.out.println("CP5 incorrecto");
         }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
+            fail("sobrepasó el límite de poder permitido");
             System.out.println("CP5 correcto");
         }
     }
@@ -425,7 +484,7 @@ public class CazadorTest {
             int rabia = 8;
             Cazador cazador = new Cazador();
             cazador.setRabia(rabia);
-            assertEquals(8,cazador.getRabia());
+            fail("este personaje tiene rabia");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"este personaje no tiene rabia");
@@ -436,18 +495,20 @@ public class CazadorTest {
     /**
      * Test of setVoluntad method, of class Cazador.
      * test en el que se actualiza la voluntad de este personaje restándole 1 unidad
+     * sabiendo que el personaje tiene la maxima voluntad
      */
     @Test
     public void testSetVoluntad() {
         try{
             Cazador cazador = new Cazador();
+            cazador.setVoluntad(3);
             int voluntad = cazador.getVoluntad();
             voluntad--;
             cazador.setVoluntad(voluntad);
             assertEquals(2,cazador.getVoluntad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"no se puede quitar mas voluntad");
+            fail("no se puede quitar mas voluntad");
             System.out.println("CP1 correcto");
         }
     }
@@ -467,7 +528,7 @@ public class CazadorTest {
             assertEquals(0,cazador.getVoluntad());
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"no se puede quitar mas voluntad");
+            fail("no se puede quitar mas voluntad");
             System.out.println("CP2 correcto");
         }
     }
@@ -484,31 +545,12 @@ public class CazadorTest {
             int voluntad = 0;
             voluntad--;
             cazador.setVoluntad(voluntad);
-            assertEquals(-1,cazador.getVoluntad());
+            fail("se puede restar voluntad al personaje");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"no se puede quitar mas voluntad");
             System.out.println("CP3 correcto");
         }
     }
-    
-    /**
-     * Test of setVoluntad method, of class Cazador.
-     * test en el que se actualiza la voluntad de este personaje restándole 1 unidad  
-     * y sabiendo que el personaje no tiene voluntad
-     */
-    @Test
-    public void testSetVoluntad3() {
-        try{
-            Cazador cazador = new Cazador();
-            int voluntad = 0;
-            voluntad--;
-            cazador.setVoluntad(voluntad);
-            assertEquals(-1,cazador.getVoluntad());
-            System.out.println("CP4 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"no se puede quitar mas voluntad");
-            System.out.println("CP4 correcto");
-        }
-    }
+  
 }

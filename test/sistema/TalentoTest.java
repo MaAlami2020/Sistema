@@ -44,12 +44,12 @@ public class TalentoTest {
     public void testSetValorAtaque() {
         try{
             int valorAtaque = 2;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setValorAtaque(valorAtaque);
             assertEquals(valorAtaque,talento.getValorAtaque());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
+            fail("se sobrepasa el valor limite de valor de ataque");
             System.out.println("CP1 correcto");
         }
     }
@@ -62,9 +62,9 @@ public class TalentoTest {
     public void testSetValorAtaque1() {
         try{
             int valorAtaque = 4;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setValorAtaque(valorAtaque);
-            assertEquals(valorAtaque,talento.getValorAtaque());
+            fail("no se sobrepasa el valor limite de valor de ataque");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
@@ -80,9 +80,9 @@ public class TalentoTest {
     public void testSetValorAtaque2() {
         try{
             int valorAtaque = 9;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setValorAtaque(valorAtaque);
-            assertEquals(valorAtaque,talento.getValorAtaque());
+            fail("no se sobrepasa el valor limite de valor de ataque");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
@@ -98,12 +98,12 @@ public class TalentoTest {
     public void testSetValorDefensa() {
         try{
             int valorDefensa = 2;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setValorDefensa(valorDefensa);
             assertEquals(valorDefensa,talento.getValorDefensa());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
+            fail("se sobrepasa el valor limite de valor de defensa");
             System.out.println("CP1 correcto");
         }
     }
@@ -116,9 +116,9 @@ public class TalentoTest {
     public void testSetValorDefensa1() {
         try{
             int valorDefensa = 4;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setValorDefensa(valorDefensa);
-            assertEquals(valorDefensa,talento.getValorDefensa());
+            fail("no se sobrepasa el valor limite de valor de ataque");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
@@ -134,9 +134,9 @@ public class TalentoTest {
     public void testSetValorDefensa2() {
         try{
             int valorDefensa = 9;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setValorDefensa(valorDefensa);
-            assertEquals(valorDefensa,talento.getValorDefensa());
+            fail("no se sobrepasa el valor limite de valor de ataque");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
@@ -152,12 +152,12 @@ public class TalentoTest {
     public void testSetEdad() {
         try{
             int edad = 24;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setEdad(edad);
             assertEquals(edad,talento.getEdad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"la edad de adquisicion no puede tomar un valor negativo");
+            fail("la edad de adquisicion no puede tomar un valor negativo");
             System.out.println("CP1 correcto");
         }
     }
@@ -170,9 +170,9 @@ public class TalentoTest {
     public void testSetEdad1() {
         try{
             int edad = -12;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setEdad(edad);
-            assertEquals(edad,talento.getEdad());
+            fail("la edad de adquisicion puede tomar un valor negativo");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"la edad de adquisicion no puede tomar un valor negativo");
@@ -188,9 +188,9 @@ public class TalentoTest {
     public void testSetCostePuntosSangre() {
         try{
             int costePuntosSangre = 0;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setCostePuntosSangre(costePuntosSangre);
-            assertEquals(costePuntosSangre,talento.getCostePuntosSangre());
+            fail("la habilidad tiene un coste de puntos de sangre");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
@@ -200,15 +200,15 @@ public class TalentoTest {
 
     /**
      * Test of setRabiaMin method, of class Talento.
-     * esta habilidad no tiene una edad
+     * esta habilidad no tiene rabia
      */
     @Test
     public void testSetRabiaMin() {
         try{
             int rabiaMin = 0;
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             talento.setRabiaMin(rabiaMin);
-            assertEquals(rabiaMin,talento.getRabiaMin());
+            fail("la habilidad tiene rabia");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"esta habilidad no tiene rabia minima");

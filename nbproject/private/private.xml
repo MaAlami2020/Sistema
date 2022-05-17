@@ -4,6 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/test/sistema/DemonioTest.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/test/sistema/FortalezaTest.java</file>
+=======
 <<<<<<< Updated upstream
             <file>file:/D:/Sistema/test/sistema/ArmaTest.java</file>
             <file>file:/D:/Sistema/src/sistema/Usuario.java</file>
@@ -35,12 +41,23 @@
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Humano.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Esbirro.java</file>
 >>>>>>> Stashed changes
+>>>>>>> main
 =======
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Sistema.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Vampiro.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Personaje.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/MenuInicio.java</file>
+>>>>>>> main
+<<<<<<< HEAD
+=======
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Sistema.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Usuario.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Vampiro.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Personaje.java</file>
+            <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/MenuInicio.java</file>
+>>>>>>> main
+=======
 >>>>>>> main
         </group>
     </open-files>

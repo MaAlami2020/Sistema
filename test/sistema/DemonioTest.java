@@ -50,14 +50,14 @@ public class DemonioTest {
             assertEquals(salud,demonio.getSalud());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
+            fail("sobrepasa el valor limite de salud");
             System.out.println("CP1 correcto");
         }
     }
     
     /**
      * Test of setSalud method, of class Demonio.
-     * test que prueba que la salud noo alcanza por 1 unidad el valor minimo de salud
+     * test que prueba que la salud no alcanza por 1 unidad el valor minimo de salud
      */
     @Test
     public void testSetSalud1() {
