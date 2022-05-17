@@ -4,9 +4,6 @@
  */
 package sistema;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import static java.lang.Math.random;
 
 /**
  *
@@ -14,13 +11,12 @@ import static java.lang.Math.random;
  */
 public class Ronda {
     private int valorAtaqueDesafiante;
-    private int valorAtaqueDesafiador;
+    private int valorAtaqueDesafiado;
     private int valorDefensaDesafiante;
-    private int valorDefensaDesafiador;
-    private Usuario usuario = new Usuario();
-    private Operador operador = new Operador();
+    private int valorDefensaDesafiado;
+    //private Operador operador = new Operador();
 
-    public Ronda()throws FileNotFoundException, IOException{
+    public Ronda(){
        
     }
 
@@ -28,316 +24,239 @@ public class Ronda {
         return valorAtaqueDesafiante;
     }
 
-    public void setValorAtaqueDesafiante(int valorAtaqueDesafiante) {
-        this.valorAtaqueDesafiante = valorAtaqueDesafiante;
-    }
-
-    public int getValorAtaqueDesafiador() {
-        return valorAtaqueDesafiador;
-    }
-
-    public void setValorAtaqueDesafiador(int valorAtaqueDesafiador) {
-        this.valorAtaqueDesafiador = valorAtaqueDesafiador;
+    public int getValorAtaqueDesafiado() {
+        return valorAtaqueDesafiado;
     }
 
     public int getValorDefensaDesafiante() {
         return valorDefensaDesafiante;
     }
 
+    public int getValorDefensaDesafiado() {
+        return valorDefensaDesafiado;
+    }
+
+    public void setValorAtaqueDesafiante(int valorAtaqueDesafiante) {
+        this.valorAtaqueDesafiante = valorAtaqueDesafiante;
+    }
+
+    public void setValorAtaqueDesafiado(int valorAtaqueDesafiador) {
+        this.valorAtaqueDesafiado = valorAtaqueDesafiador;
+    }
+
     public void setValorDefensaDesafiante(int valorDefensaDesafiante) {
         this.valorDefensaDesafiante = valorDefensaDesafiante;
     }
 
-    public int getValorDefensaDesafiador() {
-        return valorDefensaDesafiador;
+    public void setValorDefensaDesafiado(int valorDefensaDesafiador) {
+        this.valorDefensaDesafiado = valorDefensaDesafiador;
     }
+    
+    /**
+     * en este metodo calcula los potenciales de ataque y los valores de ataque de cada uno de los usuarios implicados
+     * @param user2 es el usuario que desafia
+     * @param user1 es el usuario que acepta el desafio
+     */
+    public void calcularPotencialAtaque(Usuario user2, Usuario user1){
+            Operador operador = new Operador();
+            Usuario desafiado = user1;
+            Usuario desafiante = user2;
+            
+            Usuario user = desafiado;
+            while(user != null){
+                int poder = user.getTipoPersonaje().getPoder();
+                int ataqueEquipoActivo = 0;
+                for(Arma a: user.getTipoPersonaje().getArmasActivas()){
+                    ataqueEquipoActivo += a.getModificadorAtaque();
+                }
+                ataqueEquipoActivo += user.getTipoPersonaje().getArmaduraActiva().getModificadorAtaque();
 
-    public void setValorDefensaDesafiador(int valorDefensaDesafiador) {
-        this.valorDefensaDesafiador = valorDefensaDesafiador;
-    }
-    
-    public void calcularPtencialAtaque(){
-      
-      Usuario usuarioDesafiador = usuario.getUsuarioDesafiar();
-        
-      Usuario usuarioDesafiante = usuario.getUsuarioDesafiante();
-        
-      Usuario user = usuarioDesafiador;
-      while(user != null){  
-        int poder = user.getTipoPersonaje().anadirPoder();
-        int ataqueEquipoActivo = 0;
-        for(Arma a: user.getTipoPersonaje().getArmasActivas()){       
-            ataqueEquipoActivo += a.getModificadorAtaque();
-        }
-        Vampiro vampiro = new Vampiro();
-        int potencialAtaque = poder +  ataqueEquipoActivo;
-        int ataqueHabilidad = 0;
-        int fortaleza = 0;
-        if(usuarioDesafiador.getTipoPersonaje() == vampiro){
-            fortaleza = operador.getFortalezasVampiro();          
-            Disciplina disciplina = new Disciplina();
-            if(vampiro.getReservaPuntosSangre() != 0){
-                int reservaSangre = vampiro.getReservaPuntosSangre();
-                reservaSangre -= disciplina.getCostePuntosSangre();
-                ataqueHabilidad = user.getTipoPersonaje().construirHabilidad().getValorAtaque();
-            }else if((vampiro.getReservaPuntosSangre() == 0)|(vampiro.getReservaPuntosSangre() < disciplina.getCostePuntosSangre())){
-                ataqueHabilidad = 0;
-            }
-            
-            if(usuarioDesafiador.getTipoPersonaje().anadirSalud() >= 5){
-                potencialAtaque += ataqueHabilidad + 2 + fortaleza;
-            }else{
-                potencialAtaque += ataqueHabilidad + fortaleza;
-            } 
-        }else{
-            ataqueHabilidad = user.getTipoPersonaje().construirHabilidad().getValorAtaque();
-            Licantropo licantropo = new Licantropo();
-            Cazador cazador = new Cazador();
-            if(usuarioDesafiador.getTipoPersonaje() == licantropo){ 
-                fortaleza = operador.getFortalezasLicantropo();
-                Don don = new Don();
-                int rabiaActual = licantropo.getRabia();
-                potencialAtaque += ataqueHabilidad + rabiaActual + fortaleza;
-                if(licantropo.getRabia() > don.getRabiaMin() & licantropo.getRabia() <= 3){
-                   rabiaActual += 1;
-                   licantropo.setRabia(rabiaActual);
+                Vampiro vampiro = new Vampiro();
+                int potencialAtaque = poder + ataqueEquipoActivo;
+                int ataqueHabilidad = 0;
+                if(user.getTipoPersonaje() == vampiro){
+                    int fortaleza = operador.getFortalezasVampiro();
+                    if(user.getTipoPersonaje().getReservaPuntosSangre() != 0){
+                        int reservaSangre = user.getTipoPersonaje().getReservaPuntosSangre();
+                        reservaSangre -= user.getTipoPersonaje().getHabilidad().getCostePuntosSangre();
+                        user.getTipoPersonaje().setReservaPuntosSangre(reservaSangre);
+                        ataqueHabilidad = user.getTipoPersonaje().getHabilidad().getValorAtaque();
+                    }else if((user.getTipoPersonaje().getReservaPuntosSangre() < user.getTipoPersonaje().getHabilidad().getCostePuntosSangre())){
+                        ataqueHabilidad = 0;
+                    }
+                    
+                    if(user.getTipoPersonaje().getSalud() >= 5){
+                        potencialAtaque += ataqueHabilidad + 2 + fortaleza;
+                    }else{
+                        potencialAtaque += ataqueHabilidad + fortaleza;
+                    }
+                }else{
+                    ataqueHabilidad = user.getTipoPersonaje().getHabilidad().getValorAtaque();
+                    Licantropo licantropo = new Licantropo();
+                    Cazador cazador = new Cazador();
+                    if(user.getTipoPersonaje() == licantropo){
+                        int fortaleza = operador.getFortalezasLicantropo();
+                        int rabiaActual = user.getTipoPersonaje().getRabia();         
+                        if(rabiaActual < user.getTipoPersonaje().getHabilidad().getRabiaMin()){
+                            ataqueHabilidad = 0;
+                        }
+                        potencialAtaque += ataqueHabilidad + rabiaActual + fortaleza;
+                    }else if(user.getTipoPersonaje() == cazador){
+                        int fortaleza = operador.getFortalezasCazador();
+                        int voluntad = user.getTipoPersonaje().getVoluntad();
+                        potencialAtaque += ataqueHabilidad + voluntad + fortaleza;
+                       
+                    }
                 }
-            }else if(usuarioDesafiador.getTipoPersonaje() == cazador){
-                fortaleza = operador.getFortalezasLicantropo();
-                int voluntad = cazador.getVoluntad();
-                potencialAtaque += ataqueHabilidad + voluntad + fortaleza;
-                if(voluntad > 0){
-                   voluntad -= 1;
-                   cazador.setVoluntad(voluntad);
+                int exito = 0;
+                int cont = potencialAtaque;
+                while(cont != 0){
+                    int numAleat = (int) Math.random()*6+1;
+                    cont -= 1;
+                    if((numAleat == 5)|(numAleat == 6)){
+                        exito += 1;
+                    }
                 }
-            }
-        } 
-        int exito = 0;
-            int cont = potencialAtaque;
-            while(cont != 0){
-               int numAleat = (int) Math.random()*6+1;
-               cont -= 1;
-               if((numAleat == 5)|(numAleat == 6)){
-                   exito += 1;
-               }
-            }
-        if(user == usuarioDesafiador){                      
-            setValorAtaqueDesafiador(exito);
-            user = usuarioDesafiante;        
-        }else{
-            setValorAtaqueDesafiante(exito);
-            user = null;
-        }        
-      }
-    }
-    
-    public void calcularPotencialDefensa(){
-      Usuario usuarioDesafiador = usuario.getUsuarioDesafiar();
-       
-      Usuario usuarioDesafiante = usuario.getUsuarioDesafiante();
-        
-      Usuario user = usuarioDesafiador;
-      while(user != null){  
-        int poder = user.getTipoPersonaje().anadirPoder();
-        int defensaEquipoActivo = 0;
-        for(Arma a: usuarioDesafiador.getTipoPersonaje().getArmasActivas()){       
-           defensaEquipoActivo += a.getModificadorDefensa();
-        }
-        
-        Vampiro vampiro = new Vampiro();
-        int potencialDefensa = poder + defensaEquipoActivo;
-        int defensaHabilidad = 0;
-        int debilidad = 0;
-        if(usuarioDesafiador.getTipoPersonaje() == vampiro){
-            debilidad = operador.getDebilidadesVampiro();
-            Disciplina disciplina = new Disciplina();
-            if(vampiro.getReservaPuntosSangre() != 0){
-                int reservaSangre = vampiro.getReservaPuntosSangre();
-                reservaSangre -= disciplina.getCostePuntosSangre();
-                defensaHabilidad = user.getTipoPersonaje().construirHabilidad().getValorDefensa();
-            }else if((vampiro.getReservaPuntosSangre() == 0)|(vampiro.getReservaPuntosSangre() < disciplina.getCostePuntosSangre())){
-                defensaHabilidad = 0;
-            }
-            
-            if(usuarioDesafiador.getTipoPersonaje().anadirSalud() >= 5){
-                potencialDefensa += defensaHabilidad + 2 - debilidad;
-                if(potencialDefensa < 0){
-                   potencialDefensa = 0;
-                }
-            }else{
-                potencialDefensa += defensaHabilidad - debilidad;
-                if(potencialDefensa < 0){
-                   potencialDefensa = 0;
+                if(user == desafiado){
+                    setValorAtaqueDesafiado(exito);
+                    user = desafiante;
+                }else{
+                    setValorAtaqueDesafiante(exito);
+                    user = null;
                 }
             } 
-        }else{
-            defensaHabilidad = usuarioDesafiador.getTipoPersonaje().construirHabilidad().getValorDefensa();
-            Licantropo licantropo = new Licantropo();
-            Cazador cazador = new Cazador();
-            if(usuarioDesafiador.getTipoPersonaje() == licantropo){
-                debilidad = operador.getDebilidadesLicantropo();
-                Don don = new Don();
-                int rabiaActual = licantropo.getRabia();
-                potencialDefensa += defensaHabilidad + rabiaActual - debilidad;
-                if(potencialDefensa < 0){
-                   potencialDefensa = 0;
-                }
-                if(licantropo.getRabia() > don.getRabiaMin() & licantropo.getRabia() <= 3){
-                   rabiaActual += 1;
-                   licantropo.setRabia(rabiaActual);
-                }
-            }else if(usuarioDesafiador.getTipoPersonaje() == cazador){
-                debilidad = operador.getDebilidadesCazador();
-                int voluntad = cazador.getVoluntad();
-                potencialDefensa += voluntad + defensaHabilidad - debilidad;
-                if(potencialDefensa < 0){
-                   potencialDefensa = 0;
-                }
-                if(voluntad < 0){
-                   voluntad -= 1;
-                   cazador.setVoluntad(voluntad);
-                }
-            }
-        } 
-        int exito = 0;
-            int cont = potencialDefensa;
-            while(cont != 0){
-               int numAleat = (int) Math.random()*6+1;
-               cont -= 1;
-               if((numAleat == 5)|(numAleat == 6)){
-                   exito += 1;
-               }
-            }
-        if(user == usuarioDesafiador){                      
-            setValorDefensaDesafiador(exito);
-            user = usuarioDesafiante;        
-        }else{
-            setValorDefensaDesafiante(exito);
-            user = null;
-        }        
-      }
     }
     
-    public void Juego(){
+    public void calcularPotencialDefensa(Usuario user2, Usuario user1){
+            Operador operador = new Operador();
+            Usuario desafiado = user1;
+            Usuario desafiante = user2;
+            
+            Usuario user = desafiado;
+            while(user != null){
+                int poder = user.getTipoPersonaje().getPoder();
+                int defensaEquipoActivo = 0;
+                for(Arma a: user.getTipoPersonaje().getArmasActivas()){
+                    defensaEquipoActivo += a.getModificadorDefensa();
+                }
+                defensaEquipoActivo += user.getTipoPersonaje().getArmaduraActiva().getModificadorDefensa();
+                
+                Vampiro vampiro = new Vampiro();
+                int potencialDefensa = poder + defensaEquipoActivo;
+                int defensaHabilidad = 0;
+                if(user.getTipoPersonaje() == vampiro){
+                    int debilidad = operador.getDebilidadesVampiro();
+                    if(user.getTipoPersonaje().getReservaPuntosSangre() != 0){
+                        int reservaSangre = user.getTipoPersonaje().getReservaPuntosSangre();
+                        reservaSangre -= user.getTipoPersonaje().getHabilidad().getCostePuntosSangre();
+                        user.getTipoPersonaje().setReservaPuntosSangre(reservaSangre);
+                        defensaHabilidad = user.getTipoPersonaje().getHabilidad().getValorDefensa();
+                    }else if((user.getTipoPersonaje().getReservaPuntosSangre() < user.getTipoPersonaje().getHabilidad().getCostePuntosSangre())){
+                        defensaHabilidad = 0;
+                    }
+                    
+                    if(user.getTipoPersonaje().getSalud() >= 5){
+                        potencialDefensa += defensaHabilidad + 2 - debilidad;
+                    }else{
+                        potencialDefensa += defensaHabilidad - debilidad;
+                    }
+                }else{
+                    defensaHabilidad = user.getTipoPersonaje().getHabilidad().getValorDefensa();
+                    Licantropo licantropo = new Licantropo();
+                    Cazador cazador = new Cazador();
+                    if(user.getTipoPersonaje() == licantropo){
+                        int debilidad = operador.getDebilidadesLicantropo();
+                        int rabiaActual = user.getTipoPersonaje().getRabia();         
+                        if(rabiaActual < user.getTipoPersonaje().getHabilidad().getRabiaMin()){
+                            defensaHabilidad = 0;
+                        }
+                        potencialDefensa += defensaHabilidad + rabiaActual - debilidad;
+                    }else if(user.getTipoPersonaje() == cazador){
+                        int debilidad = operador.getDebilidadesCazador();
+                        int voluntad = user.getTipoPersonaje().getVoluntad();
+                        potencialDefensa += defensaHabilidad + voluntad - debilidad;
+                       
+                    }
+                }
+                int exito = 0;
+                int cont = potencialDefensa;
+                while(cont != 0){
+                    int numAleat = (int) Math.random()*6+1;
+                    cont -= 1;
+                    if((numAleat == 5)|(numAleat == 6)){
+                        exito += 1;
+                    }
+                }
+                if(user == desafiado){
+                    setValorDefensaDesafiado(exito);
+                    user = desafiante;
+                }else{
+                    setValorDefensaDesafiante(exito);
+                    user = null;
+                }
+            }
+    }
+    /**
+     * 
+     * @param user1 es el usuario que acepta el desafio
+     * @param user2 es el usuario que desafia a otro
+     */
+    public void Juego(Usuario user1, Usuario user2){
+       Usuario user = null;
+        
        Vampiro vampiro = new Vampiro();
        Licantropo licantropo = new Licantropo();
        Cazador cazador = new Cazador();
-       if(valorAtaqueDesafiador > valorDefensaDesafiante){
-           int saludDesafiadorGhoul = usuario.getUsuarioDesafiar().getTipoPersonaje().construirGhoul().getSalud();
-           if(saludDesafiadorGhoul != 0){
-                saludDesafiadorGhoul -= 1;
-                if(usuario.getUsuarioDesafiar().getTipoPersonaje() == licantropo){
-                   int rabia = licantropo.getRabia();
+       
+       if(valorAtaqueDesafiado > valorDefensaDesafiante){
+           user = user1;
+       }
+       if(valorAtaqueDesafiante > valorDefensaDesafiado){
+           user = user2;
+       }
+           
+       boolean saludPerdida = false; 
+       while(user.getTipoPersonaje().getListaEsbirros().iterator().hasNext()&(!saludPerdida)){         
+             Esbirro EsbirroUsuario = user.getTipoPersonaje().getListaEsbirros().iterator().next();
+             if(EsbirroUsuario.getSalud() != 0){
+                int saludEsbirroUsuario = EsbirroUsuario.getSalud();
+                saludEsbirroUsuario -= 1;
+                saludPerdida = true;
+                EsbirroUsuario.setSalud(saludEsbirroUsuario);
+                if(user.getTipoPersonaje() == vampiro){
+                   int puntosSangre = user.getTipoPersonaje().getReservaPuntosSangre();
+                   puntosSangre += 4;
+                   user.getTipoPersonaje().setReservaPuntosSangre(puntosSangre);
+                }else if(user.getTipoPersonaje() == licantropo){
+                   int rabia = user.getTipoPersonaje().getRabia();
                    rabia += 1;
-                   licantropo.setRabia(rabia);
-                }else
-                if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                   int voluntad = cazador.getVoluntad();
+                   user.getTipoPersonaje().setRabia(rabia);
+                }else if(user.getTipoPersonaje() == cazador){
+                   int voluntad = user.getTipoPersonaje().getVoluntad();
                    voluntad -= 1;
-                   cazador.setVoluntad(voluntad);
+                   user.getTipoPersonaje().setVoluntad(voluntad);
                 }
-           }else{
-               int saludDesafiadorDemonio = usuario.getUsuarioDesafiar().getTipoPersonaje().construirDemonio().getSalud();
-               if(saludDesafiadorDemonio != 0){
-                   saludDesafiadorDemonio -= 1;
-                   if(usuario.getUsuarioDesafiar().getTipoPersonaje() == licantropo){
-                      int rabia = licantropo.getRabia();
-                      rabia += 1;
-                      licantropo.setRabia(rabia);
-                   }else
-                   if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                       int voluntad = cazador.getVoluntad();
-                       voluntad -= 1;
-                       cazador.setVoluntad(voluntad);
-                   }
-               }else{
-                   if(usuario.getUsuarioDesafiar().getTipoPersonaje() != vampiro){
-                       int saludDesafiadorHumano = usuario.getUsuarioDesafiar().getTipoPersonaje().construirHumano().getSalud();                       
-                       saludDesafiadorHumano -= 1;
-                       if(usuario.getUsuarioDesafiar().getTipoPersonaje() == licantropo){
-                           int rabia = licantropo.getRabia();
-                           rabia += 1;
-                           licantropo.setRabia(rabia);
-                       }
-                       if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                           int voluntad = cazador.getVoluntad();
-                           voluntad -= 1;
-                           cazador.setVoluntad(voluntad);
-                       }
-                   }else{
-                       int saludDesafiadorPersonaje = usuario.getUsuarioDesafiar().getTipoPersonaje().anadirSalud();
-                       saludDesafiadorPersonaje -= 1;
-                       if(usuario.getUsuarioDesafiar().getTipoPersonaje() == licantropo){
-                           int rabia = licantropo.getRabia();
-                           rabia += 1;
-                           licantropo.setRabia(rabia);
-                       }
-                       if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                           int voluntad = cazador.getVoluntad();
-                           voluntad -= 1;
-                           cazador.setVoluntad(voluntad);
-                       }
-                   }
-               }
-           }
-       }else if(valorAtaqueDesafiante > valorDefensaDesafiador){
-           int saludDesafianteGhoul = usuario.getUsuarioDesafiante().getTipoPersonaje().construirGhoul().getSalud();
-           if(saludDesafianteGhoul != 0){
-                saludDesafianteGhoul -= 1;
-                if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
-                   int rabia = licantropo.getRabia();
+              }
+       }
+       if(saludPerdida == false){
+          int saludPersonaje = user.getTipoPersonaje().getSalud();
+          if(saludPersonaje != 0){    
+              saludPersonaje -= 1;
+              user.getTipoPersonaje().setSalud(saludPersonaje);
+              if(user.getTipoPersonaje() == vampiro){
+                   int puntosSangre = user.getTipoPersonaje().getReservaPuntosSangre();
+                   puntosSangre += 4;
+                   user.getTipoPersonaje().setReservaPuntosSangre(puntosSangre);
+              }else if(user.getTipoPersonaje() == licantropo){
+                   int rabia = user.getTipoPersonaje().getRabia();
                    rabia += 1;
-                   licantropo.setRabia(rabia);
-                }
-                if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                   int voluntad = cazador.getVoluntad();
+                   user.getTipoPersonaje().setRabia(rabia);
+              }else if(user.getTipoPersonaje() == cazador){
+                   int voluntad = user.getTipoPersonaje().getVoluntad();
                    voluntad -= 1;
-                   cazador.setVoluntad(voluntad);
-                }
-           }else{
-               int saludDesafianteDemonio = usuario.getUsuarioDesafiante().getTipoPersonaje().construirDemonio().getSalud();
-               if(saludDesafianteDemonio != 0){
-                   saludDesafianteDemonio -= 1;
-                   if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
-                       int rabia = licantropo.getRabia();
-                       rabia += 1;
-                       licantropo.setRabia(rabia);
-                   }
-                   if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                       int voluntad = cazador.getVoluntad();
-                       voluntad -= 1;
-                       cazador.setVoluntad(voluntad);
-                   }
-               }else{
-                   if(usuario.getUsuarioDesafiante().getTipoPersonaje() != vampiro){
-                       int saludDesafianteHumano = usuario.getUsuarioDesafiante().getTipoPersonaje().construirHumano().getSalud();                       
-                       saludDesafianteHumano -= 1;
-                       if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
-                           int rabia = licantropo.getRabia();
-                           rabia += 1;
-                           licantropo.setRabia(rabia);
-                       }
-                       if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                           int voluntad = cazador.getVoluntad();
-                           voluntad -= 1;
-                           cazador.setVoluntad(voluntad);
-                       }
-                   }else{
-                       int saludDesafiantePersonaje = usuario.getUsuarioDesafiante().getTipoPersonaje().anadirSalud();
-                       saludDesafiantePersonaje -= 1;
-                       if(usuario.getUsuarioDesafiante().getTipoPersonaje() == licantropo){
-                           int rabia = licantropo.getRabia();
-                           rabia += 1;
-                           licantropo.setRabia(rabia);
-                       }
-                       if(usuario.getUsuarioDesafiar().getTipoPersonaje() == cazador){
-                           int voluntad = cazador.getVoluntad();
-                           voluntad -= 1;
-                           cazador.setVoluntad(voluntad);
-                       }
-                   }
-               }
-           }
-       }   
+                   user.getTipoPersonaje().setVoluntad(voluntad);
+              }
+          }
+       }
     }
 }

@@ -4,15 +4,10 @@
  */
 package sistema;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,35 +17,22 @@ public class Operador extends MenuInicio{
     private String nombre;
     private String nick;
     private String password;
-    private int index = 0;
     private List<Usuario> usuariosBaneados = new ArrayList<>();
-    private Usuario usuarioDesafiante;
-    private Usuario usuarioDesafiado;
     private int fortalezasVampiro;
     private int debilidadesVampiro;
     private int fortalezasLicantropo;
     private int debilidadesLicantropo;
     private int fortalezasCazador;
     private int debilidadesCazador;
-    private List<Combate> listaCombates = new ArrayList<>(); 
-    private Usuario usuario;
+     
     
-    public Operador(String nombre, String nick, String password) throws IOException{
+    public Operador(String nombre, String nick, String password){
         this.nombre = nombre;
         this.nick = nick;
-        this.password = password;
-        this.usuario = new Usuario();
-        usuarioDesafiante = usuario.getUsuarioDesafiante();
-        usuarioDesafiado = usuario.getUsuarioDesafiar();
-        
+        this.password = password;      
     }
 
-    public Operador()throws FileNotFoundException, IOException{
-        
-    }
-
-    public List<Combate> getListaCombates() {
-        return listaCombates;
+    public Operador(){
     }
 
     public int getFortalezasVampiro() {
@@ -97,15 +79,17 @@ public class Operador extends MenuInicio{
         this.nick = nickInicio;
     }
 
-    @Override
+    //@Override
     public void registrar_darBaja(){   
-      System.out.println("1.iniciar sesion");
+      System.out.println("1.registrarse");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
-      int opcion = 0;
+      Scanner sc = new Scanner(System.in);
+      String option = sc.next();
+      int opcion =Integer.parseInt(option);
       if(opcion == 2){
         System.out.println("ingrese su nombre de usuario: ");
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         String nameOp = sc.next();
         System.out.println("ingrese su contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
@@ -120,7 +104,7 @@ public class Operador extends MenuInicio{
       }else if(opcion == 1){
         boolean operatorRegistered = false;
         System.out.println("ingrese su nombre: ");
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         String name = sc.next();
         this.setNombre(name);
         System.out.println("ingrese su nick: ");
@@ -146,12 +130,8 @@ public class Operador extends MenuInicio{
            }
         }
         if(operatorRegistered == false){
-            try {
-                getOperatorlist().add(new Operador(name,apodo,contrasenia));
-            } catch (IOException ex) {
-                System.out.println("error");
-            }
-            usuario.serializar(this);
+            getOperatorlist().add(new Operador(name,apodo,contrasenia));
+            serializar(this);
             System.out.println("registrado/a corractamente");
             entrar_salirSistema();
         }
@@ -174,7 +154,9 @@ public class Operador extends MenuInicio{
                editar_Personaje();
                break;
             }case 4:{
-               validarDesafio();
+               Usuario user1 = null;
+               Usuario user2 = null;
+               validarDesafio(user1,user2);
                break;
             }case 5:{
                añadir_atributos_personaje();
@@ -193,26 +175,32 @@ public class Operador extends MenuInicio{
     }
     
     public void editar_Personaje(){
-     try{
-        Usuario usuario = new Usuario();
-        Vampiro vampiro = new Vampiro();
-      Usuario user = usuarioDesafiado;
-      while(user != null){ 
+        int posPer = 1;
+        for(Usuario user: getUserlist()){
+            System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
+        }
+        System.out.println("escoga un numero correspondiente al personaje que quiere modificar");
+        Scanner sc = new Scanner(System.in);
+        String opc = sc.next();
+        int perMod = Integer.parseInt(opc);
+        
+        Usuario user = getUserlist().get(perMod--);
+        
         System.out.println("usuario: " + user.getNombre());
         int opcion = 0;
         System.out.println("1.-cambiar nombre");
         System.out.println("2.-cambiar oro");
         System.out.println("3.-cambiar poder");
         System.out.println("4.-cambiar salud");
-        if(user.getTipoPersonaje() == vampiro){
+        if(user.getTipoPersonaje() == new Vampiro()){
              System.out.println("5.-cambiar edad");
              System.out.println("seleccione una opcion -1,2,3,4 o 5-");
-             Scanner sc = new Scanner(System.in);
+             sc = new Scanner(System.in);
              String selec = sc.next();
              opcion = Integer.parseInt(selec);
-        }else if(user.getTipoPersonaje() != vampiro){
+        }else if(user.getTipoPersonaje() != new Vampiro()){
             System.out.println("seleccione una opcion -1,2,3 o 4-");
-            Scanner sc = new Scanner(System.in);
+            sc = new Scanner(System.in);
             String selec = sc.next();
             opcion = Integer.parseInt(selec);
             if(opcion == 5){
@@ -221,53 +209,47 @@ public class Operador extends MenuInicio{
         }
         switch(opcion){
             case 1:{
-               user.getTipoPersonaje().anadirNombre();
+               String nombrePer = user.anadirNombre();
+               user.setNombrePersonaje(nombrePer);
                break;
             }case 2:{
-               user.getTipoPersonaje().anadirOro();
+               int oroPer = user.anadirOro();
+               user.setOroPersonaje(oroPer);
                break;
             }case 3:{
-               user.getTipoPersonaje().anadirPoder();
+               int poderPer = user.anadirPoder();
+               user.setPoderPersonaje(poderPer);
                break;
             }case 4:{
-               user.getTipoPersonaje().anadirSalud();
+               int saludPer = user.anadirSalud();
+               user.setSaludPersonaje(saludPer);
                break;
             }case 5:{
-                user.getTipoPersonaje().anadirEdad();
+                int edadPer = user.anadirEdad();
+               user.setEdadPersonaje(edadPer);
                break;
             }default:{
                System.out.println("seleccion erronea");
-            }
-             
+            }             
         }
-        usuario.serializar(user);
-      }
-      if(user == usuarioDesafiado){      
-            user = usuarioDesafiante;        
-      }else{
-            user = null;
-      }
-       
-     }catch(Exception e){
-        System.out.println("el usuario no tiene personaje");
-     }
-     seleccionarOpcionMenu(); 
+        serializar(user); 
+
+        seleccionarOpcionMenu(); 
     }
-  
     
-    public void validarDesafio(){
-     try{
+    public void validarDesafio(Usuario desafiante, Usuario desafiado){
       Vampiro vampiro = new Vampiro();
       Licantropo licantropo = new Licantropo();
       Cazador cazador = new Cazador();
-      Usuario user = usuarioDesafiado;
+      Usuario user;
+      user = desafiado;
       while(user != null){ 
         if(user.getTipoPersonaje() == vampiro){
            for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
                 fortalezasVampiro += fortaleza.getSensibilidad();  
            }
            for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
-             debilidadesVampiro += debilidad.getSensibilidad();
+               debilidadesVampiro += debilidad.getSensibilidad();
            }
         }else if(user.getTipoPersonaje() == licantropo){
            for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
@@ -284,125 +266,104 @@ public class Operador extends MenuInicio{
              debilidadesCazador += debilidad.getSensibilidad();
            }
         }
-        user.getUsuarioDesafiar().getNotifDesafio().add("desafio pendiente");
-        seleccionarOpcionMenu();
       }
-      if(user == usuarioDesafiado){      
-            user = usuarioDesafiante;        
+      if(user == desafiado){
+          boolean desafianteConEquipoActivo = !desafiante.getTipoPersonaje().getArmasActivas().isEmpty() & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
+          boolean desafiadoConEquipoActivo = !desafiado.getTipoPersonaje().getArmasActivas().isEmpty() & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
+          if(desafianteConEquipoActivo & desafiadoConEquipoActivo){
+            user.getUsuarioDesafiar().getNotifDesafio().add("desafio pendiente con: " + desafiante.getNombre());
+            getListaUsuariosDesafiantes().add(desafiante);
+          }
+          user = desafiante;        
       }else{
             user = null;
       }
-     }catch(Exception e){
-        System.out.println("ningun usuario lanzo un desafio");
-     } 
     }
     
     public void añadir_atributos_personaje(){
-      try{
-        Usuario usuario = new Usuario();
-        System.out.println("1.-añadir atributos al personaje de: " + usuarioDesafiante.getNombre());
-        System.out.println("2.-añadir atributos al personaje de: " + usuarioDesafiado.getNombre());
-        System.out.println("seleccione un opcion -1 o 2-");
-        Scanner sc = new Scanner(System.in);
-        String selec = sc.next();
-        int opcion = Integer.parseInt(selec);
-        if(opcion == 1){
-            usuario = usuarioDesafiante;
-        }else if(opcion == 2){
-            usuario = usuarioDesafiado;
-        }
-        Vampiro vampiro = new Vampiro();
-        System.out.println("1.-añadir arma");
-        System.out.println("2.-añadir armadura");
-        System.out.println("3.-añadir fortaleza");
-        System.out.println("4.-añadir debilidad");
-        System.out.println("5.-añadir ghoul");
-        System.out.println("6.-añadir demonio");
-        if(usuario.getTipoPersonaje() != vampiro){
-            System.out.println("7.-añadir humano");
-            System.out.println("seleccione un numero de opcion: ");
-            sc = new Scanner(System.in);
-            selec = sc.next();
-            opcion = Integer.parseInt(selec);
-        }else{
-            System.out.println("seleccione un numero de opcion: ");
-            sc = new Scanner(System.in);
-            selec = sc.next();
-            opcion = Integer.parseInt(selec);
-            if(opcion == 7){
-               opcion = 0;
-            }
-        }
-        switch(opcion){
-            case 1:{
-               usuario.getTipoPersonaje().anadirArma();
-               break;
-            }case 2:{
-               usuario.getTipoPersonaje().anadirArmadura();
-               break;
-            }case 3:{
-               usuario.getTipoPersonaje().construirFortaleza();
-               break;
-            }case 4:{
-               usuario.getTipoPersonaje().construirDebilidad();
-               break;
-            }case 5:{
-                usuario.getTipoPersonaje().construirGhoul();
-               break;
-            }case 6:{
-                usuario.getTipoPersonaje().construirDemonio();
-               break;
-            }case 7:{
-                usuario.getTipoPersonaje().construirHumano();
-               break;
-            }default:{
-               System.out.println("seleccion erronea");
-            }
-        }
-        usuario.serializar(usuario);
-      }catch(Exception e){
-         System.out.println("el usuario no tiene personaje");
-      }
+          int posPer = 1;
+          for(Usuario user: getUserlist()){
+             System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
+          }
+          System.out.println("escoga un numero correspondiente al personaje al que quiere añadir atributos");
+          Scanner sc = new Scanner(System.in);
+          String opc = sc.next();
+          int perMod = Integer.parseInt(opc);
+        
+          Usuario user = getUserlist().get(perMod--);
+      
+          System.out.println("1.-añadir arma");
+          System.out.println("2.-añadir armadura");
+          System.out.println("3.-añadir fortaleza");
+          System.out.println("4.-añadir debilidad");
+          System.out.println("5.-añadir esbirro");
+          System.out.println("seleccione un numero de opcion: ");
+          sc = new Scanner(System.in);
+          String selec = sc.next();
+          int opcion = Integer.parseInt(selec);
+          switch(opcion){
+             case 1:{
+                Arma armaPer = user.anadirArma();
+                user.setNuevaArmaPersonaje(armaPer);
+                break;
+             }case 2:{
+                Armadura armaduraPer = user.anadirArmadura();
+                user.setNuevaArmaduraPersonaje(armaduraPer);  
+                break;
+             }case 3:{
+                List<Fortaleza> fortalezas = user.actualizarListaFortalezas();
+                user.setFortalezasPersonaje(fortalezas);
+                break;
+             }case 4:{
+                List<Debilidad> debilidades = user.actualizarListaDebilidades();
+                user.setDebilidadesPersonaje(debilidades);
+                break;
+             }case 5:{     
+                List<Esbirro> esbirros = user.actualizarListaEsbirros();
+                user.setEsbirrosPersonaje(esbirros);
+                break;
+             }default:{
+                System.out.println("seleccion erronea");
+             }
+         }
+         serializar(user);
       seleccionarOpcionMenu();
     }
-    
+    /**
+     * metodo que se llama una vez finalizado un combate;
+     * en él se actualiza la lista de usuarios baneados
+     * y se comprueba si hay usuarios para desbanear en la lista de los baneados
+     * @param usuarioBaneado es el usuario que ha perdido el combate
+     */
     public void banearUsuario(Usuario usuarioBaneado){
-      try{
         usuariosBaneados.add(usuarioBaneado);
         LocalDateTime horaActual = LocalDateTime.now();
         LocalDateTime hora = horaActual.minusHours(24);
         for(Usuario usBaneado: usuariosBaneados){
-            for(Combate combate: listaCombates){
-                usuarioDesafiante = combate.getUsuarioDesafiante();
-                usuarioDesafiado = combate.getUsuarioDesafiado();
-                if(usuarioDesafiante == combate.getUsuarioVencedor()){
-                   if(usBaneado.getNombre() == usuarioDesafiado.getNombre()){
+            for(Combate combate: getListaCombates()){
+                Usuario desafiante = combate.getDesafiante();
+                Usuario desafiado = combate.getDesafiado();
+                if(desafiante == combate.getUsuarioVencedor()){
+                   if(usBaneado.getNombre().equals(desafiado.getNombre())){
                       LocalDateTime horaCombate = combate.getFecha();
                       if(horaCombate.isBefore(hora)){
-                        desbanearUsuario(usBaneado);
+                         desbanearUsuario(usBaneado);
                       }
                    }   
-                }else if(usuarioDesafiado == combate.getUsuarioVencedor()){
-                   if(usBaneado.getNombre() == usuarioDesafiante.getNombre()){
+                }else if(desafiado == combate.getUsuarioVencedor()){
+                   if(usBaneado.getNombre().equals(desafiante.getNombre())){
                       LocalDateTime horaCombate = combate.getFecha();
                       if(horaCombate.isBefore(hora)){
-                        desbanearUsuario(usBaneado);
+                         desbanearUsuario(usBaneado);
                       }
                    } 
                 }
             }
         }
-      }catch(Exception e){
-         System.out.println("error");
-      }
     }
     
     public void desbanearUsuario(Usuario usuarioDesbaneado){
-      try{  
         usuariosBaneados.remove(usuarioDesbaneado);
-      }catch(Exception e){
-         System.out.println("error");
-      }
     }
     
     public void entrar_salirSistema(){
@@ -425,7 +386,6 @@ public class Operador extends MenuInicio{
         for(Operador op: getOperatorlist()){
            if((nameOp.equals(op.getNombre()))&(contraseniaOp.equals(op.getPassword()))){
                opRegistered = true;
-               index = getUserlist().indexOf(op);
                seleccionarOpcionMenu();
            }
         }

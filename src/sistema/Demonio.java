@@ -12,52 +12,48 @@ import java.util.Scanner;
  *
  * @author mimit
  */
-public class Demonio implements Esbirro{
+public class Demonio extends Esbirro{
     private String nombre;
     private int salud;
     private String pacto;
     protected List<Esbirro> hijos = new ArrayList<>();
     
-    @Override
-    public void anadirNombre(){
-        System.out.println("Introduzca el nombre del demonio: ");
-        Scanner sc = new Scanner(System.in);
-        String nombre = sc.next();
+    public Demonio(String nombre, int salud, String pacto) {
         this.nombre = nombre;
-        for(int x = 0; x < hijos.size(); x++){
-           Esbirro esb = hijos.get(x);
-           esb.anadirNombre();
-//           System.out.println("Introduzca el nombre del demonio: ");
-//           Scanner sc = new Scanner(System.in);
-//           String nombre = sc.next();
-//           this.nombre = nombre;
-        }
+        this.salud = salud;
+        this.pacto = pacto;
     }
-    
-    public void anadirPacto(){
-       System.out.println("Anniada la descripcion del pacto: ");
-       Scanner sc = new Scanner(System.in);
-       String descripcion = sc.next();
-       this.pacto = descripcion;
-    }
-
     public String getNombre() {
         return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getSalud() {
         return salud;
     }
 
+    public void setSalud(int salud) {
+        this.salud = salud;
+    }
+
+    public String getPacto() {
+        return pacto;
+    }
+
+    public void setPacto(String pacto) {
+        this.pacto = pacto;
+    }
+   
     @Override
-    public void anadirSalud() {
-        int valorSalud = 0;
-        do{
-           System.out.println("Introduzca el valor de salud del ghoul: ");
-           Scanner sc = new Scanner(System.in);
-           String salud = sc.next();
-           valorSalud = Integer.parseInt(salud);
-        }while((valorSalud < 1)|(valorSalud > 3));
-       this.salud = valorSalud; 
+    public void setDependencia(int dependenncia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setLealtad(Lealtad lealtad) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
