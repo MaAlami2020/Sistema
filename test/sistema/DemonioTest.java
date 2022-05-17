@@ -65,29 +65,11 @@ public class DemonioTest {
             int salud = 0;
             Demonio demonio = new Demonio("lexus",salud," ");
             demonio.setSalud(salud);
-            fail("la salud esta entre 1 y 3"); 
+            assertEquals(salud,demonio.getSalud());
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
             System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setSalud method, of class Demonio.
-     * test que prueba que la salud esta lejos de alcanzar el valor minimo de salud
-     */
-    @Test
-    public void testSetSalud3() {
-        try{
-            int salud = 0;
-            Demonio demonio = new Demonio("lexus",salud," ");
-            demonio.setSalud(salud);
-            fail("la salud esta entre 1 y 3"); 
-            System.out.println("CP4 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
-            System.out.println("CP4 correcto");
         }
     }
     
@@ -104,7 +86,7 @@ public class DemonioTest {
             assertEquals(salud,demonio.getSalud());
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
-            fail("sobrepasa el valor limite de salud");
+            assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
             System.out.println("CP3 correcto");
         }
     }
@@ -119,7 +101,7 @@ public class DemonioTest {
             int dependencia = 8;
             Demonio demonio  = new Demonio("lexus",1," ");
             demonio.setDependencia(dependencia);
-            fail("este esbirro tiene dependencia");
+            assertEquals(dependencia,demonio.getDependencia());
             System.out.println("CP1 incorreccto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"este esbirro  no tiene una dependencia");
@@ -137,7 +119,7 @@ public class DemonioTest {
             Lealtad lealtad = ALTA;
             Demonio demonio  = new Demonio("lexus",1," ");
             demonio.setLealtad(lealtad);
-            fail("este esbirro tiene lealtad");
+            assertEquals(lealtad,demonio.getLealtad());
             System.out.println("CP1 incorreccto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"este esbirro no tiene una lealtad");
