@@ -4,7 +4,6 @@
  */
 package sistema;
 
-import java.util.Scanner;
 import static sistema.Lealtad.ALTA;
 import static sistema.Lealtad.BAJA;
 import static sistema.Lealtad.NORMAL;
@@ -14,48 +13,45 @@ import static sistema.Lealtad.NORMAL;
  * @author mimit
  */
 public class Humano extends Esbirro{
-    private String nombre;
-    private int salud;
+
     private Lealtad lealtad;
 
     public Humano(String nombre, int salud, Lealtad lealtad) {
-        this.nombre = nombre;
-        this.salud = salud;
+        super(nombre,salud);
         this.lealtad = lealtad;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getSalud() {
-        return salud;
-    }
-
-    public void setSalud(int salud) {
-        this.salud = salud;
     }
 
     public Lealtad getLealtad() {
         return lealtad;
     }
 
+    @Override
     public void setLealtad(Lealtad lealtad) {
-        this.lealtad = lealtad;
+        if(lealtad == ALTA | lealtad == NORMAL | lealtad == BAJA){
+            this.lealtad = lealtad;
+        }else{
+            throw new RuntimeException("valor de lealtad erroneo");
+        }
     }
 
     @Override
     public void setDependencia(int dependenncia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este esbirro no tiene una dependencia"); 
     }
 
     @Override
     public void setPacto(String pacto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este esbirro no tiene un pacto");
+    }
+
+    @Override
+    public String getPacto() {
+        return "este esbirro no tiene un pacto";
+    }
+
+    @Override
+    public int getDependencia() {
+        return -1;
     }
      
 }

@@ -59,10 +59,6 @@ public class Operador extends MenuInicio{
         return debilidadesCazador;
     }
     
-    public List<Usuario> getUsuariosBaneados() {
-        return usuariosBaneados;
-    }
-    
     public String getNombre() {
         return nombre;
     }
@@ -154,9 +150,7 @@ public class Operador extends MenuInicio{
                editar_Personaje();
                break;
             }case 4:{
-               Usuario user1 = null;
-               Usuario user2 = null;
-               validarDesafio(user1,user2);
+               validarDesafio();
                break;
             }case 5:{
                añadir_atributos_personaje();
@@ -236,13 +230,16 @@ public class Operador extends MenuInicio{
 
         seleccionarOpcionMenu(); 
     }
-    
-    public void validarDesafio(Usuario desafiante, Usuario desafiado){
+    /**
+     * el primer usuario que se obtiene de la lista de los usuarios pendientes de validar son aquellos
+     * que son  desafiados
+     */
+    public void validarDesafio(){
       Vampiro vampiro = new Vampiro();
       Licantropo licantropo = new Licantropo();
       Cazador cazador = new Cazador();
-      Usuario user;
-      user = desafiado;
+      Usuario desafiado = getDesafiosParaValidar().remove(0);
+      Usuario user = desafiado;
       while(user != null){ 
         if(user.getTipoPersonaje() == vampiro){
            for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
@@ -268,6 +265,7 @@ public class Operador extends MenuInicio{
         }
       }
       if(user == desafiado){
+          Usuario desafiante = getDesafiosParaValidar().remove(0);
           boolean desafianteConEquipoActivo = !desafiante.getTipoPersonaje().getArmasActivas().isEmpty() & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
           boolean desafiadoConEquipoActivo = !desafiado.getTipoPersonaje().getArmasActivas().isEmpty() & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
           if(desafianteConEquipoActivo & desafiadoConEquipoActivo){
@@ -311,16 +309,16 @@ public class Operador extends MenuInicio{
                 user.setNuevaArmaduraPersonaje(armaduraPer);  
                 break;
              }case 3:{
-                List<Fortaleza> fortalezas = user.actualizarListaFortalezas();
-                user.setFortalezasPersonaje(fortalezas);
+                Fortaleza fortaleza = user.construirFortaleza();
+                user.setNuevaFortalezaPersonaje(fortaleza);
                 break;
              }case 4:{
-                List<Debilidad> debilidades = user.actualizarListaDebilidades();
-                user.setDebilidadesPersonaje(debilidades);
+                Debilidad debilidad = user.construirDebilidad();
+                user.setNuevaDebilidadPersonaje(debilidad);
                 break;
              }case 5:{     
-                List<Esbirro> esbirros = user.actualizarListaEsbirros();
-                user.setEsbirrosPersonaje(esbirros);
+                Esbirro esbirroPer = user.anadirEsbirro();
+                user.setNuevoEsbirroPersonaje(esbirroPer);
                 break;
              }default:{
                 System.out.println("seleccion erronea");
@@ -335,11 +333,11 @@ public class Operador extends MenuInicio{
      * y se comprueba si hay usuarios para desbanear en la lista de los baneados
      * @param usuarioBaneado es el usuario que ha perdido el combate
      */
-    public void banearUsuario(Usuario usuarioBaneado){
-        usuariosBaneados.add(usuarioBaneado);
+    public void banearUsuario(Usuario usuarioBaneado){       
+        getUsuariosBaneados().add(usuarioBaneado);
         LocalDateTime horaActual = LocalDateTime.now();
         LocalDateTime hora = horaActual.minusHours(24);
-        for(Usuario usBaneado: usuariosBaneados){
+        for(Usuario usBaneado: getUsuariosBaneados()){
             for(Combate combate: getListaCombates()){
                 Usuario desafiante = combate.getDesafiante();
                 Usuario desafiado = combate.getDesafiado();
@@ -401,7 +399,15 @@ public class Operador extends MenuInicio{
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password){
+        try{
+            if(password.length() >= 8 & password.length() <= 12){
+                this.password = password;
+            }else{
+                throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
+            }
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

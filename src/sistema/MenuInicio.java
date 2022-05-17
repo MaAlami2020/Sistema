@@ -19,7 +19,8 @@ public class MenuInicio implements Serializable{
     protected List<Operador> operatorlist = new ArrayList<>();
     protected List<Usuario> listaUsuariosDesafiantes = new ArrayList<>();
     protected List<Combate> listaCombates = new ArrayList<>();
-
+    protected List<Usuario> usuariosBaneados = new ArrayList<>();
+    protected List<Usuario> desafiosParaValidar = new ArrayList<>();
     public MenuInicio(){// throws FileNotFoundException, IOException{
         
     }
@@ -41,6 +42,14 @@ public class MenuInicio implements Serializable{
 
     public List<Combate> getListaCombates() {
         return listaCombates;
+    }
+
+    public List<Usuario> getUsuariosBaneados() {
+        return usuariosBaneados;
+    }
+
+    public List<Usuario> getDesafiosParaValidar() {
+        return desafiosParaValidar;
     }
     
     public void serializar(Object obj){

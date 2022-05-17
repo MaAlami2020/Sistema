@@ -6,7 +6,6 @@ package sistema;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -41,7 +40,6 @@ public class Cazador extends Personaje{
     }
 
     @Override
-
     public double getOro() {
         return oro;
     }
@@ -56,11 +54,38 @@ public class Cazador extends Personaje{
         return poder;
     }
 
-    @Override
-    public void setArmasActivas(List<Arma> armasActivas) {
-        this.armasActivas = armasActivas;
+    public boolean comprobarArmaEnLista(Arma arma){
+        for(Arma a: listaArmas){
+            if(a.equals(arma)){
+                return true;
+            }
+        }
+        return false;
     }
-
+    
+    @Override
+    public void setArmasActivas(Arma armaActiva) {
+        int manejo = 2;
+        if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo)){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo--)){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals(manejo--)){    
+            this.armasActivas.add(armaActiva);
+        }else{
+            throw new RuntimeException("ha llegado al tope de armas activas");  
+        }    
+    }
+    
+    @Override
+    public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
+        if(pos == 0 | pos == 1){
+            this.armasActivas.add(pos,nuevaArmaActiva);
+        }else{
+            throw new RuntimeException("posicion fuera del rango del tamaño del array");
+        }
+    }
+    
     @Override
     public void setArmaduraActiva(Armadura armaduraActiva) {
         this.armaduraActiva = armaduraActiva;
@@ -77,18 +102,17 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public void setListaEsbirros(List<Esbirro> listaEsbirros) {
-        this.listaEsbirros = listaEsbirros;
+    public void setListaEsbirros(Esbirro esbirro) {
+        this.listaEsbirros.add(esbirro);
     }
 
     @Override
-    public void setListaFortalezas(List<Fortaleza> listaFortalezas) {
-        this.listaFortalezas = listaFortalezas;
+    public void setListaFortalezas(Fortaleza fortaleza) {
+        this.listaFortalezas.add(fortaleza);
     }
-
-    @Override
-    public void setListaDebilidades(List<Debilidad> listaDebilidades) {
-        this.listaDebilidades = listaDebilidades;
+    
+    public void setListaDebilidades(Debilidad debilidad) {
+        this.listaDebilidades.add(debilidad);
     }
  
     @Override
@@ -97,18 +121,30 @@ public class Cazador extends Personaje{
     }
     
     @Override
-    public void setOro(double oro) {
-        this.oro = oro;
+    public void setOro(double oro){
+        if(oro >= 0){ 
+            this.oro = oro;
+        }else{
+            throw new RuntimeException("la cantidad de oro no puede ser negativa");
+        }
     }
 
     @Override
     public void setSalud(int salud) {
-        this.salud = salud;
+        if(salud < 0 | salud > 5){
+            throw new RuntimeException("sobrepasó el límite de salud permitida");
+        }else{
+            this.salud = salud;
+        }
     }
 
     @Override
-    public void setPoder(int poder) {
-        this.poder = poder;
+    public void setPoder(int poder){
+        if(poder < 1 | poder > 5){
+            throw new RuntimeException("sobrepasó el límite de poder permitido");
+        }else{
+            this.poder = poder;
+        }
     }
 
     @Override
@@ -118,7 +154,11 @@ public class Cazador extends Personaje{
 
     @Override
     public void setHabilidad(Habilidad habilidad) {
-        this.habilidad = habilidad;
+        int valorEdad = habilidad.getEdad();
+        String edadAdquisicion = String.valueOf(valorEdad);
+        if(!edadAdquisicion.equals("esta habilidad no tiene una edad de adquisicion")){
+            this.habilidad = habilidad;
+        }
     }
     
     @Override
@@ -159,36 +199,40 @@ public class Cazador extends Personaje{
     @Override
     public int getVoluntad() {
         return voulntad;
-    }
+    }   
 
     @Override
     public void setEdad(int edad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene una edad");
     }
 
     @Override
     public int getEdad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
 
     @Override
     public void setReservaPuntosSangre(int sangreAcum) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene reserva de puntos de sangre");
     }
 
     @Override
     public int getReservaPuntosSangre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
 
     @Override
     public void setRabia(int rabia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene rabia");
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        this.voulntad = voluntad;
+        if(voluntad >= 0){
+           this.voulntad = voluntad;
+        }else{
+           throw new RuntimeException("no se puede quitar mas voluntad");
+        }
     }
     
 }

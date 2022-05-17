@@ -17,8 +17,7 @@ public class Desafio implements Iterator{
     public Desafio(){
     }
 
-    
-    public void aceptar(Usuario desafiado, Usuario desafiante) {
+    public void aceptar(Usuario desafiado, Usuario desafiante){
         Combate combate = new Combate();
         int opc = 0;
         do{
@@ -39,12 +38,36 @@ public class Desafio implements Iterator{
            combate.iniciar(desafiado,desafiante);
            combate.mostrarResultaddo();
         }
+        List<Arma> armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
+        Armadura armaduraDesafiante = desafiante.getTipoPersonaje().getArmaduraActiva();
+        List<Arma> armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
+        Armadura armaduraDesafiado = desafiado.getTipoPersonaje().getArmaduraActiva();
+        if((!(armasDesafiante.isEmpty())|(armaduraDesafiante != null))&((!armasDesafiado.isEmpty())|(armaduraDesafiado != null))){           
+            switch (opc) {
+                case 1:
+                   desafiado.ActualizarArmasActivasPersonaje();
+                   break;
+                case 2:
+                   Armadura nuevaArmadura = desafiado.cambiarArmadura_activa();
+                   desafiado.setArmaduraActivaPersonaje(nuevaArmadura);
+                   break;
+                case 3:
+                   combate.iniciar(desafiado,desafiante);
+                   combate.mostrarResultaddo();
+                   break;
+                default:
+                   break;
+            }
+        }else{
+            System.out.println("no tiene armas o armadura activa");
+        }
     }
 
     /**
      * al usuario desafiado se le quita el 10% de la cantidad de oro que el desafiante aposto
-     */
-    public void rechazar(Usuario desafiado, Usuario desafiante) {
+    */
+
+    public void rechazar(Usuario desafiado, Usuario desafiante){
         double oroPersonaje = desafiado.getTipoPersonaje().getOro();
         int oroDesafiante = desafiante.getOroApostado();
         oroPersonaje -= (double) oroDesafiante * 0.1;

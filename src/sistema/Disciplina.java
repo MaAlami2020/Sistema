@@ -9,6 +9,7 @@ package sistema;
  * @author mimit
  */
 public class Disciplina implements Habilidad{
+
     private String nombre;
     private int valorAtaque;
     private int valorDefensa;
@@ -20,11 +21,20 @@ public class Disciplina implements Habilidad{
         this.valorDefensa = valorDefensa;
         this.costePuntosSangre = costePuntosSangre;
     }
-
-    public void setCostePuntosSangre(int costePuntosSangre) {
-        this.costePuntosSangre = costePuntosSangre;
+    
+    public Disciplina() {
     }
 
+    @Override
+    public void setCostePuntosSangre(int costePuntosSangre) {
+        if(costePuntosSangre  >= 1 & costePuntosSangre <= 3){
+           this.costePuntosSangre = costePuntosSangre;
+        }else{
+           throw new RuntimeException("se sobrepasa el valor limite del coste de puntos de sangre");
+        }
+    }
+
+    @Override
     public int getCostePuntosSangre() {
         return costePuntosSangre;
     }
@@ -41,7 +51,11 @@ public class Disciplina implements Habilidad{
 
     @Override
     public void setValorAtaque(int valorAtaque) {
-        this.valorAtaque = valorAtaque;
+        if(valorAtaque >= 1 & valorAtaque <= 3){
+           this.valorAtaque = valorAtaque;
+        }else{
+           throw new RuntimeException("se sobrepasa el valor limite de valor de ataque");
+        }
     }
 
     @Override
@@ -56,16 +70,31 @@ public class Disciplina implements Habilidad{
 
     @Override
     public void setValorDefensa(int valorDefensa) {
-        this.valorDefensa = valorDefensa;
+        if(valorDefensa >= 1 & valorDefensa <= 3){
+           this.valorDefensa = valorDefensa;
+        }else{
+           throw new RuntimeException("se sobrepasa el valor limite de valor de defensa"); 
+        }
     }
 
     @Override
     public void setRabiaMin(int rabiaMin) {
-        throw new UnsupportedOperationException("esta habilidad no tiene rabia minima"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene rabia minima"); 
     }
 
     @Override
     public int getRabiaMin() {
-        throw new UnsupportedOperationException("esta habilidad no tiene rabia minima"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("esta habilidad no tiene rabia minima"); 
     }
+
+    @Override
+    public void setEdad(int edad) {
+        throw new RuntimeException("esta habilidad no tiene una edad de adquisicion");
+    }
+
+    @Override
+    public int getEdad() {
+        throw new RuntimeException("esta habilidad no tiene una edad de adquisicion");
+    }
+
 }
