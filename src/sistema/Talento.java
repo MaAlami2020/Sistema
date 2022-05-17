@@ -83,7 +83,7 @@ public class Talento implements Habilidad{
 
     @Override
     public int getCostePuntosSangre() {
-        throw new RuntimeException("esta habilidad no tiene un coste");
+        return -1;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class Talento implements Habilidad{
 
     @Override
     public int getRabiaMin() {
-        throw new RuntimeException("esta habilidad no tiene rabia minima"); 
+        return -1;
     }
 
 }
