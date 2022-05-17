@@ -20,10 +20,15 @@ public class Armadura {
     }
     
     public Armadura(){
+
     }
     
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if(nombre != " "){
+            this.nombre = nombre;
+        }else{
+            throw new RuntimeException("nombre invalido");
+        }
     }
 
     public String getNombre() {
@@ -31,9 +36,9 @@ public class Armadura {
     }
 
     
-    public void setModificadorAtaque(int modificadorAtaque) throws Exception{
+    public void setModificadorAtaque(int modificadorAtaque){
         if(modificadorAtaque < 0 | modificadorAtaque > 3){
-            throw new Exception("sobrepasó el límite de modificador de ataque");
+            throw new RuntimeException("sobrepasó el límite de modificador de ataque");
         }else{
             this.modificadorAtaque = modificadorAtaque;
         }
@@ -47,9 +52,9 @@ public class Armadura {
         return modificadorDefensa;
     }
 
-    public void setModificadorDefensa(int modificadorDefensa) throws Exception{
-        if(modificadorDefensa < 0 | modificadorDefensa > 3){
-            throw new Exception("sobrepasó el límite del modificador de defensa");
+    public void setModificadorDefensa(int modificadorDefensa){
+        if(modificadorDefensa < 1 | modificadorDefensa > 3){
+            throw new RuntimeException("sobrepasó el límite del modificador de defensa");
         }else{
             this.modificadorDefensa = modificadorDefensa;
         }

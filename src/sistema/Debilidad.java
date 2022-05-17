@@ -22,7 +22,11 @@ public class Debilidad{
    } 
 
     public void setSensibilidad(int sensibilidadModif) {
-       this.sensibilidad = sensibilidadModif;
+       if(sensibilidadModif >= 1 & sensibilidadModif <= 5){
+           this.sensibilidad = sensibilidadModif;
+       }else{
+           throw new RuntimeException("sobrepasa el valor limite de sensibilidad");
+       }
     }
 
     public int getSensibilidad() {

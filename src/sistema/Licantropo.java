@@ -6,7 +6,6 @@ package sistema;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -14,14 +13,14 @@ import java.util.Scanner;
  */
 public class Licantropo extends Personaje{
     private String nombre;
-    private Arma [] armasActivas = new Arma [2];
+    private List<Arma> armasActivas = new ArrayList<>();
     private Armadura armaduraActiva;    
     private List<Arma> listaArmas = new ArrayList<>();
     private List<Armadura>listaArmaduras = new ArrayList<>(); 
     private List<Fortaleza> listaFortalezas = new ArrayList<>();
     private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
-    private int oro;
+    private double oro;
     private int salud;
     private int poder;
     private Habilidad habilidad;
@@ -41,7 +40,7 @@ public class Licantropo extends Personaje{
     }
 
     @Override
-    public int getOro() {
+    public double getOro() {
         return oro;
     }
 
@@ -55,9 +54,36 @@ public class Licantropo extends Personaje{
         return poder;
     }
 
+    public boolean comprobarArmaEnLista(Arma arma){
+        for(Arma a: listaArmas){
+            if(a.equals(arma)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     @Override
-    public void setArmasActivas(Arma [] armasActivas) {
-        this.armasActivas = armasActivas;
+    public void setArmasActivas(Arma armaActiva) {
+        int manejo = 2;
+        if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo)){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo--)){
+            this.armasActivas.add(armaActiva);
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals(manejo--)){    
+            this.armasActivas.add(armaActiva);
+        }else{
+            throw new RuntimeException("ha llegado al tope de armas activas");  
+        }    
+    }
+    
+    @Override
+    public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
+        if(pos == 0 | pos == 1){
+            this.armasActivas.add(pos,nuevaArmaActiva);
+        }else{
+            throw new RuntimeException("posicion fuera del rango del tamaño del array");
+        }
     }
 
     @Override
@@ -75,7 +101,6 @@ public class Licantropo extends Personaje{
         this.listaArmaduras.add(armadura);
     }
 
-    @Override
     public void setListaEsbirros(Esbirro esbirro) {
         this.listaEsbirros.add(esbirro);
     }
@@ -85,7 +110,6 @@ public class Licantropo extends Personaje{
         this.listaFortalezas = listaFortalezas;
     }
 
-    @Override
     public void setListaDebilidades(Debilidad debilidad) {
         this.listaDebilidades = listaDebilidades;
     }
@@ -96,18 +120,30 @@ public class Licantropo extends Personaje{
     }
     
     @Override
-    public void setOro(int oro) {
-        this.oro = oro;
+    public void setOro(double oro){
+        if(oro >= 0){ 
+            this.oro = oro;
+        }else{
+            throw new RuntimeException("la cantidad de oro no puede ser negativa");
+        }
     }
 
     @Override
     public void setSalud(int salud) {
-        this.salud = salud;
+        if(salud < 0 | salud > 5){
+            throw new RuntimeException("sobrepasó el límite de salud permitida");
+        }else{
+            this.salud = salud;
+        }
     }
 
     @Override
-    public void setPoder(int poder) {
-        this.poder = poder;
+    public void setPoder(int poder){
+        if(poder < 1 | poder > 5){
+            throw new RuntimeException("sobrepasó el límite de poder permitido");
+        }else{
+            this.poder = poder;
+        }
     }
 
     @Override
@@ -117,7 +153,11 @@ public class Licantropo extends Personaje{
 
     @Override
     public void setHabilidad(Habilidad habilidad) {
-        this.habilidad = habilidad;
+        int valorRabia = habilidad.getEdad();
+        String rabiaMin = String.valueOf(valorRabia);
+        if(!rabiaMin.equals("esta habilidad no tiene rabia minima")){
+            this.habilidad = habilidad;
+        }
     }
     
     @Override
@@ -126,7 +166,7 @@ public class Licantropo extends Personaje{
     }
 
     @Override
-    public Arma [] getArmasActivas() {
+    public List<Arma> getArmasActivas() {
         return armasActivas;
     }
 
@@ -157,36 +197,40 @@ public class Licantropo extends Personaje{
 
     @Override
     public int getVoluntad() {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad"); 
+        throw new RuntimeException("este personaje no tiene voluntad"); 
     }
 
     @Override
     public void setEdad(int edad) {
-        throw new UnsupportedOperationException("este personje no tiene edad"); 
+        throw new RuntimeException("este personje no tiene edad"); 
     }
 
     @Override
     public int getEdad() {
-        throw new UnsupportedOperationException("este personaje no tiene edad");
+        throw new RuntimeException("este personaje no tiene edad");
     }
 
     @Override
     public void setReservaPuntosSangre(int sangreAcum) {
-        throw new UnsupportedOperationException("este personaje no tiene puntos de sangre"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene puntos de sangre");
     }
 
     @Override
     public int getReservaPuntosSangre() {
-        throw new UnsupportedOperationException("este personaje no tiene puntos de sangre"); //To change body of generated methods, choose Tools | Templates.
+        throw new RuntimeException("este personaje no tiene puntos de sangre"); 
     }
 
     @Override
     public void setRabia(int rabia) {
-        this.rabia = rabia;
+        if(rabia <= 3){
+           this.rabia = rabia;
+        }else{
+           throw new RuntimeException("ha llegado al tope de rabia");
+        }  
     }
 
     @Override
     public void setVoluntad(int voluntad) {
-        throw new UnsupportedOperationException("este personaje no tiene voluntad");
+        throw new RuntimeException("este personaje no tiene voluntad");
     }
 }

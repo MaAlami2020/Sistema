@@ -17,6 +17,7 @@ public class Operador extends MenuInicio{
     private String nombre;
     private String nick;
     private String password;
+    private List<Usuario> usuariosBaneados = new ArrayList<>();
     private int fortalezasVampiro;
     private int debilidadesVampiro;
     private int fortalezasLicantropo;
@@ -75,7 +76,7 @@ public class Operador extends MenuInicio{
     }
 
     //@Override
-    public void registrar_darBaja()throws Exception{   
+    public void registrar_darBaja(){   
       System.out.println("1.registrarse");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
@@ -133,7 +134,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void seleccionarOpcionMenu()throws Exception{
+    public void seleccionarOpcionMenu(){
         System.out.println("***BIENVENIDO**");
         System.out.println("3.-editar un personaje");
         System.out.println("4.-validar desafio");
@@ -149,8 +150,6 @@ public class Operador extends MenuInicio{
                editar_Personaje();
                break;
             }case 4:{
-               Usuario user1 = null;
-               Usuario user2 = null;
                validarDesafio();
                break;
             }case 5:{
@@ -169,7 +168,7 @@ public class Operador extends MenuInicio{
         }
     }
     
-    public void editar_Personaje()throws Exception{
+    public void editar_Personaje(){
         int posPer = 1;
         for(Usuario user: getUserlist()){
             System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
@@ -267,8 +266,8 @@ public class Operador extends MenuInicio{
       }
       if(user == desafiado){
           Usuario desafiante = getDesafiosParaValidar().remove(0);
-          boolean desafianteConEquipoActivo = desafiante.getTipoPersonaje().getArmasActivas().length != 0 & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
-          boolean desafiadoConEquipoActivo = desafiado.getTipoPersonaje().getArmasActivas().length != 0 & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
+          boolean desafianteConEquipoActivo = !desafiante.getTipoPersonaje().getArmasActivas().isEmpty() & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
+          boolean desafiadoConEquipoActivo = !desafiado.getTipoPersonaje().getArmasActivas().isEmpty() & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
           if(desafianteConEquipoActivo & desafiadoConEquipoActivo){
             user.getUsuarioDesafiar().getNotifDesafio().add("desafio pendiente con: " + desafiante.getNombre());
             getListaUsuariosDesafiantes().add(desafiante);
@@ -279,7 +278,7 @@ public class Operador extends MenuInicio{
       }
     }
     
-    public void añadir_atributos_personaje()throws Exception{
+    public void añadir_atributos_personaje(){
           int posPer = 1;
           for(Usuario user: getUserlist()){
              System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
@@ -365,7 +364,7 @@ public class Operador extends MenuInicio{
         usuariosBaneados.remove(usuarioDesbaneado);
     }
     
-    public void entrar_salirSistema()throws Exception{
+    public void entrar_salirSistema(){
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
       System.out.println("seleccione una opcion: -1 o 2-");
@@ -400,7 +399,15 @@ public class Operador extends MenuInicio{
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password){
+        try{
+            if(password.length() >= 8 & password.length() <= 12){
+                this.password = password;
+            }else{
+                throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
+            }
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -50,7 +50,7 @@ public class Combate extends MenuInicio{
      * @param user1 usuario que acepto el desafio
      * @param user2 usuario que desafia a otro
      */
-    public void iniciar(Usuario user1, Usuario user2)throws Exception{
+    public void iniciar(Usuario user1, Usuario user2){
             desafiante = user2;
             desafiado = user1;
             
@@ -71,8 +71,8 @@ public class Combate extends MenuInicio{
                 usuarioVencedor = desafiante;
                 int oroApostado = desafiante.getOroApostado();
                 
-                int oroDesafiado = desafiado.getTipoPersonaje().getOro();
-                int oroDesafiante = desafiante.getTipoPersonaje().getOro();
+                double oroDesafiado = desafiado.getTipoPersonaje().getOro();
+                double oroDesafiante = desafiante.getTipoPersonaje().getOro();
                 
                 if(oroApostado > oroDesafiado){
                     desafiado.getTipoPersonaje().setOro(0);    
@@ -91,8 +91,8 @@ public class Combate extends MenuInicio{
                 usuarioVencedor = desafiado;
                 int oroApostado = desafiante.getOroApostado();
                 
-                int oroDesafiado = desafiado.getTipoPersonaje().getOro();
-                int oroDesafiante = desafiante.getTipoPersonaje().getOro();
+                double oroDesafiado = desafiado.getTipoPersonaje().getOro();
+                double oroDesafiante = desafiante.getTipoPersonaje().getOro();
                 
                 if(oroApostado > oroDesafiante){
                     desafiante.getTipoPersonaje().setOro(0);    
