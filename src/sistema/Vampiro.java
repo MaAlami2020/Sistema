@@ -30,6 +30,7 @@ public class Vampiro extends Personaje{
     public Vampiro(){
     }
 
+    @Override
     public int getReservaPuntosSangre() {
         return reservaPuntosSangre;
     }
@@ -44,6 +45,7 @@ public class Vampiro extends Personaje{
         return nombre;
     }
 
+    @Override
     public int getEdad() {
         return edad;
     }
@@ -63,6 +65,7 @@ public class Vampiro extends Personaje{
         return poder;
     }
 
+    @Override
     public void setReservaPuntosSangre(int reservaPuntosSangre) {
         int sangreAcum = reservaPuntosSangre;
         if(sangreAcum < 0){
@@ -147,11 +150,12 @@ public class Vampiro extends Personaje{
         this.nombre = nombre;
     }
 
+    @Override
     public void setEdad(int edad) {
         if(edad >= 0){
            this.edad = edad;
         }else{
-           throw new UnsupportedOperationException("la edad no puede ser negativa");
+           throw new RuntimeException("la edad no puede ser negativa");
         }
     }
     
@@ -187,6 +191,10 @@ public class Vampiro extends Personaje{
         return habilidad;
     }
 
+    /**
+     *
+     * @param habilidad
+     */
     @Override
     public void setHabilidad(Habilidad habilidad) {
         //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no sea null    

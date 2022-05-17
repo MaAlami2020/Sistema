@@ -252,7 +252,7 @@ public class VampiroTest {
     @Test
     public void testSetHabilidad1() {
         try{
-            Don don = new Don();
+            Don don = new Don("silsavd",2,3,-1);
             Vampiro vampiro = new Vampiro();
             vampiro.setHabilidad(don);
             assertSame(don,vampiro.getHabilidad());
@@ -271,7 +271,7 @@ public class VampiroTest {
     @Test
     public void testSetHabilidad2() {
         try{
-            Talento talento = new Talento();
+            Talento talento = new Talento("chupar la sangre",3,1,91);
             Vampiro vampiro = new Vampiro();
             vampiro.setHabilidad(talento);
             assertSame(talento,vampiro.getHabilidad());
