@@ -12,7 +12,7 @@ import java.util.List;
  * @author mimit
  */
 public class Demonio extends Esbirro{
- 
+
     private String pacto;
     protected List<Esbirro> hijos = new ArrayList<>();
     

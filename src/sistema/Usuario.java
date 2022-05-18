@@ -312,7 +312,7 @@ public class Usuario extends MenuInicio{
             return oroPer;
     }
 
-    public void setOroPersonaje(int oro){
+    public void setOroPersonaje(double oro){
         try{
             tipoPersonaje.setOro(oro);
         }catch(RuntimeException e){
@@ -1102,3 +1102,5 @@ public class Usuario extends MenuInicio{
     }
         
 }
+
+

@@ -227,7 +227,7 @@ public class LicantropoTest {
     @Test
     public void testSetHabilidad1() {
         try{
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,1);
             Licantropo licantropo = new Licantropo();
             licantropo.setHabilidad(disciplina);
             fail("el personaje tiene como habilidad la disciplina");
@@ -245,7 +245,7 @@ public class LicantropoTest {
     @Test
     public void testSetHabilidad2() {
         try{
-            Talento talento = new Talento();
+            Talento talento = new Talento("adkgxv",3,1,455);
             Licantropo licantropo = new Licantropo();
             licantropo.setHabilidad(talento);
             fail("el personaje tiene como habilidad el talento");

@@ -41,10 +41,11 @@ public class DonTest {
      * test que prueba que el valor del ataque esta dentro de los limites permitidos
      */
     @Test
+
     public void testSetValorAtaque() {
         try{
             int valorAtaque = 2;
-            Don don = new Don();
+            Don don = new Don("adkgxv",2,1,455);
             don.setValorAtaque(valorAtaque);
             assertEquals(valorAtaque,don.getValorAtaque());
             System.out.println("CP1 incorrecto");
@@ -62,7 +63,7 @@ public class DonTest {
     public void testSetValorAtaque1() {
         try{
             int valorAtaque = 4;
-            Don don = new Don();
+            Don don = new Don("adkgxv",4,1,-455);
             don.setValorAtaque(valorAtaque);
             fail("el valor de ataque esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
@@ -80,7 +81,7 @@ public class DonTest {
     public void testSetValorAtaque2() {
         try{
             int valorAtaque = 9;
-            Don don = new Don();
+            Don don = new Don("adkgxv",9,1,455);
             don.setValorAtaque(valorAtaque);
             fail("el valor de ataque esta entre 1 y 3");
             System.out.println("CP3 incorrecto");
@@ -98,7 +99,7 @@ public class DonTest {
     public void testSetValorDefensa() {
         try{
             int valorDefensa = 2;
-            Don don = new Don();
+            Don don = new Don("adkgxv",3,2,455);
             don.setValorDefensa(valorDefensa);
             assertEquals(valorDefensa,don.getValorDefensa());
             System.out.println("CP1 incorrecto");
@@ -116,7 +117,7 @@ public class DonTest {
     public void testSetValorDefensa1() {
         try{
             int valorDefensa = 4;
-            Don don = new Don();
+            Don don = new Don("adkgxv",3,4,455);
             don.setValorDefensa(valorDefensa);
             fail("el valor de defensa esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
@@ -134,7 +135,7 @@ public class DonTest {
     public void testSetValorDefensa2() {
         try{
             int valorDefensa = 9;
-            Don don = new Don();
+            Don don = new Don("adkgxv",3,9,455);
             don.setValorDefensa(valorDefensa);
             fail("el valor de defensa esta entre 1 y 3");
             System.out.println("CP3 incorrecto");
@@ -152,7 +153,7 @@ public class DonTest {
     public void testSetCostePuntosSangre() {
         try{
             int costePuntosSangre = 0;
-            Don don = new Don();
+            Don don = new Don("adkgxv",3,1,455);
             don.setCostePuntosSangre(costePuntosSangre);
             fail("la habilidad tiene un coste en puntos de sangre");
             System.out.println("CP1 incorrecto");
@@ -170,7 +171,7 @@ public class DonTest {
     public void testSetEdad() {
         try{
             int edad = 0;
-            Don don = new Don();
+            Don don = new Don("adkgxv",3,1,-455);
             don.setEdad(edad);
             fail("la habilidad tiene una edad de adquisicion");
             System.out.println("CP1 incorrecto");

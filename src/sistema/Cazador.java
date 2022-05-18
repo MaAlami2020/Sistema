@@ -20,7 +20,7 @@ public class Cazador extends Personaje{
     private List<Fortaleza> listaFortalezas = new ArrayList<>();
     private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
-    private int oro;
+    private double oro;
     private int salud;
     private int poder;
     private Habilidad habilidad;
@@ -40,7 +40,7 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public int getOro() {
+    public double getOro() {
         return oro;
     }
 
@@ -111,12 +111,11 @@ public class Cazador extends Personaje{
 
     @Override
     public void setListaFortalezas(Fortaleza fortaleza) {
-        this.listaFortalezas = listaFortalezas;
+        this.listaFortalezas.add(fortaleza);
     }
-
-    @Override
+    
     public void setListaDebilidades(Debilidad debilidad) {
-        this.listaDebilidades = listaDebilidades;
+        this.listaDebilidades.add(debilidad);
     }
  
     @Override
@@ -125,7 +124,7 @@ public class Cazador extends Personaje{
     }
     
     @Override
-    public void setOro(int oro){
+    public void setOro(double oro){
         if(oro >= 0){ 
             this.oro = oro;
         }else{
@@ -203,7 +202,7 @@ public class Cazador extends Personaje{
     @Override
     public int getVoluntad() {
         return voulntad;
-    }
+    }   
 
     @Override
     public void setEdad(int edad) {

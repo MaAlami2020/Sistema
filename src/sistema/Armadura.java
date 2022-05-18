@@ -18,9 +18,7 @@ public class Armadura {
         this.modificadorAtaque = modificadorAtaque;
         this.modificadorDefensa = modificadorDefensa;
     }
-    
-    public Armadura(){
-    }
+
     
     public void setNombre(String nombre) {
         if(nombre != " "){
