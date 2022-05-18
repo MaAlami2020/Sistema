@@ -44,12 +44,12 @@ public class DisciplinaTest {
     public void testSetCostePuntosSangre() {
         try{
             int costePuntosSangre = 2;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
             disciplina.setCostePuntosSangre(costePuntosSangre);
             assertEquals(costePuntosSangre,disciplina.getCostePuntosSangre());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"se sobrepasa el valor limite del coste de puntos de sangre");
+            fail("se sobrepasa el valor limite del coste de puntos de sangre");
             System.out.println("CP1 correcto");
         }
     }
@@ -62,9 +62,9 @@ public class DisciplinaTest {
     public void testSetCostePuntosSangre1() {
         try{
             int costePuntosSangre = 4;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,2);
             disciplina.setCostePuntosSangre(costePuntosSangre);
-            assertEquals(costePuntosSangre,disciplina.getCostePuntosSangre());
+            fail("el valor del coste de puntos de sangre esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite del coste de puntos de sangre");
@@ -80,9 +80,9 @@ public class DisciplinaTest {
     public void testSetCostePuntosSangre2() {
         try{
             int costePuntosSangre = 9;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
             disciplina.setCostePuntosSangre(costePuntosSangre);
-            assertEquals(costePuntosSangre,disciplina.getCostePuntosSangre());
+            fail("el valor del coste de puntos de sangre esta entre 1 y 3");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite del coste de puntos de sangre");
@@ -98,12 +98,12 @@ public class DisciplinaTest {
     public void testSetValorAtaque() {
         try{
             int valorAtaque = 2;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,1);
             disciplina.setValorAtaque(valorAtaque);
             assertEquals(valorAtaque,disciplina.getValorAtaque());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
+            fail("se sobrepasa el valor limite de valor de ataque");
             System.out.println("CP1 correcto");
         }
     }
@@ -116,9 +116,9 @@ public class DisciplinaTest {
     public void testSetValorAtaque1() {
         try{
             int valorAtaque = 4;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,2);
             disciplina.setValorAtaque(valorAtaque);
-            assertEquals(valorAtaque,disciplina.getValorAtaque());
+            fail("el valor de ataque esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
@@ -134,9 +134,9 @@ public class DisciplinaTest {
     public void testSetValorAtaque2() {
         try{
             int valorAtaque = 9;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,2);
             disciplina.setValorAtaque(valorAtaque);
-            assertEquals(valorAtaque,disciplina.getValorAtaque());
+            fail("el valor de ataque esta entre 1 y 3");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de ataque");
@@ -152,12 +152,12 @@ public class DisciplinaTest {
     public void testSetValorDefensa() {
         try{
             int valorDefensa = 2;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,1);
             disciplina.setValorDefensa(valorDefensa);
             assertEquals(valorDefensa,disciplina.getValorDefensa());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
+            fail("se sobrepasa el valor limite de valor de defensa");
             System.out.println("CP1 correcto");
         }
     }
@@ -170,9 +170,9 @@ public class DisciplinaTest {
     public void testSetValorDefensa1() {
         try{
             int valorDefensa = 4;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,1);
             disciplina.setValorDefensa(valorDefensa);
-            assertEquals(valorDefensa,disciplina.getValorDefensa());
+            fail("el valor de defensa esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
@@ -188,9 +188,9 @@ public class DisciplinaTest {
     public void testSetValorDefensa2() {
         try{
             int valorDefensa = 9;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
             disciplina.setValorDefensa(valorDefensa);
-            assertEquals(valorDefensa,disciplina.getValorDefensa());
+            fail("el valor de defensa esta entre 1 y 3");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"se sobrepasa el valor limite de valor de defensa");
@@ -206,12 +206,12 @@ public class DisciplinaTest {
     public void testSetRabiaMin() {
         try{
             int rabiaMin = 0;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
             disciplina.setRabiaMin(rabiaMin);
-            assertEquals(rabiaMin,disciplina.getRabiaMin());
+            fail("la habilidad tiene rabia minima");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no retorna rabia minima");
+            assertEquals(e.getMessage(),"esta habilidad no tiene rabia minima");
             System.out.println("CP1 correcto");
         }
     }
@@ -223,14 +223,13 @@ public class DisciplinaTest {
     @Test
     public void testSetEdad() {
         try{
-            System.out.println("setEdad");
             int edad = 0;
-            Disciplina disciplina = new Disciplina();
+            Disciplina disciplina = new Disciplina("adkgxv",3,1,2);
             disciplina.setEdad(edad);
-            assertEquals(edad,disciplina.getEdad());
+            fail("la habilidad tiene edad de adquisicion");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no retorna rabia minima");
+            assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
             System.out.println("CP1 correcto");
         }
     }

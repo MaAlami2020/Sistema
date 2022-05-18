@@ -65,12 +65,11 @@ public class Cazador extends Personaje{
     
     @Override
     public void setArmasActivas(Arma armaActiva) {
-        int manejo = 2;
-        if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo)){
+        if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("2 manos")){
             this.armasActivas.add(armaActiva);
-        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 0 & armaActiva.getManejo().equals(manejo--)){
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("1 mano")){
             this.armasActivas.add(armaActiva);
-        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals(manejo--)){    
+        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals("1 mano")){    
             this.armasActivas.add(armaActiva);
         }else{
             throw new RuntimeException("ha llegado al tope de armas activas");  
@@ -80,9 +79,13 @@ public class Cazador extends Personaje{
     @Override
     public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
         if(pos == 0 | pos == 1){
-            this.armasActivas.add(pos,nuevaArmaActiva);
+            if(armasActivas.get(pos).getManejo().equals(nuevaArmaActiva.getManejo())){
+                this.armasActivas.add(pos,nuevaArmaActiva);
+            }else{
+                throw new RuntimeException("no se pueden intercambiar las armas");
+            }
         }else{
-            throw new RuntimeException("posicion fuera del rango del tamaño del array");
+            throw new RuntimeException("posicion fuera del rango del tamaño de la lista de armas activas");
         }
     }
     
@@ -148,15 +151,9 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public Habilidad getHabilidad() {
-        return habilidad;
-    }
-
-    @Override
     public void setHabilidad(Habilidad habilidad) {
         int valorEdad = habilidad.getEdad();
-        String edadAdquisicion = String.valueOf(valorEdad);
-        if(!edadAdquisicion.equals("esta habilidad no tiene una edad de adquisicion")){
+        if(valorEdad != -1){
             this.habilidad = habilidad;
         }
     }
@@ -193,7 +190,7 @@ public class Cazador extends Personaje{
 
     @Override
     public int getRabia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
 
     @Override
@@ -233,6 +230,11 @@ public class Cazador extends Personaje{
         }else{
            throw new RuntimeException("no se puede quitar mas voluntad");
         }
+    }
+
+    @Override
+    public Habilidad getHabilidad() {
+        return habilidad;
     }
     
 }
