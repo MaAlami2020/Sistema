@@ -266,7 +266,7 @@ public class LicantropoTest {
         try{
             int oro = 32;     
             licantropo.setOro(oro);
-            assertEquals(32,licantropo.getOro());
+            assertEquals(32,licantropo.getOro(),0.1);
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
             Exception e;
@@ -304,9 +304,9 @@ public class LicantropoTest {
     public void testSetOro2() {
         Licantropo licantropo = new Licantropo();
         try{
-            int oro = 0;     
+            double oro = 0.0;     
             licantropo.setOro(oro);
-            assertEquals(0,licantropo.getOro());
+            assertEquals(0.0,licantropo.getOro(),0.1);
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
             Exception e;

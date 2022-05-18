@@ -290,7 +290,7 @@ public class CazadorTest {
         try{
             int oro = 32;     
             cazador.setOro(oro);
-            assertEquals(oro,cazador.getOro());
+            assertEquals(oro,cazador.getOro(),0.1);
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
             fail("la cantidad de oro no puede ser negativa");
@@ -328,7 +328,7 @@ public class CazadorTest {
         try{
             int oro = 0;     
             cazador.setOro(oro);
-            assertEquals(0,cazador.getOro());
+            assertEquals(0,cazador.getOro(),0.1);
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
             fail("la cantidad de oro no puede ser negativa");
