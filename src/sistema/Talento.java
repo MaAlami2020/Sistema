@@ -12,7 +12,9 @@ public class Talento extends Habilidad{
     private int edad;
 
     public Talento(String nombre, int valorAtaque, int valorDefensa, int edad) {
-        super(nombre,valorAtaque,valorDefensa);
+        nombreHab = nombre;
+        valorAtaqueHab = valorAtaque;
+        valorDefensaHab = valorDefensa;
         this.edad = edad;
     }
 

@@ -9,23 +9,17 @@ package sistema;
  * @author mimit
  */
 public abstract class Habilidad {
-    private String nombre;
-    private int valorAtaque;
-    private int valorDefensa;
-    
-    public Habilidad(String nombre, int valorAtaque, int valorDefensa){
-        this.nombre = nombre;
-        this.valorAtaque = valorAtaque;
-        this.valorDefensa = valorDefensa;
-    }
+    protected String nombreHab;
+    protected int valorAtaqueHab;
+    protected int valorDefensaHab;
     
     public void setNombre(String nombre){
-        this.nombre = nombre;
+        this.nombreHab = nombre;
     }
     
     public void setValorAtaque(int valorAtaque){
         if(valorAtaque >= 1 & valorAtaque <= 3){
-           this.valorAtaque = valorAtaque;
+           this.valorAtaqueHab = valorAtaque;
         }else{
            throw new RuntimeException("se sobrepasa el valor limite de valor de ataque");
         }
@@ -33,20 +27,20 @@ public abstract class Habilidad {
     
     public void setValorDefensa(int valorDefensa){
         if(valorDefensa >= 1 & valorDefensa <= 3){
-           this.valorDefensa = valorDefensa;
+           this.valorDefensaHab = valorDefensa;
         }else{
            throw new RuntimeException("se sobrepasa el valor limite de valor de defensa"); 
         }
     } 
     
     public String getNombre(){
-        return nombre;
+        return nombreHab;
     }   
     public int getValorAtaque(){
-        return valorAtaque;
+        return valorAtaqueHab;
     }
     public int getValorDefensa(){
-        return valorDefensa;
+        return valorDefensaHab;
     }
     
     public abstract void setCostePuntosSangre(int costePuntosSangre);

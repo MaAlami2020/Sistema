@@ -233,6 +233,7 @@ public class CazadorTest {
             Talento talento = new Talento("extirpacion",3,1,219);
             Cazador cazador = new Cazador();
             cazador.setHabilidad(talento);
+            
             assertEquals(talento,cazador.getHabilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){

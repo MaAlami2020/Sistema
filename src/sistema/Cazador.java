@@ -151,15 +151,9 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public Habilidad getHabilidad() {
-        return habilidad;
-    }
-
-    @Override
     public void setHabilidad(Habilidad habilidad) {
         int valorEdad = habilidad.getEdad();
-        String edadAdquisicion = String.valueOf(valorEdad);
-        if(!edadAdquisicion.equals("esta habilidad no tiene una edad de adquisicion")){
+        if(valorEdad != -1){
             this.habilidad = habilidad;
         }
     }
@@ -236,6 +230,11 @@ public class Cazador extends Personaje{
         }else{
            throw new RuntimeException("no se puede quitar mas voluntad");
         }
+    }
+
+    @Override
+    public Habilidad getHabilidad() {
+        return habilidad;
     }
     
 }
