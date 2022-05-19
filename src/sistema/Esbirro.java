@@ -39,16 +39,7 @@ public abstract class Esbirro {
     
     public abstract void setDependencia(int dependenncia);
     public abstract void setPacto(String pacto);
-    public abstract void setLealtad(Lealtad lealtad); 
-    
-    public String getNombre(){
-       return nombre;
-    }
-    
-    public int getSalud(){
-        return salud;
-    }
-    public abstract void setLealtad(Lealtad lealtad)
+    public abstract void setLealtad(Lealtad lealtad);
     public abstract Lealtad getLealtad();
     public abstract String getPacto();
     public abstract int getDependencia();

@@ -11,6 +11,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -111,7 +112,7 @@ public class UsuarioTest {
         }catch(Exception ex){
             Exception e;
             e = ex;
-            assertEquals("cantidad apostada no valida");
+            assertEquals(e.getMessage(),"cantidad apostada no valida");
             System.out.println("CP1 correcto");
         }
     }

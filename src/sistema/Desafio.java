@@ -28,16 +28,7 @@ public class Desafio implements Iterator{
            String opcion = sc.next();
            opc = Integer.parseInt(opcion);
         }while((opc < 1)|(opc > 3));
-        if(opc == 1){          
-           List<Arma> nuevasArmas = desafiado.cambiarArmas_activas();
-           desafiado.setArmasActivasPersonaje(nuevasArmas);
-        }else if(opc == 2){
-           Armadura nuevaArmadura = desafiado.cambiarArmadura_activa();
-           desafiado.setArmaduraActivaPersonaje(nuevaArmadura);
-        }else if(opc == 3){
-           combate.iniciar(desafiado,desafiante);
-           combate.mostrarResultaddo();
-        }
+        //si los competidores no tienen equipos activos no se puede inicializar el combate
         List<Arma> armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
         Armadura armaduraDesafiante = desafiante.getTipoPersonaje().getArmaduraActiva();
         List<Arma> armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
@@ -45,7 +36,7 @@ public class Desafio implements Iterator{
         if((!(armasDesafiante.isEmpty())|(armaduraDesafiante != null))&((!armasDesafiado.isEmpty())|(armaduraDesafiado != null))){           
             switch (opc) {
                 case 1:
-                   desafiado.ActualizarArmasActivasPersonaje();
+                   desafiado.cambiarArmasActivasPersonaje();
                    break;
                 case 2:
                    Armadura nuevaArmadura = desafiado.cambiarArmadura_activa();
