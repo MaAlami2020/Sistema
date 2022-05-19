@@ -13,7 +13,9 @@ public class Don extends Habilidad{
     private int rabiaMin;
 
     public Don(String nombre, int valorAtaque, int valorDefensa, int rabiaMin) {
-        super(nombre,valorAtaque,valorDefensa);
+        nombreHab = nombre;
+        valorAtaqueHab = valorAtaque;
+        valorDefensaHab = valorDefensa;
         this.rabiaMin = rabiaMin;
     }
     

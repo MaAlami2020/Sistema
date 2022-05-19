@@ -47,7 +47,7 @@ public class HumanoTest {
     public void testSetSalud() {
         try{
             int salud = 2;
-            Humano humano = new Humano("estropicus",salud,ALTA);
+            Humano humano = new Humano("asòd",salud,NORMAL);
             humano.setSalud(salud);
             assertEquals(salud,humano.getSalud());
             System.out.println("CP1 incorrecto");

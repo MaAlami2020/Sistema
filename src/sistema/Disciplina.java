@@ -13,7 +13,9 @@ public class Disciplina extends Habilidad{
     private int costePuntosSangre;
 
     public Disciplina(String nombre, int valorAtaque, int valorDefensa, int costePuntosSangre) {
-        super(nombre,valorAtaque,valorDefensa);
+        nombreHab = nombre;
+        valorAtaqueHab = valorAtaque;
+        valorDefensaHab = valorDefensa;
         this.costePuntosSangre = costePuntosSangre;
     }
 
@@ -38,7 +40,7 @@ public class Disciplina extends Habilidad{
 
     @Override
     public int getRabiaMin() {
-        return -1; 
+        return -1;
     }
 
     @Override

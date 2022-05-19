@@ -146,7 +146,7 @@ public class CazadorTest {
     
     /**
      * Test of setArmasActivas method, of class Cazador.
-     * test que prueba que se puede cambiar un arma activa por otra
+     * test que prueba que se puede cambiar un arma activa por otra que es del mismo manejo
      */
     @Test
     public void testSetNuevasArmasActivas() {
@@ -169,14 +169,38 @@ public class CazadorTest {
             System.out.println("CP1 correcto");
         }
     }
-    
+    /**
+     * Test of setArmasActivas method, of class Cazador.
+     * test que prueba que se puede cambiar un arma activa por otra que es de distinto mismo manejo
+     */
+    @Test
+    public void testSetNuevasArmasActivas1() {
+        try{          
+            Cazador cazador = new Cazador();
+            
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            cazador.setListaArmas(arma1);
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            cazador.setListaArmas(arma2);
+            Arma arma3 = new Arma("satan",3,3,"2 manos");
+            cazador.setListaArmas(arma3);
+        
+            cazador.setArmasActivas(arma1);
+            cazador.setArmasActivas(arma2);
+            cazador.setNuevasArmasActivas(0, arma3);
+            System.out.println("CP1 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"no se pueden intercambiar las armas");
+            System.out.println("CP1 correcto");
+        }
+    }
     /**
      * Test of setArmasActivas method, of class Cazador.
      * test que prueba que no se puede cambiar un arma activa por otra porque el arma seleccionada
      * a cambiar esta fuera del rango del tamaño de la lista de armas activas
      */
     @Test
-    public void testSetNuevasArmasActivas1() {
+    public void testSetNuevasArmasActivas2() {
         try{          
             Cazador cazador = new Cazador();
             
@@ -209,7 +233,8 @@ public class CazadorTest {
             Talento talento = new Talento("extirpacion",3,1,219);
             Cazador cazador = new Cazador();
             cazador.setHabilidad(talento);
-            assertSame(talento,cazador.getHabilidad());
+            
+            assertEquals(talento,cazador.getHabilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             fail("esta habilidad no tiene una edad de adquisicion");
@@ -265,7 +290,7 @@ public class CazadorTest {
         try{
             int oro = 32;     
             cazador.setOro(oro);
-            assertEquals(oro,cazador.getOro());
+            assertEquals(oro,cazador.getOro(),0.1);
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
             fail("la cantidad de oro no puede ser negativa");
@@ -303,7 +328,7 @@ public class CazadorTest {
         try{
             int oro = 0;     
             cazador.setOro(oro);
-            assertEquals(0,cazador.getOro());
+            assertEquals(0,cazador.getOro(),0.1);
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
             fail("la cantidad de oro no puede ser negativa");
@@ -491,7 +516,39 @@ public class CazadorTest {
             System.out.println("CP1 correcto");
         }
     }
-
+/**
+     * Test of setEdad method, of class Cazador.
+     * test en el que se intenta meter un valor de edad cualquiera pese a que este personaje no tiene rabia
+     */
+    @Test
+    public void testSetEdad() {
+        try{
+            int edad = 8;
+            Cazador cazador = new Cazador();
+            cazador.setEdad(edad);
+            fail("este personaje tiene edad");
+            System.out.println("CP1 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"este personaje no tiene una edad");
+            System.out.println("CP1 correcto");
+        }
+    }/**
+     * Test of setRabia method, of class Cazador.
+     * test en el que se intenta meter un valor de reserva de puntos de sangre cualquiera pese a que este personaje no tiene rabia
+     */
+    @Test
+    public void testSetReservaPutosSangre() {
+        try{
+            int reserva = 8;
+            Cazador cazador = new Cazador();
+            cazador.setReservaPuntosSangre(reserva);
+            fail("este personaje tiene reserva");
+            System.out.println("CP1 incorrecto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"este personaje no tiene reserva de puntos de sangre");
+            System.out.println("CP1 correcto");
+        }
+    }
     /**
      * Test of setVoluntad method, of class Cazador.
      * test en el que se actualiza la voluntad de este personaje restándole 1 unidad
