@@ -46,6 +46,7 @@ public class ArmaTest {
         Arma a = new Arma(null,0,0,null);
         try {
             a.setModificadorAtaque(4);
+            fail("el valor del modificador al ataque esta dentro del limite (1-3)");
             System.out.println("CP1 incorrecto");
         } catch(Exception ex) {
             Exception e;
@@ -140,18 +141,7 @@ public class ArmaTest {
             System.out.println("CP6 correcto");
         }
     }
-    
-    @Test
-    public void anadirModifDefensa(){
-        Arma a3 = new Arma(null,0,0,null);
-        Exception e = null;
-        try {
-             a3.setModificadorDefensa(0);
-        } catch(Exception ex) {
-             e = ex;
-        } 
-        assertNull(e);
-    }
+
     /**
      * Test of setModificadorDefensa method, of class Arma.
      * test para comprobar que el siguiente valor al rango superior [1-3]
@@ -329,7 +319,6 @@ public class ArmaTest {
              assertEquals("2 manos",a1.getManejo());
              System.out.println("CP2 incorrecto");
         } catch(Exception ex) {
-            Exception e = null;
             fail("el manejo del arma no puede ser de 2 manos");
             System.out.println("CP2 correcto");
         }
@@ -347,7 +336,7 @@ public class ArmaTest {
         } catch(Exception ex) {
             Exception e = null;
             e = ex;
-            assertEquals(e.getMessage(),"valor manejo invalido");
+            assertEquals(e.getMessage(),"valor invalido");
             System.out.println("CP3 correcto");
         }
     }
