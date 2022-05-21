@@ -15,18 +15,16 @@ import java.util.List;
  * @author mimit
  */
 public class MenuInicio implements Serializable{
-    protected List<Usuario> userlist = new ArrayList<>();
-    protected List<Operador> operatorlist = new ArrayList<>();
-    protected List<Usuario> listaUsuariosDesafiantes = new ArrayList<>();
-    protected List<Combate> listaCombates = new ArrayList<>();
-    protected List<Usuario> usuariosBaneados = new ArrayList<>();
-    protected List<Usuario> desafiosParaValidar = new ArrayList<>();
-    public MenuInicio(){// throws FileNotFoundException, IOException{
+    private List<Usuario> userlist = new ArrayList<>();
+    private List<Operador> operatorlist = new ArrayList<>();
+    private List<Usuario> listaUsuariosDesafiantes = new ArrayList<>();
+    private List<Combate> listaCombates = new ArrayList<>();
+    private List<Usuario> usuariosBaneados = new ArrayList<>();
+    private List<Usuario> desafiosParaValidar = new ArrayList<>();
+    
+    public MenuInicio(){
         
     }
-
-    //public abstract void registrar_darBaja();
-    //public abstract void entrar_salirSistema();
     
     public List<Usuario> getUserlist() {
         return userlist;
