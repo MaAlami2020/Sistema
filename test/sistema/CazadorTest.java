@@ -171,7 +171,7 @@ public class CazadorTest {
     }
     /**
      * Test of setArmasActivas method, of class Cazador.
-     * test que prueba que se puede cambiar un arma activa por otra que es de distinto mismo manejo
+     * test que prueba que no se puede cambiar un arma activa por otra que es de distinto mismo manejo
      */
     @Test
     public void testSetNuevasArmasActivas1() {
@@ -188,6 +188,7 @@ public class CazadorTest {
             cazador.setArmasActivas(arma1);
             cazador.setArmasActivas(arma2);
             cazador.setNuevasArmasActivas(0, arma3);
+            fail("no se pueden intercambiar armas de distinto manejo");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"no se pueden intercambiar las armas");
@@ -238,7 +239,7 @@ public class CazadorTest {
             assertEquals(talento,cazador.getHabilidad());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            fail("esta habilidad no tiene una edad de adquisicion");
+            fail("este personaje no tiene esta habilidad");
             System.out.println("CP1 correcto");
         }
     }
@@ -246,7 +247,7 @@ public class CazadorTest {
     /**
      * Test of setHabilidad method, of class Cazador.
      * test para probar que este personaje no tiene como habilidad especial el don 
-     * porque esa habilidad no tiene una edad de adquiscion
+     * porque no tiene una edad de adquiscion
      */
     @Test
     public void testSetHabilidad1() {
@@ -254,10 +255,10 @@ public class CazadorTest {
             Don don = new Don("adkgxv",3,1,455);
             Cazador cazador = new Cazador(); 
             cazador.setHabilidad(don);
-            fail("esta habilidad tiene una edad de adquisicion");
+            fail("este personaje tiene esta habilidad");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
+            assertEquals(e.getMessage(),"este personaje no tiene esta habilidad");
             System.out.println("CP2 correcto");
         }
     }
@@ -265,7 +266,7 @@ public class CazadorTest {
     /**
      * Test of setHabilidad method, of class Cazador.
      * test para probar que este personaje no tiene como habilidad especial la disciplina 
-     * porque esta habilidad no tiene una edad de adquisicion
+     * porque no tiene una edad de adquisicion
      */
     @Test
     public void testSetHabilidad2() {
@@ -273,10 +274,10 @@ public class CazadorTest {
             Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
             Cazador cazador = new Cazador();
             cazador.setHabilidad(disciplina);
-            fail("esta habilidad tiene una edad de adquisicion");
+            fail("este personaje tiene esta habilidad");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene una edad de adquisicion");
+            assertEquals(e.getMessage(),"este personaje no tiene esta habilidad");
             System.out.println("CP3 correcto");
         }
     }
