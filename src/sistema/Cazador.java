@@ -155,6 +155,8 @@ public class Cazador extends Personaje{
         int valorEdad = habilidad.getEdad();
         if(valorEdad != -1){
             this.habilidad = habilidad;
+        }else{
+            throw new RuntimeException("este personaje no tiene esta habilidad");
         }
     }
     

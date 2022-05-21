@@ -385,7 +385,7 @@ public class VampiroTest {
     /**
      * Test of setHabilidad method, of class Vampiro.
      * test para probar que este personaje no tiene como habilidad especial el don 
-     * porque esta habilidad no tiene un coste en puntos de sangre
+     * porque no tiene un coste en puntos de sangre
      */
     @Test
     public void testSetHabilidad1() {
@@ -396,7 +396,7 @@ public class VampiroTest {
             fail("el personaje tiene como habilidad el don");
             System.out.println("CP2 incorrecto");
         }catch(RuntimeException e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
+            assertEquals(e.getMessage(),"este personaje no tiene esta habilidad");
             System.out.println("CP2 correcto");
         }
     }
@@ -404,7 +404,7 @@ public class VampiroTest {
     /**
      * Test of setHabilidad method, of class Vampiro.
      * test para probar que este personaje no tiene como habilidad especial el talento 
-     * porque esta habilidad no tiene un coste en puntos de sangre
+     * porque no tiene un coste en puntos de sangre
      */
     @Test
     public void testSetHabilidad2() {
@@ -415,7 +415,7 @@ public class VampiroTest {
             fail("el personaje tiene como habilidad el talento");
             System.out.println("CP3 incorrecto");
         }catch(RuntimeException e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
+            assertEquals(e.getMessage(),"este personaje no tiene esta habilidad");
             System.out.println("CP3 correcto");
         }
     }

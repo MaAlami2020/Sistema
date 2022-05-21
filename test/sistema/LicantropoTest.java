@@ -522,7 +522,7 @@ public class LicantropoTest {
      * y sabiendo que la rabia actual del personaje es 2
      */
     @Test
-    public void testSetVoluntad1() {
+    public void testSetRabia1() {
         try{
             Licantropo licantropo = new Licantropo();
             int rabia = 2;
@@ -531,7 +531,7 @@ public class LicantropoTest {
             assertEquals(3,licantropo.getRabia());
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"ha llegado al tope de rabia");
+            fail("ha llegado al tope de rabia");
             System.out.println("CP2 correcto");
         }
     }
@@ -548,7 +548,7 @@ public class LicantropoTest {
             int rabia = 3;
             rabia++;
             licantropo.setRabia(rabia);
-            assertEquals(3,licantropo.getRabia());
+            fail("no ha llegado al tope de rabia");
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"ha llegado al tope de rabia");

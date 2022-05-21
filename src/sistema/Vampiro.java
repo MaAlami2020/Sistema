@@ -192,20 +192,18 @@ public class Vampiro extends Personaje{
     }
 
     /**
-     *
+     * trato de distinguir al personaje segun el atributo que solo dispone este personaje, 
+     * es decir, que si el valor del coste en puntos de sangre es -1 significa que esa habilidad no tiene un coste
+     * y si la habilidad no tiene un coste entonces ese personaje no tiene esa habilidad
      * @param habilidad
      */
     @Override
-    public void setHabilidad(Habilidad habilidad) {
-        //distinguir al personaje segun el atributo que solo dispone este personaje, es decir que no sea null    
-        try{
-            int valorCoste = habilidad.getCostePuntosSangre();
-            String coste = String.valueOf(valorCoste);
-            if(!coste.equals("esta habilidad no tiene coste")){
-                this.habilidad = habilidad;
-            }
-        }catch(RuntimeException e){
-            System.out.println("este personaje no tiene esta habilidad");
+    public void setHabilidad(Habilidad habilidad) { 
+        int valorCoste = habilidad.getCostePuntosSangre();
+        if(valorCoste != -1){
+            this.habilidad = habilidad;
+        }else{
+            throw new RuntimeException("este personaje no tiene esta habilidad");
         }
     }
     
