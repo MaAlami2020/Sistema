@@ -45,12 +45,10 @@ public class OperadorTest {
         Operador operator = new Operador();
         try{
             String password = "micontr";
-            operator.setPassword(password);
-            assertEquals(password,operator.getPassword());
+            operator.setPassword(password);            
+            fail("la longitud de la contraseña esta dentro del rango(8-12)");
             System.out.println("CP1 incorrecto");
-        }catch(Exception ex){
-            Exception e;
-            e = ex;
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"longitud de la contrasenia fuera del rango[8-12]");
             System.out.println("CP1 correcto");
         }
@@ -66,11 +64,9 @@ public class OperadorTest {
         try{
             String password = "micontrasenia";
             operator1.setPassword(password);
-            assertEquals(password,operator1.getPassword());
+            fail("la contraseña esta dentro del limite (8-12)");
             System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
-            Exception e;
-            e = ex;
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"longitud de la contrasenia fuera del rango[8-12]");
             System.out.println("CP2 correcto");
         }
@@ -88,10 +84,8 @@ public class OperadorTest {
             operator2.setPassword(password);
             assertEquals(password,operator2.getPassword());
             System.out.println("CP3 incorrecto");
-        }catch(Exception ex){
-            Exception e;
-            e = ex;
-            assertEquals(e.getMessage(),"longitud de la contrasenia fuera del rango[8-12]");
+        }catch(RuntimeException e){
+            fail("longitud de la contrasenia fuera del rango[8-12]");
             System.out.println("CP3 correcto");
         }
     }

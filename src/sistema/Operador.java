@@ -110,15 +110,17 @@ public class Operador extends MenuInicio{
         System.out.println("ingrese una contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
         String contrasenia = sc.next();
-        while((contrasenia.length() < 1)&(contrasenia.length() > 4)){
+        this.password = contrasenia;
+        while(contrasenia.length() < 8 | contrasenia.length() > 12){
            System.out.println("Por favor, ingrese una nueva contrasenia (8-12 caracteres): ");
            sc = new Scanner(System.in);
            contrasenia = sc.next();
+           this.password = contrasenia;
         }
-        this.setPassword(contrasenia);
+        
         
         for(Operador op: getOperatorlist()){
-           if((op.getNombre().equals(name))&(op.getNick().equals(apodo))){
+           if(op.getNombre().equals(name) & op.getNick().equals(apodo)){
                operatorRegistered = true;
                System.out.println("usuario ya registrado");
                entrar_salirSistema();
@@ -442,14 +444,10 @@ public class Operador extends MenuInicio{
     }
 
     public void setPassword(String password){
-        try{
-            if(password.length() >= 8 & password.length() <= 12){
-                this.password = password;
-            }else{
-                throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
-            }
-        }catch(RuntimeException e){
-            System.out.println(e.getMessage());
+        if(password.length() >= 8 & password.length() <= 12){
+            this.password = password;
+        }else{
+            throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
         }
     }
 }
