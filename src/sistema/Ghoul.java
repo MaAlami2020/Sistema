@@ -34,12 +34,12 @@ public class Ghoul extends Esbirro{
 
     @Override
     public void setPacto(String pacto) {
-        System.out.println("este esbirro no tiene un pacto");
+        throw new RuntimeException("este esbirro no tiene un pacto");
     }
 
     @Override
     public void setLealtad(Lealtad lealtad) {
-        System.out.println("este esbirro no tiene una lealtad");
+        throw new RuntimeException("este esbirro no tiene una lealtad");
     }
 
     @Override
@@ -49,6 +49,6 @@ public class Ghoul extends Esbirro{
 
     @Override
     public String getPacto() {
-        return "este esbirro no tiene un pacto";
+        return null;
     }
 }

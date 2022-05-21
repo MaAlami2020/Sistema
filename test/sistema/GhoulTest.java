@@ -122,7 +122,7 @@ public class GhoulTest {
             assertEquals(dependencia,ghoul.getDependencia());
             System.out.println("CP1 incorreccto");
         }catch(Exception e){
-            fail("este esbirro  no tiene una dependencia");
+            fail("sobrepasa el valor limite de dependencia");
             System.out.println("CP1 correcto");
         }
     }
@@ -140,7 +140,7 @@ public class GhoulTest {
             fail("el valor de dependencia esta entre 1 y 5");
             System.out.println("CP2 incorreccto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"este esbirro  no tiene una dependencia");
+            assertEquals(e.getMessage(),"sobrepasa el valor limite de dependencia");
             System.out.println("CP2 correcto");
         }
     }
@@ -152,13 +152,13 @@ public class GhoulTest {
     @Test
     public void testSetDependencia2() {
         try{
-            int dependencia = 11;
+            int dependencia = 1;
             Ghoul ghoul = new Ghoul("lexus",1,dependencia);
             ghoul.setDependencia(dependencia);
             assertEquals(dependencia,ghoul.getDependencia());
             System.out.println("CP3 incorreccto");
         }catch(Exception e){
-            fail("este esbirro  no tiene una dependencia");
+            fail("sobrepasa el valor limite de dependencia");
             System.out.println("CP3 correcto");
         }
     }
