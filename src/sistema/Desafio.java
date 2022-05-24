@@ -12,13 +12,16 @@ import java.util.Scanner;
  * @author mimit
  */
 public class Desafio implements Iterator{
-    //private Combate combate = new Combate();
+    private MenuInicio menu;
 
     public Desafio(){
     }
-
+    public Desafio(MenuInicio menu){
+        this.menu = menu;
+    }
+  
     public void aceptar(Usuario desafiado, Usuario desafiante){
-        Combate combate = new Combate();
+        Combate combate = new Combate(menu);
         int opc = 0;
         do{
            System.out.println("1.cambiar arma activa");
@@ -28,13 +31,15 @@ public class Desafio implements Iterator{
            String opcion = sc.next();
            opc = Integer.parseInt(opcion);
         }while((opc < 1)|(opc > 3));
+        /*
         //si los competidores no tienen equipos activos no se puede inicializar el combate
         List<Arma> armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
         Armadura armaduraDesafiante = desafiante.getTipoPersonaje().getArmaduraActiva();
         List<Arma> armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
         Armadura armaduraDesafiado = desafiado.getTipoPersonaje().getArmaduraActiva();
         if((!(armasDesafiante.isEmpty())|(armaduraDesafiante != null))&((!armasDesafiado.isEmpty())|(armaduraDesafiado != null))){           
-            switch (opc) {
+        */    
+        switch (opc) {
                 case 1:
                    desafiado.cambiarArmasActivasPersonaje();
                    break;
@@ -49,9 +54,11 @@ public class Desafio implements Iterator{
                 default:
                    break;
             }
+        /*
         }else{
             System.out.println("no tiene armas o armadura activa");
         }
+        */
     }
 
     /**

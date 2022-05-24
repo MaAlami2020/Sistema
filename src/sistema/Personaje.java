@@ -11,7 +11,6 @@ import java.util.List;
  * @author mimit
  */
 public abstract class Personaje {
-    //private String nombre;
     
     public abstract void setNombre(String nombre);
     public abstract void setEdad(int edad);

@@ -12,18 +12,22 @@ import java.util.List;
  *
  * @author mimit
  */
-public class Combate extends MenuInicio{
-    private List<Ronda> listaRondas;
+public class Combate{
+    private List<Ronda> listaRondas = new ArrayList<>();
     private Usuario desafiante;
     private Usuario desafiado; 
     private Usuario usuarioVencedor;
     private LocalDateTime fecha = LocalDateTime.now();
     private double oroGanado;
     private List<Usuario> contendientes = new ArrayList<>();
-    //private Ronda ronda= new Ronda();
+    private MenuInicio menu;
 
     public Combate(){
-        listaRondas = new ArrayList<>();
+        
+    }
+    
+    public Combate(MenuInicio menu){
+        this.menu = menu;
     }
 
     public LocalDateTime getFecha() {
@@ -56,13 +60,15 @@ public class Combate extends MenuInicio{
             
             int saludDesafiado = desafiado.getTipoPersonaje().getSalud();
             int saludDesafiante = desafiante.getTipoPersonaje().getSalud();
-            Ronda ronda = new Ronda();
             
             while((saludDesafiante > 0)|(saludDesafiado > 0)){
+                Ronda ronda = new Ronda(menu);
                 ronda.calcularPotencialAtaque(desafiante,desafiado);
-                ronda.calcularPotencialDefensa(desafiante,desafiado);
-                ronda.Juego(desafiante,desafiado);
+                //ronda.calcularPotencialDefensa(desafiante,desafiado);
+                ronda.Jugar(desafiante,desafiado);
                 listaRondas.add(ronda);
+                saludDesafiado = desafiado.getTipoPersonaje().getSalud();
+                saludDesafiante = desafiante.getTipoPersonaje().getSalud();
             }
             if(saludDesafiado == 0 & saludDesafiante == 0){
                 usuarioVencedor = null;
@@ -84,7 +90,7 @@ public class Combate extends MenuInicio{
                 desafiante.getTipoPersonaje().setOro(oroDesafiante);
                 
                 oroGanado = oroDesafiante;   
-                Operador operador = new Operador();
+                Operador operador = menu.getOperatorlist().get(0);
                 operador.banearUsuario(desafiado);
                 
             }else if(saludDesafiado > 0){
@@ -104,7 +110,7 @@ public class Combate extends MenuInicio{
                 desafiado.getTipoPersonaje().setOro(oroDesafiado);
                 
                 oroGanado = oroDesafiado;   
-                Operador operador = new Operador();
+                Operador operador = menu.getOperatorlist().get(0);
                 operador.banearUsuario(desafiante);
             }
             
@@ -124,17 +130,34 @@ public class Combate extends MenuInicio{
                       if(!userPresent){
                           contendientes.add(user);
                       }
-                  }
-               }           
+                  }else{
+                      Class esbirro = EsbirroUsuario.getClass(); 
+                      if(esbirro == Demonio.class){
+                         for(Esbirro esb: EsbirroUsuario.getHijos()){
+                            if(esb.getSalud() != 0){
+                                saludPerdida = true;
+                                boolean userPresent = false;
+                                for(Usuario us: contendientes){
+                                    if(us.equals(user)){
+                                        userPresent = true;
+                                    }
+                                }
+                                if(!userPresent){
+                                    contendientes.add(user);
+                                }
+                            }
+                         }
+                      }
+                  }           
                if(user == desafiado){
                    user = desafiante;
                }else{
                    user = null;
                }
+              }
             }
-            
-            getListaCombates().add(this);
-            serializar(this);  
+            menu.setListaCombates(this);
+            menu.serializar(this);  
     }
     
     public void mostrarResultaddo(){

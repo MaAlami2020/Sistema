@@ -15,7 +15,7 @@ import static sistema.Lealtad.NORMAL;
  *
  * @author MariaAmparoAlami
  */
-public class Usuario extends MenuInicio{
+public class Usuario{
     private String nombre;
     private String nick;
     private String password;  
@@ -24,6 +24,7 @@ public class Usuario extends MenuInicio{
     private Usuario usuarioDesafiar;
     private int oroApostado;
     private List<String> notifDesafio = new ArrayList<>();
+    private MenuInicio menu;
 
     public Usuario(String nombre, String nick, String password){
         this.nombre = nombre;
@@ -31,8 +32,11 @@ public class Usuario extends MenuInicio{
         this.password = password;    
     }
 
-    public Usuario(){
-        
+    public Usuario(){  
+    }
+    
+    public Usuario(MenuInicio menu){
+        this.menu = menu;
     }
     
     public String getNombre() {
@@ -64,7 +68,7 @@ public class Usuario extends MenuInicio{
     }
     
     public StringBuilder updateRegistro(){
-        if(!getUserlist().isEmpty()){
+        if(!menu.getUserlist().isEmpty()){
           for(int i = 0; i <= 4; i++){
              char caracter = registro.charAt(i);
              if((caracter < 'Z')|(caracter < '9')){
@@ -77,54 +81,64 @@ public class Usuario extends MenuInicio{
         }
         return registro;
     }
-
-    //@Override
+    
     public void registrar_darBaja(){
-      
       boolean userRegistered = false;  
       System.out.println("1.registrarse");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
       Scanner sc = new Scanner(System.in);
       String option = sc.next();
+
       int opcion =Integer.parseInt(option);
       if(opcion == 2){
         System.out.println("ingrese su nombre de usuario: ");
         sc = new Scanner(System.in);
         String nameUs = sc.next();
         setNombreUsuario(nameUs);
-        System.out.println("ingrese su contrasenia (8-12 caracteres): ");
-        sc = new Scanner(System.in);
-        String contraseniaUs = sc.next();
+        String contraseniaUs = null;
+        do{
+           System.out.println("ingrese su contrasenia (8-12 caracteres): ");
+           sc = new Scanner(System.in);
+           contraseniaUs = sc.next();
+        }while(contraseniaUs.length() < 8 | contraseniaUs.length() > 12);
         setPassword(contraseniaUs);
-        for(Usuario us: getUserlist()){
+        boolean cuentaEliminada = false;
+        for(Usuario us: menu.getUserlist()){
            if((nameUs.equals(us.getNombre()))&(contraseniaUs.equals(us.getPassword()))){
-                getUserlist().remove(us);
+                menu.getUserlist().remove(us);
                 System.out.println("cuenta eliminada");
-                entrar_salirSistema();
+                cuentaEliminada = true;
            }
+        }
+        if(cuentaEliminada == false){
+            System.out.println("no esta registrado");
         }
       }else if(opcion == 1){
         System.out.println("ingrese su nombre: ");
         sc = new Scanner(System.in);
         String name = sc.next();
+
         this.setNombreUsuario(name);
         System.out.println("ingrese su nick: ");
         sc = new Scanner(System.in);
         String apodo = sc.next();
+
         this.setNick(apodo);
         System.out.println("ingrese una contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
         String contrasenia = sc.next();
-        while((contrasenia.length() < 8)|(contrasenia.length() > 12)){
+        actualizarContrasenia(contrasenia);
+        while(contrasenia.length() < 8 | contrasenia.length() > 12){
            System.out.println("Por favor, ingrese una nueva contrasenia (8-12 caracteres): ");
            sc = new Scanner(System.in);
            contrasenia = sc.next();
+           actualizarContrasenia(contrasenia);
         }
-        this.setPassword(contrasenia);
         
-        for(Usuario us: getUserlist()){
-           if((us.getNombre().equals(name))&(us.getNick().equals(apodo))){
+
+        for(Usuario us: menu.getUserlist()){
+           if((us.getNombre().equals(this.getNombre()))&&(us.getNick().equals(this.getNick()))){
                userRegistered = true;
                System.out.println("usuario ya registrado");
                entrar_salirSistema();
@@ -132,12 +146,12 @@ public class Usuario extends MenuInicio{
         }
         if(userRegistered == false){
             tipoPersonaje = null;
-            if(getUserlist().isEmpty()){                
+            if(menu.getUserlist().isEmpty()){                
                   registro.append("A00AA");
-                  anadirNuevoUsuario(name,apodo,contrasenia,registro,tipoPersonaje);                  
+                  anadirNuevoUsuario(nombre,nick,password,registro,tipoPersonaje);                  
             }else{
                   StringBuilder reg = updateRegistro();
-                  anadirNuevoUsuario(name,apodo,contrasenia,reg,tipoPersonaje);
+                  anadirNuevoUsuario(nombre,nick,password,reg,tipoPersonaje);
             }
             System.out.println("registrado/a corractamente");
             entrar_salirSistema();
@@ -149,8 +163,9 @@ public class Usuario extends MenuInicio{
         Usuario usuario = new Usuario(name,apodo,contrasenia);
         usuario.setRegistro(reg);
         usuario.setTipoPersonaje(tipoPersonaje);
-        getUserlist().add(usuario);
+        menu.setUserlist(usuario);
     }
+  
     public void seleccionarOpcionMenu(){
         int opc = 0;
         do{
@@ -184,7 +199,8 @@ public class Usuario extends MenuInicio{
                    option = sc.next();
                    int opt1 =Integer.parseInt(option);
                    if(opt1 == 1){
-                      registrar_vampiro();
+
+                       registrar_vampiro();
                    }else if(opt1 == 2){
                       registrar_licantropo();
                    }else if(opt1 == 3){
@@ -207,10 +223,12 @@ public class Usuario extends MenuInicio{
                if(opt == 1){
                    Arma armaActiva = elegirArma_activa();
                    setArmasActivasPersonaje(armaActiva);
+                   menu.updateUser(this, tipoPersonaje);
                    seleccionarOpcionMenu();
                }else if(opt == 2){
                    Armadura armaduraActiva = elegirArmadura_activa();
                    setArmaduraActivaPersonaje(armaduraActiva);
+                   menu.updateUser(this, tipoPersonaje);
                    seleccionarOpcionMenu();
                }                  
                break;
@@ -285,6 +303,16 @@ public class Usuario extends MenuInicio{
                     
                     String pactoEsb = anadirPactoEsbirro();
                     demonio.setPacto(pactoEsb);
+                    String selec = null;
+                    do {
+                        System.out.println("¿quiere añadir esbirros hijos? -si- o -no-");
+                        Scanner sc = new Scanner(System.in);
+                        selec = sc.next();
+                    } while (!selec.equals("si") & !selec.equals("no"));
+                    if(selec.equals("si")){
+                        Esbirro hijo = anadirEsbirro();
+                        demonio.addHijos(hijo);
+                    }
                     return demonio;
                 }case 3:{
                     Humano humano = new Humano("",0,null);
@@ -813,6 +841,7 @@ public class Usuario extends MenuInicio{
 
             Esbirro esbirro = anadirEsbirro();
             setNuevoEsbirroPersonaje(esbirro);
+            
             System.out.println("escriba -no- si no quiere anadir otro esbirro");
             Scanner sc = new Scanner(System.in);
             insertar = sc.next();
@@ -836,8 +865,12 @@ public class Usuario extends MenuInicio{
             Scanner sc = new Scanner(System.in);
             insertar = sc.next();
         }while(!insertar.equals("no"));
+        
     }
-    
+    /**
+     * se registra un personaje y se actualiza la información del usuario que registra el personaje 
+     * en el listado del menú (userlist)
+     */
     public void registrar_vampiro(){
         Fabrica fabrica = new FabricacionVampiro();
         this.setTipoPersonaje(fabrica.crearPersonaje());
@@ -855,15 +888,17 @@ public class Usuario extends MenuInicio{
         }while(sangreAcum < 0 | sangreAcum > 10);
         
         atributosComunesPersonaje();
-        
+        menu.updateUser(this,tipoPersonaje);
         seleccionarOpcionMenu();
+
     }
     
     public void registrar_licantropo(){
         Fabrica fabrica = new FabricacionLicantropo();
         this.setTipoPersonaje(fabrica.crearPersonaje());
         
-        atributosComunesPersonaje();       
+        atributosComunesPersonaje(); 
+        menu.updateUser(this,tipoPersonaje);
         seleccionarOpcionMenu();
     }
     
@@ -871,7 +906,8 @@ public class Usuario extends MenuInicio{
         Fabrica fabrica = new FabricacionCazador();
         this.setTipoPersonaje(fabrica.crearPersonaje());
         
-        atributosComunesPersonaje();       
+        atributosComunesPersonaje();
+       menu.updateUser(this,tipoPersonaje);
         seleccionarOpcionMenu();
     }
     
@@ -913,21 +949,22 @@ public class Usuario extends MenuInicio{
         return false;
     }
     
-    public void desafiarUsuario(){
+     public void desafiarUsuario(){
         System.out.println("introduzca el nick del usuario a desafiar: ");
         Scanner sc = new Scanner(System.in);
         String nickUsuarioDesafiar = sc.next();
-        Usuario usuarioDesafiado = buscarUsuarioDesafiar(getUserlist(),nickUsuarioDesafiar);
+        Usuario usuarioDesafiado = buscarUsuarioDesafiar(menu.getUserlist(),nickUsuarioDesafiar);
         if(usuarioDesafiado != null){
-               boolean estaBaneado = usuarioBaneado(getUserlist(),usuarioDesafiado); 
+               boolean estaBaneado = usuarioBaneado(menu.getUsuariosBaneados(),usuarioDesafiado); 
                if(estaBaneado == false){
                    usuarioDesafiar = usuarioDesafiado;
                    do{
                       int oro = apostarOro();
                       setOroApostado(oro);
                    }while((oroApostado < 0)|(oroApostado > tipoPersonaje.getOro()));
-                   getDesafiosParaValidar().add(usuarioDesafiar);
-                   getDesafiosParaValidar().add(this);
+                   menu.setUsuariosParaValidar(usuarioDesafiar);
+                   menu.setUsuariosParaValidar(this);
+                   System.out.println(menu.getDesafiosParaValidar().size());
                }else{
                   System.out.println("no puede desafiar a este usuario");
                }
@@ -935,7 +972,7 @@ public class Usuario extends MenuInicio{
             System.out.println("este usuario no esta registrado");
         }
         seleccionarOpcionMenu();    
-    }
+    } 
     
     public Armadura cambiarArmadura_activa(){
        return elegirArmadura_activa();
@@ -1012,11 +1049,11 @@ public class Usuario extends MenuInicio{
         tipoPersonaje.setArmasActivas(armaActiva);
     }
     
-    public void consultarOro(){
-      if(!getListaCombates().isEmpty()){
+    public void consultarOro(){ 
+      if(!menu.getListaCombates().isEmpty()){
         System.out.println("usuario: " + this.nombre);
         int cont = 1;
-        for(Combate combate: getListaCombates()){
+        for(Combate combate: menu.getListaCombates()){
             if(this.nombre.equals(combate.getDesafiante().getNombre())){
                 System.out.print("combate " + cont);
                 cont++;
@@ -1034,7 +1071,7 @@ public class Usuario extends MenuInicio{
     }
     
     public void consultarRanking(){
-        List<Usuario> listaUsuarios = getUserlist(); 
+        List<Usuario> listaUsuarios = menu.getUserlist(); 
         Usuario [] usuarios = new Usuario[listaUsuarios.size()];
         int pos = 0;       
         for(Usuario usuario: listaUsuarios){
@@ -1058,12 +1095,13 @@ public class Usuario extends MenuInicio{
         seleccionarOpcionMenu();
     }
     
-    public void aceptar_rechazarDesafio(){
-        Desafio desafio = new Desafio(); 
+    public void aceptar_rechazarDesafio(){ 
+      if(!usuarioDesafiar.notifDesafio.isEmpty()){
+        Desafio desafio = new Desafio(menu);
         int cont = 0;
         int iter = 0;
-        while(notifDesafio.iterator().hasNext()){
-            Usuario desafiante = getListaUsuariosDesafiantes().get(iter);
+        while(iter != menu.getListaUsuariosDesafiantes().size() & usuarioDesafiar.notifDesafio.iterator().hasNext()){
+            Usuario desafiante = menu.getListaUsuariosDesafiantes().get(iter);
             System.out.println("1.aceptar desafio con: " + desafiante.getNombre());
             System.out.println("2.rechazar desafio con: " + desafiante.getNombre());
             System.out.println("seleccione una opcion: ");
@@ -1071,23 +1109,25 @@ public class Usuario extends MenuInicio{
             String selec = sc.next();
             int opc = Integer.parseInt(selec);
             if(opc == 1){
-                desafio.aceptar(this,desafiante);
-                notifDesafio.remove(cont);
+                desafio.aceptar(usuarioDesafiar,desafiante);
+                usuarioDesafiar.notifDesafio.remove(cont);
                 cont++;
-                serializar(this);
+                menu.serializar(this);
             }else if(opc == 2){
-                desafio.rechazar(this,desafiante);
-                notifDesafio.remove(cont);
+                desafio.rechazar(usuarioDesafiar,desafiante);
+                usuarioDesafiar.notifDesafio.remove(cont);
                 cont++;
             }
-            notifDesafio.iterator().next();
+            usuarioDesafiar.notifDesafio.iterator().next();
             iter++;
         }
-        seleccionarOpcionMenu();
+      }else{
+         System.out.println("no tiene desafios pendientes");
+      }
+      seleccionarOpcionMenu();
     }
    
-    //@Override
-    public void entrar_salirSistema(){
+    public void entrar_salirSistema(){  
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
       System.out.println("seleccione una opcion: -1 o 2-");
@@ -1099,13 +1139,16 @@ public class Usuario extends MenuInicio{
         System.out.println("ingrese su nombre de usuario: ");
         sc = new Scanner(System.in);
         String nameUser = sc.next();
+        //this.setNombreUsuario(nameUser);
         System.out.println("ingrese su contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
         String contraseniaUser = sc.next();
-        for(Usuario us: getUserlist()){
-           if((nameUser.equals(us.getNombre()))&(contraseniaUser.equals(us.getPassword()))){
-               userRegistered = true;          
-               if(!notifDesafio.isEmpty()){
+        //this.setPassword(contraseniaUser);
+
+        for(Usuario us: menu.getUserlist()){
+           if(nameUser.equals(us.getNombre()) && contraseniaUser.equals(us.getPassword())){
+               userRegistered = true;  
+               while(!us.notifDesafio.isEmpty()){
                    usuarioDesafiar = us;
                    aceptar_rechazarDesafio();
                }
@@ -1125,6 +1168,14 @@ public class Usuario extends MenuInicio{
         return password;
     }
 
+    public void actualizarContrasenia(String password){
+        try{
+            setPassword(password);
+        }catch(RuntimeException e){
+            System.out.println("la longitud de la contrasenia esta fuera del tamaño permtido");
+        }
+    }
+    
     public void setPassword(String password){
         if(password.length() >= 8 & password.length() <= 12){
             this.password = password;
@@ -1136,9 +1187,17 @@ public class Usuario extends MenuInicio{
     public Personaje getTipoPersonaje() {
         return tipoPersonaje;
     }
+/*
+    public void setUsuarioDesafiar(Usuario usuarioDesafiar) {
+        this.usuarioDesafiar = usuarioDesafiar;
+    }
 
     public Usuario getUsuarioDesafiar() {
         return usuarioDesafiar;
+    }
+*/
+    public void setNotifDesafio(String notificacion) {
+        this.notifDesafio.add(notificacion);
     }
 
     public List<String> getNotifDesafio() {

@@ -4,6 +4,8 @@
  */
 package sistema;
 
+import java.util.List;
+
 
 /**
  *
@@ -50,5 +52,15 @@ public class Ghoul extends Esbirro{
     @Override
     public String getPacto() {
         return null;
+    }
+
+    @Override
+    public void addHijos(Esbirro e) {
+        throw new RuntimeException("este esbirro no inserta otros esbirros"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Esbirro> getHijos() {
+       return null;
     }
 }

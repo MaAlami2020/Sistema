@@ -51,7 +51,13 @@ public class Demonio extends Esbirro{
         return -1;
     }
     
+    @Override
     public void addHijos(Esbirro e){
         this.hijos.add(e);
     }
+    @Override
+    public List<Esbirro> getHijos() {
+        return hijos;
+    }
+    
 }

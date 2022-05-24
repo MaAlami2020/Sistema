@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.util.List;
 import static sistema.Lealtad.ALTA;
 import static sistema.Lealtad.BAJA;
 import static sistema.Lealtad.NORMAL;
@@ -51,6 +52,16 @@ public class Humano extends Esbirro{
     @Override
     public int getDependencia() {
         return -1;
+    }
+
+    @Override
+    public void addHijos(Esbirro e) {
+        throw new RuntimeException("este esbirro no inserta otros esbirros"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Esbirro> getHijos() {
+        return null;
     }
      
 }

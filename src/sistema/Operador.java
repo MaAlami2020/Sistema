@@ -5,26 +5,23 @@
 package sistema;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
  *
  * @author mimit
  */
-public class Operador extends MenuInicio{
+public class Operador{
     private String nombre;
     private String nick;
     private String password;
-    private List<Usuario> usuariosBaneados = new ArrayList<>();
     private int fortalezasVampiro;
     private int debilidadesVampiro;
     private int fortalezasLicantropo;
     private int debilidadesLicantropo;
     private int fortalezasCazador;
     private int debilidadesCazador;
-     
+    private MenuInicio menu; 
     
     public Operador(String nombre, String nick, String password){
         this.nombre = nombre;
@@ -32,6 +29,10 @@ public class Operador extends MenuInicio{
         this.password = password;      
     }
 
+    public Operador(MenuInicio menu){
+        this.menu = menu;
+    }
+    
     public Operador(){
     }
 
@@ -75,8 +76,7 @@ public class Operador extends MenuInicio{
         this.nick = nickInicio;
     }
 
-    //@Override
-    public void registrar_darBaja(){   
+    public void registrar_darBaja(){ 
       System.out.println("1.registrarse");
       System.out.println("2.eliminar cuenta");
       System.out.println("escoga una opcion: ");
@@ -87,15 +87,22 @@ public class Operador extends MenuInicio{
         System.out.println("ingrese su nombre de usuario: ");
         sc = new Scanner(System.in);
         String nameOp = sc.next();
-        System.out.println("ingrese su contrasenia (8-12 caracteres): ");
-        sc = new Scanner(System.in);
-        String contraseniaOp = sc.next();
-        for(Operador op: getOperatorlist()){
-           if((nameOp.equals(op.getNombre()))&(contraseniaOp.equals(op.getPassword()))){
-                getOperatorlist().remove(op);
+        String contraseniaOp = null;
+        do{
+            System.out.println("ingrese su contrasenia (8-12 caracteres): ");
+            sc = new Scanner(System.in);
+            contraseniaOp = sc.next();
+        }while(contraseniaOp.length() < 8 | contraseniaOp.length() > 12);
+        boolean cuentaEliminada = false;
+        for(Operador op: menu.getOperatorlist()){
+           if(nameOp.equals(op.getNombre()) && contraseniaOp.equals(op.getPassword())){
+                menu.getOperatorlist().remove(op);
                 System.out.println("cuenta eliminada");
-                entrar_salirSistema();
+                cuentaEliminada = true;
            }
+        }
+        if(cuentaEliminada == false){
+            System.out.println("no esta registrado");
         }
       }else if(opcion == 1){
         boolean operatorRegistered = false;
@@ -110,17 +117,15 @@ public class Operador extends MenuInicio{
         System.out.println("ingrese una contrasenia (8-12 caracteres): ");
         sc = new Scanner(System.in);
         String contrasenia = sc.next();
-        this.password = contrasenia;
+        actualizarContrasenia(contrasenia);
         while(contrasenia.length() < 8 | contrasenia.length() > 12){
            System.out.println("Por favor, ingrese una nueva contrasenia (8-12 caracteres): ");
            sc = new Scanner(System.in);
            contrasenia = sc.next();
-           this.password = contrasenia;
+           actualizarContrasenia(contrasenia);
         }
-        
-        
-        for(Operador op: getOperatorlist()){
-           if(op.getNombre().equals(name) & op.getNick().equals(apodo)){
+        for(Operador op: menu.getOperatorlist()){
+           if(op.getNombre().equals(name) && op.getNick().equals(apodo)){
                operatorRegistered = true;
                System.out.println("usuario ya registrado");
                entrar_salirSistema();
@@ -128,8 +133,8 @@ public class Operador extends MenuInicio{
            }
         }
         if(operatorRegistered == false){
-            getOperatorlist().add(new Operador(name,apodo,contrasenia));
-            serializar(this);
+            menu.setOperatorlist(new Operador(name,apodo,contrasenia));
+            menu.serializar(this);
             System.out.println("registrado/a corractamente");
             entrar_salirSistema();
         }
@@ -174,10 +179,10 @@ public class Operador extends MenuInicio{
         }
     }
     
-    public void editar_Personaje(){
-      if(!getUserlist().isEmpty()){  
+    public void editar_Personaje(){  
+      if(!menu.getUserlist().isEmpty()){  
         int posPer = 1;
-        for(Usuario user: getUserlist()){
+        for(Usuario user: menu.getUserlist()){
             System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
         }
         System.out.println("escoga un numero correspondiente al personaje que quiere modificar");
@@ -185,7 +190,7 @@ public class Operador extends MenuInicio{
         String opc = sc.next();
         int perMod = Integer.parseInt(opc);
         
-        Usuario user = getUserlist().get(perMod--);
+        Usuario user = menu.getUserlist().get(perMod--);
         
         System.out.println("usuario: " + user.getNombre());
         int opcion = 0;
@@ -233,7 +238,7 @@ public class Operador extends MenuInicio{
                System.out.println("seleccion erronea");
             }             
         }
-        serializar(user); 
+        menu.serializar(user); 
       }else{
          System.out.println("no hay personajes dados de alta");
       }
@@ -244,28 +249,28 @@ public class Operador extends MenuInicio{
      * que son  desafiados
      */
     public void validarDesafio(){
-       if(!getDesafiosParaValidar().isEmpty()){  
-           Vampiro vampiro = new Vampiro();
-           Licantropo licantropo = new Licantropo();
-           Cazador cazador = new Cazador();
-           Usuario desafiado = getDesafiosParaValidar().remove(0);
+       System.out.println(menu.getDesafiosParaValidar().size());
+       while(!menu.getDesafiosParaValidar().isEmpty()){  
+         
+           Usuario desafiado = menu.getDesafiosParaValidar().remove(0);
            Usuario user = desafiado;
-           while(user != null){ 
-                if(user.getTipoPersonaje() == vampiro){
+           Class personaje = user.getTipoPersonaje().getClass();
+           if(user != null){ 
+                if(personaje == Vampiro.class){
                    for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
                        fortalezasVampiro += fortaleza.getSensibilidad();  
                    }
                    for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
                        debilidadesVampiro += debilidad.getSensibilidad();
                    }
-                }else if(user.getTipoPersonaje() == licantropo){
+                }else if(personaje == Licantropo.class){
                    for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
                        fortalezasLicantropo += fortaleza.getSensibilidad();  
                    }
                    for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
                        debilidadesLicantropo += debilidad.getSensibilidad();
                    }
-                }else if(user.getTipoPersonaje() == cazador){
+                }else if(personaje == Cazador.class){
                    for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
                        fortalezasCazador += fortaleza.getSensibilidad();  
                    }
@@ -275,27 +280,29 @@ public class Operador extends MenuInicio{
                 }
            }
            if(user == desafiado){
-               Usuario desafiante = getDesafiosParaValidar().remove(0);
-               boolean desafianteConEquipoActivo = !desafiante.getTipoPersonaje().getArmasActivas().isEmpty() & desafiante.getTipoPersonaje().getArmaduraActiva() != null;
-               boolean desafiadoConEquipoActivo = !desafiado.getTipoPersonaje().getArmasActivas().isEmpty() & desafiado.getTipoPersonaje().getArmaduraActiva() != null;
+               boolean desafiadoConEquipoActivo = !user.getTipoPersonaje().getArmasActivas().isEmpty() & user.getTipoPersonaje().getArmaduraActiva() != null;
+               Usuario desafiante = menu.getDesafiosParaValidar().remove(0);
+               boolean desafianteConEquipoActivo = !desafiante.getTipoPersonaje().getArmasActivas().isEmpty() & desafiante.getTipoPersonaje().getArmaduraActiva() != null;              
                if(desafianteConEquipoActivo & desafiadoConEquipoActivo){
-                    user.getUsuarioDesafiar().getNotifDesafio().add("desafio pendiente con: " + desafiante.getNombre());
-                    getListaUsuariosDesafiantes().add(desafiante);
+                    user.setNotifDesafio("desafio pendiente con: " + desafiante.getNombre());
+                    menu.setListaUsuariosDesafiantes(desafiante);
+                    //menu.setUserlist(desafiado);
                }
                user = desafiante;        
            }else{
                user = null;
            }
-       }else{
+       }
+       if(menu.getDesafiosParaValidar().isEmpty()){
           System.out.println("no hay usuarios pendientes para validar");
        }
        seleccionarOpcionMenu();
     }
     
     public void añadir_atributos_personaje(){
-       if(!getUserlist().isEmpty()){
+       if(!menu.getUserlist().isEmpty()){
           int posPer = 1;
-          for(Usuario user: getUserlist()){
+          for(Usuario user: menu.getUserlist()){
              System.out.println(posPer + ".-" + user.getTipoPersonaje().getNombre());
           }
           System.out.println("escoga un numero correspondiente al personaje al que quiere añadir atributos");
@@ -303,7 +310,7 @@ public class Operador extends MenuInicio{
           String opc = sc.next();
           int perMod = Integer.parseInt(opc);
           perMod--;
-          Usuario user = getUserlist().get(perMod);
+          Usuario user = menu.getUserlist().get(perMod);
           int opcion = 0;
           do{
              System.out.println("1.-añadir arma");
@@ -341,7 +348,7 @@ public class Operador extends MenuInicio{
                 System.out.println("seleccion erronea");
              }
          }
-         serializar(user);
+         menu.serializar(user);
         }else{
            System.out.println("no hay personajes dados de alta");
         }
@@ -353,19 +360,20 @@ public class Operador extends MenuInicio{
      * y se comprueba si hay usuarios para desbanear en la lista de los baneados
      * @param usuarioBaneado es el usuario que ha perdido el combate
      */
-    public void banearUsuario(Usuario usuarioBaneado){  
+    
+    public void banearUsuario(Usuario usuarioBaneado){
         boolean registrado =  false;
-        for(Usuario us: getUserlist()){
+        for(Usuario us: menu.getUserlist()){
             if(us.equals(usuarioBaneado)){
                 registrado = true;
             }
         }
         if(registrado == true){
-           getUsuariosBaneados().add(usuarioBaneado);
+           menu.getUsuariosBaneados().add(usuarioBaneado);
            LocalDateTime horaActual = LocalDateTime.now();
            LocalDateTime hora = horaActual.minusHours(24);
-           for(Usuario usBaneado: getUsuariosBaneados()){
-             for(Combate combate: getListaCombates()){
+           for(Usuario usBaneado: menu.getUsuariosBaneados()){
+             for(Combate combate: menu.getListaCombates()){
                 Usuario desafiante = combate.getDesafiante();
                 Usuario desafiado = combate.getDesafiado();
                 if(desafiante == combate.getUsuarioVencedor()){
@@ -392,15 +400,15 @@ public class Operador extends MenuInicio{
     
     public void desbanearUsuario(Usuario usuarioDesbaneado){
         boolean registrado =  false;
-        for(Usuario us: getUserlist()){
+        for(Usuario us: menu.getUserlist()){
             if(us.equals(usuarioDesbaneado)){
                 registrado = true;
             }
         }
         if(registrado == true){
-            for(Usuario usuario: usuariosBaneados){
+            for(Usuario usuario: menu.getUsuariosBaneados()){
                 if(usuario.equals(usuarioDesbaneado)){
-                    usuariosBaneados.remove(usuarioDesbaneado);
+                    menu.getUsuariosBaneados().remove(usuarioDesbaneado);
                 }
             }  
         }else{
@@ -408,6 +416,7 @@ public class Operador extends MenuInicio{
         }
     }
     
+    //@Override
     public void entrar_salirSistema(){
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
@@ -425,8 +434,8 @@ public class Operador extends MenuInicio{
         sc = new Scanner(System.in);
         String contraseniaOp = sc.next();
         this.setPassword(contraseniaOp);
-        for(Operador op: getOperatorlist()){
-           if((nameOp.equals(op.getNombre()))&(contraseniaOp.equals(op.getPassword()))){
+        for(Operador op: menu.getOperatorlist()){
+           if(nameOp.equals(op.getNombre()) && contraseniaOp.equals(op.getPassword())){
                opRegistered = true;
                seleccionarOpcionMenu();
            }
@@ -441,6 +450,14 @@ public class Operador extends MenuInicio{
 
     public String getPassword() {
         return password;
+    }
+    
+    public void actualizarContrasenia(String password){
+        try{
+            setPassword(password);
+        }catch(RuntimeException e){
+            System.out.println("la longitud de la contrasenia esta fuera del tamaño permtido");
+        }
     }
 
     public void setPassword(String password){

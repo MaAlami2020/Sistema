@@ -4,13 +4,15 @@
  */
 package sistema;
 
+import java.util.List;
+
 /**
  *
  * @author mimit
  */
 public abstract class Esbirro {
-    private String nombre;
-    private int salud;
+    protected String nombre;
+    protected int salud;
     
     public Esbirro(String nombre,int salud){
         this.nombre = nombre;
@@ -43,4 +45,6 @@ public abstract class Esbirro {
     public abstract Lealtad getLealtad();
     public abstract String getPacto();
     public abstract int getDependencia();
+    public abstract void addHijos(Esbirro e);
+    public abstract List<Esbirro> getHijos();
 }
