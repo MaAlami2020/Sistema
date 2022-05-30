@@ -63,6 +63,8 @@ public class Desafio implements Iterator{
 
     /**
      * al usuario desafiado se le quita el 10% de la cantidad de oro que el desafiante aposto
+     * @param desafiado, usuario que debe aceptar o rechazar un desafio
+     * @param desafiante, usuario que desafia a otro
     */
 
     public void rechazar(Usuario desafiado, Usuario desafiante){
@@ -74,14 +76,14 @@ public class Desafio implements Iterator{
 
     @Override
     public boolean hashNext() {
-            Usuario usuario = new Usuario();
+            Usuario usuario = new Usuario(menu);
             List<String> listaNotif = usuario.getNotifDesafio();
             return !listaNotif.isEmpty();
     }
 
     @Override
     public String next() {
-            Usuario usuario = new Usuario();
+            Usuario usuario = new Usuario(menu);
             List<String> listaNotif = usuario.getNotifDesafio();
             String notif = listaNotif.get(0);
             return notif;

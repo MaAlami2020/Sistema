@@ -42,7 +42,8 @@ public class OperadorTest {
      */
     @Test
     public void testSetPassword() {
-        Operador operator = new Operador();
+        MenuInicio menu = new MenuInicio();
+        Operador operator = new Operador(menu);
         try{
             String password = "micontr";
             operator.setPassword(password);            
@@ -60,7 +61,8 @@ public class OperadorTest {
      */
     @Test
     public void testSetPassword1() {
-        Operador operator1 = new Operador();
+        MenuInicio menu = new MenuInicio();
+        Operador operator1 = new Operador(menu);
         try{
             String password = "micontrasenia";
             operator1.setPassword(password);
@@ -78,7 +80,8 @@ public class OperadorTest {
      */
     @Test
     public void testSetPassword2() {
-        Operador operator2 = new Operador();
+        MenuInicio menu = new MenuInicio();
+        Operador operator2 = new Operador(menu);
         try{
             String password = "mypassword";
             operator2.setPassword(password);

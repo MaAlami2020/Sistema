@@ -45,7 +45,8 @@ public class UsuarioTest {
      */
     @Test
     public void testSetPassword() {
-        Usuario user = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user = new Usuario(menu);
         try{
             String password = "micontr";
             user.setPassword(password);
@@ -65,7 +66,8 @@ public class UsuarioTest {
      */
     @Test
     public void testSetPassword1() {
-        Usuario user1 = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user1 = new Usuario(menu);
         try{
             String password = "micontrasenia";
             user1.setPassword(password);
@@ -84,7 +86,8 @@ public class UsuarioTest {
      */
     @Test
     public void testSetPassword2() {
-        Usuario user2 = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user2 = new Usuario(menu);
         try{
             String password = "mypassword";
             user2.setPassword(password);
@@ -102,7 +105,8 @@ public class UsuarioTest {
      */
     @Test
     public void testSetOroApostado(){
-        Usuario user = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user = new Usuario(menu);
         Vampiro vampiro = new Vampiro();
         user.setTipoPersonaje(vampiro);
         user.getTipoPersonaje().setOro(50);
@@ -125,7 +129,8 @@ public class UsuarioTest {
      */
     @Test
     public void testSetOroApostado1() {
-        Usuario user1 = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user1 = new Usuario(menu);
         Licantropo licantropo = new Licantropo();
         user1.setTipoPersonaje(licantropo);
         user1.getTipoPersonaje().setOro(4);
@@ -149,7 +154,8 @@ public class UsuarioTest {
     @Test
 
     public void testSetOroApostado2() {
-        Usuario user2 = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user2 = new Usuario(menu);
         Cazador cazador = new Cazador();
         user2.setTipoPersonaje(cazador);
         user2.getTipoPersonaje().setOro(39);
@@ -172,7 +178,8 @@ public class UsuarioTest {
      */
     @Test
     public void testSetOroApostado3() {
-        Usuario user3 = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user3 = new Usuario(menu);
         Cazador cazador = new Cazador();
         user3.setTipoPersonaje(cazador);
         user3.getTipoPersonaje().setOro(56);
@@ -194,7 +201,8 @@ public class UsuarioTest {
      */
     @Test
     public void testBuscarUsuarioDesafiar() {
-        Usuario user = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user = new Usuario(menu);
         List <Usuario> usuarios = new ArrayList<>();
         usuarios.add(new Usuario("wolfgang","wolf","0000384567"));
         usuarios.add(new Usuario("esteban","teseo","123443928"));
@@ -218,7 +226,8 @@ public class UsuarioTest {
      */
     @Test
     public void testBuscarUsuarioDesafiar1() {
-        Usuario user = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user = new Usuario(menu);
         List <Usuario> usuarios = new ArrayList<>();
         usuarios.add(new Usuario("wolfgang","wolf","0000384567"));
         usuarios.add(new Usuario("esteban","teseo","123443928"));
@@ -233,7 +242,8 @@ public class UsuarioTest {
      */
     @Test
     public void testUsuarioBaneado() {
-        Usuario user = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user = new Usuario(menu);
         List <Usuario> usuariosBaneados = new ArrayList<>();
         usuariosBaneados.add(new Usuario("wolfgang","wolf","0000384567"));
         usuariosBaneados.add(new Usuario("esteban","teseo","123443928"));
@@ -250,7 +260,8 @@ public class UsuarioTest {
      */
     @Test
     public void testUsuarioBaneado1() {
-        Usuario user = new Usuario();
+        MenuInicio menu = new MenuInicio();
+        Usuario user = new Usuario(menu);
         List <Usuario> usuariosBaneados = new ArrayList<>();
         usuariosBaneados.add(new Usuario("wolfgang","wolf","0000384567"));
         usuariosBaneados.add(new Usuario("esteban","teseo","123443928"));

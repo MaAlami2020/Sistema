@@ -66,8 +66,9 @@ public class Ronda {
             Usuario desafiante = user2;
             
             Usuario user = desafiado;
-            Class personaje = user.getTipoPersonaje().getClass();
+            
             while(user != null){
+                Class personaje = user.getTipoPersonaje().getClass();
                 int poder = user.getTipoPersonaje().getPoder();
                 int ataqueEquipoActivo = 0;
                 for(Arma a: user.getTipoPersonaje().getArmasActivas()){
@@ -82,7 +83,11 @@ public class Ronda {
                     if(user.getTipoPersonaje().getReservaPuntosSangre() != 0){
                         int reservaSangre = user.getTipoPersonaje().getReservaPuntosSangre();
                         reservaSangre -= user.getTipoPersonaje().getHabilidad().getCostePuntosSangre();
-                        user.getTipoPersonaje().setReservaPuntosSangre(reservaSangre);
+                        try{
+                            user.getTipoPersonaje().setReservaPuntosSangre(reservaSangre);
+                        }catch(RuntimeException e){
+                            System.out.println(e.getMessage());
+                        }
                         ataqueHabilidad = user.getTipoPersonaje().getHabilidad().getValorAtaque();
                     }else if((user.getTipoPersonaje().getReservaPuntosSangre() < user.getTipoPersonaje().getHabilidad().getCostePuntosSangre())){
                         ataqueHabilidad = 0;
@@ -135,8 +140,9 @@ public class Ronda {
             Usuario desafiante = user2;
             
             Usuario user = desafiado;
-            Class personaje = user.getTipoPersonaje().getClass();
+            
             while(user != null){
+                Class personaje = user.getTipoPersonaje().getClass();
                 int poder = user.getTipoPersonaje().getPoder();
                 int defensaEquipoActivo = 0;
                 for(Arma a: user.getTipoPersonaje().getArmasActivas()){
@@ -151,7 +157,11 @@ public class Ronda {
                     if(user.getTipoPersonaje().getReservaPuntosSangre() != 0){
                         int reservaSangre = user.getTipoPersonaje().getReservaPuntosSangre();
                         reservaSangre -= user.getTipoPersonaje().getHabilidad().getCostePuntosSangre();
-                        user.getTipoPersonaje().setReservaPuntosSangre(reservaSangre);
+                        try{
+                            user.getTipoPersonaje().setReservaPuntosSangre(reservaSangre);
+                        }catch(RuntimeException e){
+                            System.out.println(e.getMessage());
+                        }
                         defensaHabilidad = user.getTipoPersonaje().getHabilidad().getValorDefensa();
                     }else if((user.getTipoPersonaje().getReservaPuntosSangre() < user.getTipoPersonaje().getHabilidad().getCostePuntosSangre())){
                         defensaHabilidad = 0;
@@ -202,7 +212,7 @@ public class Ronda {
      * @param user1 es el usuario que acepta el desafio
      * @param user2 es el usuario que desafia a otro
      */
-    public void Jugar(Usuario user1, Usuario user2){ 
+    public void Jugar(Usuario user2, Usuario user1){ 
       Usuario user = user1; 
       if(valorAtaqueDesafiado > valorDefensaDesafiante){
            user = user1;
@@ -211,23 +221,39 @@ public class Ronda {
        
          Class personaje = user.getTipoPersonaje().getClass();    
          boolean saludPerdida = false; 
+         //int iter =0;
          while(user.getTipoPersonaje().getListaEsbirros().iterator().hasNext()&(!saludPerdida)){         
              Esbirro EsbirroUsuario = user.getTipoPersonaje().getListaEsbirros().iterator().next();
              if(EsbirroUsuario.getSalud() != 0){
-                int saludEsbirroUsuario = 0; 
+                int saludEsbirroUsuario = 5;//se inicializa con el maximo de salud 
                 Class esbirro = EsbirroUsuario.getClass(); 
                       if(esbirro == Demonio.class){
-                         for(Esbirro esb: EsbirroUsuario.getHijos()){
-                            if(esb.getSalud() != 0){
-                                saludEsbirroUsuario = esb.getSalud();
-                                saludEsbirroUsuario -= 1;
+                         int saludEsbirroHijo = 5; 
+                         if(EsbirroUsuario.getHijos().isEmpty()){
+                             saludEsbirroUsuario = EsbirroUsuario.getSalud();
+                             saludEsbirroUsuario -= 1;
+                             if(saludEsbirroUsuario >= 1)
+                                EsbirroUsuario.setSalud(saludEsbirroUsuario); 
+                         }else{
+                               for(Esbirro esb: EsbirroUsuario.getHijos()){
+                             
+                                   if(esb.getSalud() != 0){
+                                      saludEsbirroHijo = esb.getSalud();
+                                      saludEsbirroHijo -= 1;
                                 
-                            }
-                            break;
-                         }
+                                      if(saludEsbirroHijo == 0)
+                                           EsbirroUsuario.getHijos().remove(esb);
+                                      else if(saludEsbirroHijo >= 1)
+                                           esb.setSalud(saludEsbirroHijo);
+                                   }
+                                   break;
+                               }
+                         } 
                       }else{
                         saludEsbirroUsuario = EsbirroUsuario.getSalud();
                         saludEsbirroUsuario -= 1;
+                        if(saludEsbirroUsuario >= 1)
+                           EsbirroUsuario.setSalud(saludEsbirroUsuario);
                       }
                 saludPerdida = true;
                 if(saludEsbirroUsuario == 0)
@@ -235,17 +261,30 @@ public class Ronda {
                 if(personaje == Vampiro.class){
                    int puntosSangre = user.getTipoPersonaje().getReservaPuntosSangre();
                    puntosSangre += 4;
-                   user.getTipoPersonaje().setReservaPuntosSangre(puntosSangre);
+                   try{
+                       user.getTipoPersonaje().setReservaPuntosSangre(puntosSangre);
+                   }catch(RuntimeException e){
+                       user.getTipoPersonaje().setReservaPuntosSangre(10);
+                   }
                 }else if(personaje == Licantropo.class){
                    int rabia = user.getTipoPersonaje().getRabia();
                    rabia += 1;
-                   user.getTipoPersonaje().setRabia(rabia);
+                   try{
+                       user.getTipoPersonaje().setRabia(rabia);
+                   }catch(RuntimeException e){
+                       user.getTipoPersonaje().setRabia(3);
+                   }
                 }else if(personaje == Cazador.class){
                    int voluntad = user.getTipoPersonaje().getVoluntad();
                    voluntad -= 1;
-                   user.getTipoPersonaje().setVoluntad(voluntad);
+                   try{
+                       user.getTipoPersonaje().setVoluntad(voluntad);
+                   }catch(RuntimeException e){
+                       user.getTipoPersonaje().setVoluntad(0);
+                   }
                 }
               }
+             //iter++;
         }
         if(saludPerdida == false){
           int saludPersonaje = user.getTipoPersonaje().getSalud();
@@ -255,23 +294,37 @@ public class Ronda {
               if(personaje == Vampiro.class){
                    int puntosSangre = user.getTipoPersonaje().getReservaPuntosSangre();
                    puntosSangre += 4;
-                   user.getTipoPersonaje().setReservaPuntosSangre(puntosSangre);
+                   try{
+                       user.getTipoPersonaje().setReservaPuntosSangre(puntosSangre);
+                   }catch(RuntimeException e){
+                       user.getTipoPersonaje().setReservaPuntosSangre(10);
+                   }
               }else if(personaje == Licantropo.class){
                    int rabia = user.getTipoPersonaje().getRabia();
                    rabia += 1;
-                   user.getTipoPersonaje().setRabia(rabia);
+                   try{
+                       user.getTipoPersonaje().setRabia(rabia);
+                   }catch(RuntimeException e){
+                       user.getTipoPersonaje().setRabia(3);
+                   }
               }else if(personaje == Cazador.class){
                    int voluntad = user.getTipoPersonaje().getVoluntad();
                    voluntad -= 1;
-                   user.getTipoPersonaje().setVoluntad(voluntad);
+                   try{
+                       user.getTipoPersonaje().setVoluntad(voluntad);
+                   }catch(RuntimeException e){
+                       user.getTipoPersonaje().setVoluntad(0);
+                   }
               }
           }
         }
     
      if(user == user1){
-       if(valorAtaqueDesafiante > valorDefensaDesafiado){
+        if(valorAtaqueDesafiante > valorDefensaDesafiado){
            user = user2;
-       }  
+        }else{
+           user = null;
+        }  
      }else{
        user = null;
      }   

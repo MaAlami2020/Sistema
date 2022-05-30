@@ -4,9 +4,6 @@
  */
 package sistema;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,22 +12,32 @@ import java.util.Scanner;
  *
  * @author mimit
  */
-public class MenuInicio implements Serializable{
+public class MenuInicio{
     private List<Usuario> userlist;
     private List<Operador> operatorlist = new ArrayList<>();
     private List<Usuario> listaUsuariosDesafiantes = new ArrayList<>();
     private List<Combate> listaCombates = new ArrayList<>();
     private List<Usuario> usuariosBaneados;
     private List<Usuario> desafiosParaValidar;
+    private List<Usuario> usuariosActuales;
     
     public MenuInicio(){
         this.desafiosParaValidar = new ArrayList<>();
         this.userlist = new ArrayList<>();
         this.usuariosBaneados = new ArrayList<>();
+        this.usuariosActuales = new ArrayList<>();
+    }
+
+    public List<Usuario> getUsuarioActual() {
+        return usuariosActuales;
+    }
+
+    public void setUsuarioActual(Usuario usuarioActual) {
+        this.usuariosActuales.add(usuarioActual);
     }
     
     public void acceder(){
-        Usuario user = new Usuario(this);
+      Usuario user = new Usuario(this);
       Operador operador = new Operador(this);
       
       int seleccion = 0;  
@@ -125,32 +132,5 @@ public class MenuInicio implements Serializable{
             }
         }    
     }
-    
-    public void serializar(Object obj){
-       try{
-           String fich = "C:\\Users\\mimit\\Sistema\\sistema.bin";
-           ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
-           out.writeObject(obj);
-           out.close();
-       }catch(Exception e){
-           System.out.println(e);
-       }
-       System.out.println("informacion guardada");
-    }
-    /**
-    public void serializar(){
-       try{
-           String fich = "C:\\Users\\mimit\\Sistema\\sistema.bin";
-           ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
-           out.writeObject(userlist);
-           out.writeObject(operatorlist);
-           out.writeObject(listaUsuariosDesafiantes);
-           out.writeObject(listaCombates);
-           out.close();
-       }catch(Exception e){
-           System.out.println(e);
-       }
-    }
-    */
     
 }

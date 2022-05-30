@@ -30,6 +30,7 @@ public class Vampiro extends Personaje{
     public Vampiro(){
     }
 
+    @Override
     public int getReservaPuntosSangre() {
         return reservaPuntosSangre;
     }
@@ -44,6 +45,7 @@ public class Vampiro extends Personaje{
         return nombre;
     }
 
+    @Override
     public int getEdad() {
         return edad;
     }
@@ -63,6 +65,7 @@ public class Vampiro extends Personaje{
         return poder;
     }
 
+    @Override
     public void setReservaPuntosSangre(int reservaPuntosSangre) {
         int sangreAcum = reservaPuntosSangre;
         if(sangreAcum < 0){
@@ -128,9 +131,13 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setListaEsbirros(Esbirro esbirro) {
-        Lealtad valorLealtad = esbirro.getLealtad();
-        if(valorLealtad == null){
-            this.listaEsbirros.add(esbirro);
+        if(esbirro != null){
+            Lealtad valorLealtad = esbirro.getLealtad();
+            if(valorLealtad == null){
+                this.listaEsbirros.add(esbirro);
+            }else{
+                throw new RuntimeException("este personaje no tiene esbirros humanos");
+            }
         }else{
             throw new RuntimeException("este personaje no tiene esbirros humanos");
         }
@@ -151,6 +158,7 @@ public class Vampiro extends Personaje{
         this.nombre = nombre;
     }
 
+    @Override
     public void setEdad(int edad) {
         if(edad >= 0){
            this.edad = edad;
