@@ -88,23 +88,26 @@ public class Vampiro extends Personaje{
     
     @Override
     public void setArmasActivas(Arma armaActiva) {
-        //int manejo = 2;
-        if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("2 manos")){
-            this.armasActivas.add(armaActiva);
-        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("1 mano")){
-            this.armasActivas.add(armaActiva);
-        }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals("1 mano")){    
-            this.armasActivas.add(armaActiva);
+        if(armaActiva != null){
+            if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("2 manos")){
+                this.armasActivas.add(armaActiva);
+            }else if(comprobarArmaEnLista(armaActiva) & armasActivas.isEmpty() & armaActiva.getManejo().equals("1 mano")){
+                this.armasActivas.add(armaActiva);
+            }else if(comprobarArmaEnLista(armaActiva) & armasActivas.size() == 1 & armaActiva.getManejo().equals("1 mano")){    
+                this.armasActivas.add(armaActiva);
+            }else{
+                throw new RuntimeException("ha llegado al tope de armas activas");  
+            } 
         }else{
-            throw new RuntimeException("ha llegado al tope de armas activas");  
-        }    
+            throw new RuntimeException("no registró ningún personaje");
+        }
     }
     
     @Override
     public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
         if(pos == 0 | pos == 1){
             if(armasActivas.get(pos).getManejo().equals(nuevaArmaActiva.getManejo())){
-                this.armasActivas.add(pos,nuevaArmaActiva);
+                this.armasActivas.set(pos,nuevaArmaActiva);
             }else{
                 throw new RuntimeException("no se pueden intercambiar las armas");
             }
@@ -116,7 +119,11 @@ public class Vampiro extends Personaje{
 
     @Override
     public void setArmaduraActiva(Armadura armaduraActiva) {
-        this.armaduraActiva = armaduraActiva;
+        if(armaduraActiva != null){
+            this.armaduraActiva = armaduraActiva;
+        }else{
+            throw new RuntimeException("no registró ningún personaje");
+        }
     }
 
     @Override

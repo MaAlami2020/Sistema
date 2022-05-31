@@ -104,17 +104,19 @@ public class Licantropo extends Personaje{
         this.listaArmaduras.add(armadura);
     }
 
+    @Override
     public void setListaEsbirros(Esbirro esbirro) {
         this.listaEsbirros.add(esbirro);
     }
 
     @Override
     public void setListaFortalezas(Fortaleza fortaleza) {
-        this.listaFortalezas = listaFortalezas;
+        this.listaFortalezas.add(fortaleza);
     }
 
+    @Override
     public void setListaDebilidades(Debilidad debilidad) {
-        this.listaDebilidades = listaDebilidades;
+        this.listaDebilidades.add(debilidad);
     }
  
     @Override

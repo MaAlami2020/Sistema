@@ -114,6 +114,7 @@ public class Cazador extends Personaje{
         this.listaFortalezas.add(fortaleza);
     }
     
+    @Override
     public void setListaDebilidades(Debilidad debilidad) {
         this.listaDebilidades.add(debilidad);
     }

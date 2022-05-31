@@ -26,6 +26,7 @@ public class MenuInicio{
         this.userlist = new ArrayList<>();
         this.usuariosBaneados = new ArrayList<>();
         this.usuariosActuales = new ArrayList<>();
+        Combate combate = new Combate(this);
     }
 
     public List<Usuario> getUsuarioActual() {
@@ -39,6 +40,7 @@ public class MenuInicio{
     public void acceder(){
       Usuario user = new Usuario(this);
       Operador operador = new Operador(this);
+      
       
       int seleccion = 0;  
       do{  

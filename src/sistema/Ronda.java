@@ -14,13 +14,8 @@ public class Ronda {
     private int valorAtaqueDesafiado;
     private int valorDefensaDesafiante;
     private int valorDefensaDesafiado;
-    private MenuInicio menu;
 
     public Ronda(){   
-    }
-    
-    public Ronda(MenuInicio menu){
-        this.menu = menu;
     }
 
     public int getValorAtaqueDesafiante() {
@@ -61,7 +56,6 @@ public class Ronda {
      * @param user1 es el usuario que acepta el desafio
      */
     public void calcularPotencialAtaque(Usuario user2, Usuario user1){
-            Operador operador = menu.getOperatorlist().get(0);
             Usuario desafiado = user1;
             Usuario desafiante = user2;
             
@@ -78,8 +72,12 @@ public class Ronda {
 
                 int potencialAtaque = poder + ataqueEquipoActivo;
                 int ataqueHabilidad = 0;
+                
                 if(personaje == Vampiro.class){
-                    int fortaleza = operador.getFortalezasVampiro();
+                    int valorFortaleza = 0;
+                    for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
+                         valorFortaleza += fortaleza.getSensibilidad();
+                    }
                     if(user.getTipoPersonaje().getReservaPuntosSangre() != 0){
                         int reservaSangre = user.getTipoPersonaje().getReservaPuntosSangre();
                         reservaSangre -= user.getTipoPersonaje().getHabilidad().getCostePuntosSangre();
@@ -94,24 +92,29 @@ public class Ronda {
                     }
                     
                     if(user.getTipoPersonaje().getSalud() >= 5){
-                        potencialAtaque += ataqueHabilidad + 2 + fortaleza;
+                        potencialAtaque += ataqueHabilidad + 2 + valorFortaleza;
                     }else{
-                        potencialAtaque += ataqueHabilidad + fortaleza;
+                        potencialAtaque += ataqueHabilidad + valorFortaleza;
                     }
                 }else{
                     ataqueHabilidad = user.getTipoPersonaje().getHabilidad().getValorAtaque();
+                    int valorFortaleza = 0;
                     
                     if(personaje == Licantropo.class){
-                        int fortaleza = operador.getFortalezasLicantropo();
+                        for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
+                            valorFortaleza += fortaleza.getSensibilidad();
+                        }
                         int rabiaActual = user.getTipoPersonaje().getRabia();         
                         if(rabiaActual < user.getTipoPersonaje().getHabilidad().getRabiaMin()){
                             ataqueHabilidad = 0;
                         }
-                        potencialAtaque += ataqueHabilidad + rabiaActual + fortaleza;
+                        potencialAtaque += ataqueHabilidad + rabiaActual + valorFortaleza;
                     }else if(personaje == Cazador.class){
-                        int fortaleza = operador.getFortalezasCazador();
+                        for(Fortaleza fortaleza: user.getTipoPersonaje().getListaFortalezas()){
+                            valorFortaleza += fortaleza.getSensibilidad();
+                        }
                         int voluntad = user.getTipoPersonaje().getVoluntad();
-                        potencialAtaque += ataqueHabilidad + voluntad + fortaleza;
+                        potencialAtaque += ataqueHabilidad + voluntad + valorFortaleza;
                        
                     }
                 }
@@ -120,7 +123,7 @@ public class Ronda {
                 while(cont != 0){
                     int numAleat = (int) (Math.random()*6+1);
                     cont -= 1;
-                    if((numAleat == 5)|(numAleat == 6)){
+                    if(numAleat == 5 || numAleat == 6){
                         exito += 1;
                     }
                 }
@@ -135,7 +138,6 @@ public class Ronda {
     }
     
     public void calcularPotencialDefensa(Usuario user2, Usuario user1){
-            Operador operador = menu.getOperatorlist().get(0);
             Usuario desafiado = user1;
             Usuario desafiante = user2;
             
@@ -152,8 +154,12 @@ public class Ronda {
                 
                 int potencialDefensa = poder + defensaEquipoActivo;
                 int defensaHabilidad = 0;
+                
                 if(personaje == Vampiro.class){
-                    int debilidad = operador.getDebilidadesVampiro();
+                    int valorDebilidad = 0;
+                    for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
+                        valorDebilidad += debilidad.getSensibilidad();
+                    }
                     if(user.getTipoPersonaje().getReservaPuntosSangre() != 0){
                         int reservaSangre = user.getTipoPersonaje().getReservaPuntosSangre();
                         reservaSangre -= user.getTipoPersonaje().getHabilidad().getCostePuntosSangre();
@@ -168,24 +174,31 @@ public class Ronda {
                     }
                     
                     if(user.getTipoPersonaje().getSalud() >= 5){
-                        potencialDefensa += defensaHabilidad + 2 - debilidad;
+                        potencialDefensa += defensaHabilidad + 2 - valorDebilidad;
                     }else{
-                        potencialDefensa += defensaHabilidad - debilidad;
+                        potencialDefensa += defensaHabilidad - valorDebilidad;
                     }
                 }else{
                     defensaHabilidad = user.getTipoPersonaje().getHabilidad().getValorDefensa();
                     
                     if(personaje == Licantropo.class){
-                        int debilidad = operador.getDebilidadesLicantropo();
+                        int valorDebilidad = 0;
+                        for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
+                            valorDebilidad += debilidad.getSensibilidad();
+                        }
                         int rabiaActual = user.getTipoPersonaje().getRabia();         
                         if(rabiaActual < user.getTipoPersonaje().getHabilidad().getRabiaMin()){
                             defensaHabilidad = 0;
                         }
-                        potencialDefensa += defensaHabilidad + rabiaActual - debilidad;
+                        potencialDefensa += defensaHabilidad + rabiaActual - valorDebilidad;
+                        
                     }else if(personaje == Cazador.class){
-                        int debilidad = operador.getDebilidadesCazador();
+                        int valorDebilidad = 0;
+                        for(Debilidad debilidad: user.getTipoPersonaje().getListaDebilidades()){
+                            valorDebilidad += debilidad.getSensibilidad();
+                        }
                         int voluntad = user.getTipoPersonaje().getVoluntad();
-                        potencialDefensa += defensaHabilidad + voluntad - debilidad;
+                        potencialDefensa += defensaHabilidad + voluntad - valorDebilidad;
                        
                     }
                 }
@@ -194,7 +207,7 @@ public class Ronda {
                 while(cont != 0){
                     int numAleat = (int) (Math.random()*6+1);
                     cont -= 1;
-                    if((numAleat == 5)|(numAleat == 6)){
+                    if(numAleat == 5 || numAleat == 6){
                         exito += 1;
                     }
                 }
@@ -222,7 +235,7 @@ public class Ronda {
          Class personaje = user.getTipoPersonaje().getClass();    
          boolean saludPerdida = false; 
          //int iter =0;
-         while(user.getTipoPersonaje().getListaEsbirros().iterator().hasNext()&(!saludPerdida)){         
+         while(!user.getTipoPersonaje().getListaEsbirros().isEmpty() && user.getTipoPersonaje().getListaEsbirros().iterator().hasNext()&(!saludPerdida)){         
              Esbirro EsbirroUsuario = user.getTipoPersonaje().getListaEsbirros().iterator().next();
              if(EsbirroUsuario.getSalud() != 0){
                 int saludEsbirroUsuario = 5;//se inicializa con el maximo de salud 

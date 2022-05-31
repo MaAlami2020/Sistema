@@ -30,16 +30,8 @@ public class Desafio implements Iterator{
            Scanner sc = new Scanner(System.in);
            String opcion = sc.next();
            opc = Integer.parseInt(opcion);
-        }while((opc < 1)|(opc > 3));
-        /*
-        //si los competidores no tienen equipos activos no se puede inicializar el combate
-        List<Arma> armasDesafiante = desafiante.getTipoPersonaje().getArmasActivas();
-        Armadura armaduraDesafiante = desafiante.getTipoPersonaje().getArmaduraActiva();
-        List<Arma> armasDesafiado = desafiado.getTipoPersonaje().getArmasActivas();
-        Armadura armaduraDesafiado = desafiado.getTipoPersonaje().getArmaduraActiva();
-        if((!(armasDesafiante.isEmpty())|(armaduraDesafiante != null))&((!armasDesafiado.isEmpty())|(armaduraDesafiado != null))){           
-        */    
-        switch (opc) {
+         
+            switch (opc) {
                 case 1:
                    desafiado.cambiarArmasActivasPersonaje();
                    break;
@@ -52,13 +44,10 @@ public class Desafio implements Iterator{
                    combate.mostrarResultaddo();
                    break;
                 default:
+                   System.out.println("seleccion erronea"); 
                    break;
             }
-        /*
-        }else{
-            System.out.println("no tiene armas o armadura activa");
-        }
-        */
+        }while(opc != 3); 
     }
 
     /**
@@ -71,7 +60,11 @@ public class Desafio implements Iterator{
         double oroPersonaje = desafiado.getTipoPersonaje().getOro();
         int oroDesafiante = desafiante.getOroApostado();
         oroPersonaje -= (double) oroDesafiante * 0.1;
-        desafiado.setOroPersonaje(oroPersonaje);
+        if(oroPersonaje >= 0){
+            desafiado.setOroPersonaje(oroPersonaje);
+        }else{
+            desafiado.setOroPersonaje(0);
+        }
     }
 
     @Override

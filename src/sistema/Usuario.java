@@ -5,6 +5,7 @@
 package sistema;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -204,7 +205,7 @@ public class Usuario implements Serializable{
                         sc = new Scanner(System.in);
                         String option = sc.next();
                         int opt =Integer.parseInt(option);
-                        if(opt == 1){
+                        if(opt == 1 && menu.getUsuarioActual().get(0).getTipoPersonaje() == null){
                             System.out.println("1.-vampiro");
                             System.out.println("2.-licantropo");
                             System.out.println("3.-cazador");
@@ -219,6 +220,10 @@ public class Usuario implements Serializable{
                             }else if(opt1 == 3){
                                 registrar_cazador();
                             }
+                            atributosComunesPersonaje();
+                            menu.updateUser(menu.getUsuarioActual().get(0),menu.getUsuarioActual().get(0).getTipoPersonaje());
+                        }else if(opt == 1 && menu.getUsuarioActual().get(0).getTipoPersonaje() != null){
+                            System.out.println("ya tiene un personaje registrado");
                         }else if(opt == 2){
                             darBaja_Personaje();
                         }
@@ -908,9 +913,6 @@ public class Usuario implements Serializable{
            sangreAcum = anadirSangreAcum();
            setSangreAcumPersonaje(sangreAcum);
         }while(sangreAcum < 0 | sangreAcum > 10);
-        
-        atributosComunesPersonaje();
-        menu.updateUser(menu.getUsuarioActual().get(0),menu.getUsuarioActual().get(0).getTipoPersonaje());
 
     }
     
@@ -918,16 +920,12 @@ public class Usuario implements Serializable{
         Fabrica fabrica = new FabricacionLicantropo();
         menu.getUsuarioActual().get(0).setTipoPersonaje(fabrica.crearPersonaje());
         
-        atributosComunesPersonaje(); 
-        menu.updateUser(menu.getUsuarioActual().get(0),menu.getUsuarioActual().get(0).getTipoPersonaje());
     }
     
     public void registrar_cazador(){
         Fabrica fabrica = new FabricacionCazador();
         menu.getUsuarioActual().get(0).setTipoPersonaje(fabrica.crearPersonaje());
         
-        atributosComunesPersonaje();
-        menu.updateUser(menu.getUsuarioActual().get(0),menu.getUsuarioActual().get(0).getTipoPersonaje());
     }
     
     public int apostarOro(){
@@ -945,6 +943,14 @@ public class Usuario implements Serializable{
             throw new RuntimeException("cantidad apostada no valida");
         }else{
             usuarioActual.oroApostado = oroApostar;
+        }
+    }
+    
+    public void introducirApuesta(int oroApostar){
+        try{
+            setOroApostado(oroApostar);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -982,7 +988,7 @@ public class Usuario implements Serializable{
                if(estaBaneado == false){
                    do{
                         int oro = apostarOro();
-                        setOroApostado(oro);
+                        introducirApuesta(oro);
                    }while(menu.getUsuarioActual().get(0).getOroApostado() < 0 || menu.getUsuarioActual().get(0).getOroApostado() > menu.getUsuarioActual().get(0).getTipoPersonaje().getOro());
                    menu.setUsuariosParaValidar(menu.getUsuarioActual().get(0).usuarioDesafiar);
                    menu.setUsuariosParaValidar(menu.getUsuarioActual().get(0));
@@ -1006,14 +1012,14 @@ public class Usuario implements Serializable{
           System.out.println(cont + ".-" + arm.getNombre() + " --> " + arm.getManejo());
           cont++;
        }
-       int opcArma = 0;
+       int opcArma;
        do{
           System.out.println("seleccione el numero de arma a modificar: ");
           Scanner sc = new Scanner(System.in);
           String opc = sc.next();
           opcArma = Integer.parseInt(opc);
-       }while(opcArma != 1 && opcArma != 2);
-       
+       }while(opcArma < 1 || opcArma >= cont);
+       opcArma--;
        return opcArma;
     }
     
@@ -1021,19 +1027,20 @@ public class Usuario implements Serializable{
         int posArmaModificar = seleccionarArmaModificar();
         boolean cambiadas = false;
         do{
-           Arma nuevaArma = elegirArma_activa();
-           Arma armaModificar = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas().get(posArmaModificar);
-           if(armaModificar.getManejo().equals(nuevaArma.getManejo())){
-               menu.getUsuarioActual().get(0).getTipoPersonaje().setNuevasArmasActivas(posArmaModificar, nuevaArma);
-               cambiadas = true;
-           }else{
-               System.out.println("no se pueden cambiar las armas porque son de distinto manejo");
-           }
+            Arma nuevaArma = elegirArma_activa();
+            Arma armaModificar = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas().get(posArmaModificar);
+            if(armaModificar.getManejo().equals(nuevaArma.getManejo())){
+                menu.getUsuarioActual().get(0).getTipoPersonaje().setNuevasArmasActivas(posArmaModificar, nuevaArma);
+                cambiadas = true;
+            }else{
+                System.out.println("no se pueden cambiar las armas porque son de distinto manejo");
+            }
         }while(cambiadas == false);
     }
         
     public Armadura elegirArmadura_activa(){
-           List<Armadura> armaduras = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmaduras();
+        List<Armadura> armaduras = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmaduras();
+        if(!armaduras.isEmpty()){
            int cont = 1;
            for(Armadura a : armaduras){
               System.out.println(cont + ".-" + a.getNombre());
@@ -1049,33 +1056,48 @@ public class Usuario implements Serializable{
            opcArmadura--;
            Armadura armaduraActiva = armaduras.get(opcArmadura);
            return armaduraActiva;
+        }else{
+            return null;
+        }
     }
     
     public void setArmaduraActivaPersonaje(Armadura armaduraActiva){
-        menu.getUsuarioActual().get(0).getTipoPersonaje().setArmaduraActiva(armaduraActiva);
+        try{
+            menu.getUsuarioActual().get(0).getTipoPersonaje().setArmaduraActiva(armaduraActiva);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     public Arma elegirArma_activa(){
         List<Arma> armas = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas();
-        int cont = 1;
-            for(Arma a : armas){
-                System.out.println(cont + ".-" + a.getNombre() + " --> " + a.getManejo());
-                cont++;
-            }
-            int opcArma = 0;
-            do{
-                System.out.println("escoga un numero de arma activa: ");
-                Scanner sc = new Scanner(System.in);
-                String opc = sc.next();
-                opcArma = Integer.parseInt(opc);
-            }while(opcArma < 1 || opcArma >= cont);
-            opcArma--;
-            Arma arm = armas.get(opcArma);
-        return arm;
+        if(!armas.isEmpty()){
+            int cont = 1;
+                for(Arma a : armas){
+                    System.out.println(cont + ".-" + a.getNombre() + " --> " + a.getManejo());
+                    cont++;
+                }
+                int opcArma = 0;
+                do{
+                    System.out.println("escoga un numero de arma activa: ");
+                    Scanner sc = new Scanner(System.in);
+                    String opc = sc.next();
+                    opcArma = Integer.parseInt(opc);
+                }while(opcArma < 1 || opcArma >= cont);
+                opcArma--;
+                Arma arm = armas.get(opcArma);
+            return arm;
+        }else{
+            return null;
+        }
     }
     
     public void setArmasActivasPersonaje(Arma armaActiva){
-        menu.getUsuarioActual().get(0).getTipoPersonaje().setArmasActivas(armaActiva);
+        try{
+            menu.getUsuarioActual().get(0).getTipoPersonaje().setArmasActivas(armaActiva);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     public void consultarOro(){ 
@@ -1083,7 +1105,7 @@ public class Usuario implements Serializable{
         System.out.println("usuario: " + menu.getUsuarioActual().get(0).getNombre());
         int cont = 1;
         for(Combate combate: menu.getListaCombates()){
-            System.out.print("combate " + cont);
+            System.out.println("combate " + cont);
                 cont++;
             if(menu.getUsuarioActual().get(0).getNombre().equals(combate.getDesafiante().getNombre())){
                 System.out.println("oro actual: "+combate.getDesafiante().getTipoPersonaje().getOro());
@@ -1093,7 +1115,7 @@ public class Usuario implements Serializable{
             if(combate.getUsuarioVencedor().getNombre().equals(menu.getUsuarioActual().get(0).getNombre())){
                     System.out.println("oro ganado: "+ combate.getOroGanado());
             }else{
-                    System.out.println("oro ganado: "+0);
+                    System.out.println("oro perdido: "+ combate.getOroGanado());
             }
         }
       }else{
@@ -1237,7 +1259,7 @@ public class Usuario implements Serializable{
            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
            out.writeObject(us);
            out.close();
-       }catch(Exception e){
+       }catch(IOException e){
            System.out.println(e);
        }
     }  

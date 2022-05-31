@@ -5,17 +5,17 @@
 package sistema;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
  * @author mimit
  */
-public class Combate{
+public class Combate implements Comparable{
     private List<Ronda> listaRondas = new ArrayList<>();
     private Usuario desafiante;
     private Usuario desafiado; 
@@ -96,7 +96,7 @@ public class Combate{
             int saludDesafiante = desafiante.getTipoPersonaje().getSalud();
             
             while(saludDesafiante > 0 && saludDesafiado > 0){
-                Ronda ronda = new Ronda(menu);
+                Ronda ronda = new Ronda();
                 ronda.calcularPotencialAtaque(desafiante,desafiado);
                 ronda.calcularPotencialDefensa(desafiante,desafiado);
                 ronda.Jugar(desafiante,desafiado);
@@ -126,12 +126,16 @@ public class Combate{
                 oroDesafiante += oroApostado;
                 desafiante.getTipoPersonaje().setOro(oroDesafiante);
                 
-                combate.setOroGanado(oroApostado);   
+                oroGanado = oroApostado;
+                
+                combate.setOroGanado(oroGanado);   
                 menu.setListaCombates(this);
-                Operador operador = menu.getOperatorlist().get(0);
-                operador.setMenu(menu);
+                
+               // menu.setUsuariosBaneados(desafiado);
+                //Operador operador = menu.getOperatorlist().get(0);
+                //operador.setMenu(menu);
 //baneara a un usuario cualquier operador, en mi caso he decidido que sea el primer operador registrado
-                operador.banearUsuario(desafiado);
+                //operador.banearUsuario(desafiado);
                 
             }else if(saludDesafiado > 0){
                 usuarioVencedor = desafiado;
@@ -150,18 +154,22 @@ public class Combate{
                 oroDesafiado += oroApostado;
                 desafiado.getTipoPersonaje().setOro(oroDesafiado);
                 
-                combate.setOroGanado(oroApostado);   
+                oroGanado = oroApostado;
+                
+                combate.setOroGanado(oroGanado);   
                 menu.setListaCombates(this);
-                Operador operador = menu.getOperatorlist().get(0);
-                operador.setMenu(menu);
-                operador.banearUsuario(desafiante);
+                
+               // menu.setUsuariosBaneados(desafiante);
+//                Operador operador = menu.getOperatorlist().get(0);
+//                operador.setMenu(menu);
+//                operador.banearUsuario(desafiante);
             }
             combate.setUsuarioVencedor(usuarioVencedor);
             
             Usuario user = desafiado;
             while(user != null){
                boolean saludPerdida = false; 
-               while(user.getTipoPersonaje().getListaEsbirros().iterator().hasNext()&(!saludPerdida)){         
+               while(!user.getTipoPersonaje().getListaEsbirros().isEmpty() && user.getTipoPersonaje().getListaEsbirros().iterator().hasNext()&(!saludPerdida)){         
                   Esbirro EsbirroUsuario = user.getTipoPersonaje().getListaEsbirros().iterator().next();
                   if(EsbirroUsuario.getSalud() != 0){
                       saludPerdida = true;
@@ -174,25 +182,26 @@ public class Combate{
                       if(!userPresent){
                           contendientes.add(user);
                       }
-                  }else{
-                      Class esbirro = EsbirroUsuario.getClass(); 
-                      if(esbirro == Demonio.class){
-                         for(Esbirro esb: EsbirroUsuario.getHijos()){
-                            if(esb.getSalud() != 0){
-                                saludPerdida = true;
-                                boolean userPresent = false;
-                                for(Usuario us: contendientes){
-                                    if(us.equals(user)){
-                                        userPresent = true;
-                                    }
-                                }
-                                if(!userPresent){
-                                    contendientes.add(user);
-                                }
-                            }
-                         }
-                      }
                   }
+                    //else{
+//                      Class esbirro = EsbirroUsuario.getClass(); 
+//                      if(esbirro == Demonio.class){
+//                         for(Esbirro esb: EsbirroUsuario.getHijos()){
+//                            if(esb.getSalud() != 0){
+//                                saludPerdida = true;
+//                                boolean userPresent = false;
+//                                for(Usuario us: contendientes){
+//                                    if(us.equals(user)){
+//                                        userPresent = true;
+//                                    }
+//                                }
+//                                if(!userPresent){
+//                                    contendientes.add(user);
+//                                }
+//                            }
+//                         }
+//                      }
+//                  }
                }
                if(user == desafiado){
                    user = desafiante;
@@ -220,15 +229,28 @@ public class Combate{
             System.out.println("valor a la defensa del desafiado: " + rd.getValorDefensaDesafiado());
         }
     }
+    
     public void serializar(Combate cmb){
        try{
            String fich = "D://Sistema//fichero.bin";
            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
            out.writeObject(cmb);
            out.close();
-       }catch(Exception e){
+       }catch(IOException e){
            System.out.println(e);
        }
        System.out.println("informacion guardada");
     }  
+
+    @Override
+    public int compareTo(Object o) {
+        Combate c = (Combate) o;
+        if(fecha.isBefore(c.fecha)){
+            return -1;
+        }else if(fecha.isAfter(c.fecha)){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }
