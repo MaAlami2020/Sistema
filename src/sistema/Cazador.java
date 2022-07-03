@@ -44,16 +44,6 @@ public class Cazador extends Personaje{
         return oro;
     }
 
-    @Override
-    public int getSalud() {
-        return salud;
-    }
-
-    @Override
-    public int getPoder() {
-        return poder;
-    }
-
     public boolean comprobarArmaEnLista(Arma arma){
         for(Arma a: listaArmas){
             if(a.equals(arma)){
@@ -75,24 +65,6 @@ public class Cazador extends Personaje{
             throw new RuntimeException("ha llegado al tope de armas activas");  
         }    
     }
-    
-    @Override
-    public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
-        if(pos == 0 | pos == 1){
-            if(armasActivas.get(pos).getManejo().equals(nuevaArmaActiva.getManejo())){
-                this.armasActivas.add(pos,nuevaArmaActiva);
-            }else{
-                throw new RuntimeException("no se pueden intercambiar las armas");
-            }
-        }else{
-            throw new RuntimeException("posicion fuera del rango del tamaño de la lista de armas activas");
-        }
-    }
-    
-    @Override
-    public void setArmaduraActiva(Armadura armaduraActiva) {
-        this.armaduraActiva = armaduraActiva;
-    }
 
     @Override
     public void setListaArmas(Arma arma) {
@@ -108,16 +80,6 @@ public class Cazador extends Personaje{
     public void setListaEsbirros(Esbirro esbirro) {
         this.listaEsbirros.add(esbirro);
     }
-
-    @Override
-    public void setListaFortalezas(Fortaleza fortaleza) {
-        this.listaFortalezas.add(fortaleza);
-    }
-    
-    @Override
-    public void setListaDebilidades(Debilidad debilidad) {
-        this.listaDebilidades.add(debilidad);
-    }
  
     @Override
     public void setNombre(String nombre) {
@@ -132,34 +94,6 @@ public class Cazador extends Personaje{
             throw new RuntimeException("la cantidad de oro no puede ser negativa");
         }
     }
-
-    @Override
-    public void setSalud(int salud) {
-        if(salud < 0 | salud > 5){
-            throw new RuntimeException("sobrepasó el límite de salud permitida");
-        }else{
-            this.salud = salud;
-        }
-    }
-
-    @Override
-    public void setPoder(int poder){
-        if(poder < 1 | poder > 5){
-            throw new RuntimeException("sobrepasó el límite de poder permitido");
-        }else{
-            this.poder = poder;
-        }
-    }
-
-    @Override
-    public void setHabilidad(Habilidad habilidad) {
-        int valorEdad = habilidad.getEdad();
-        if(valorEdad != -1){
-            this.habilidad = habilidad;
-        }else{
-            throw new RuntimeException("este personaje no tiene esta habilidad");
-        }
-    }
     
     @Override
     public List<Arma> getListaArmas() {
@@ -172,24 +106,9 @@ public class Cazador extends Personaje{
     }
 
     @Override
-    public List<Fortaleza> getListaFortalezas() {
-        return listaFortalezas;
-    }
-
-    @Override
-    public List<Debilidad> getListaDebilidades() {
-        return listaDebilidades;
-    }
-
-    @Override
     public List<Armadura> getListaArmaduras() {
        return listaArmaduras;
-    }
-
-    @Override
-    public Armadura getArmaduraActiva() {
-        return armaduraActiva;
-    }   
+    }  
 
     @Override
     public int getRabia() {
@@ -233,11 +152,6 @@ public class Cazador extends Personaje{
         }else{
            throw new RuntimeException("no se puede quitar mas voluntad");
         }
-    }
-
-    @Override
-    public Habilidad getHabilidad() {
-        return habilidad;
     }
     
 }

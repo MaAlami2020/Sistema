@@ -19,6 +19,8 @@ public abstract class Personaje {
     public abstract int getEdad();
     public abstract double getOro();
     public abstract void setListaArmas(Arma arma);
+    public abstract void setArmasActivas(Arma armaActiva);
+    public abstract List<Arma> getArmasActivas();
     public abstract void setListaArmaduras(Armadura armadura);
     public abstract List<Arma> getListaArmas();
     public abstract List<Armadura> getListaArmaduras();
