@@ -13,17 +13,11 @@ import java.util.List;
  */
 public class Cazador extends Personaje{
     private String nombre;
-    private List<Arma> armasActivas = new ArrayList<>();
-    private Armadura armaduraActiva;    
+    private List<Arma> armasActivas = new ArrayList<>();   
     private List<Arma> listaArmas = new ArrayList<>();
     private List<Armadura>listaArmaduras = new ArrayList<>(); 
-    private List<Fortaleza> listaFortalezas = new ArrayList<>();
-    private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
     private double oro;
-    private int salud;
-    private int poder;
-    private Habilidad habilidad;
     private int voulntad = 3;
     
     public Cazador(){
