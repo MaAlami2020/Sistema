@@ -162,7 +162,7 @@ public class CazadorTest {
         
             cazador.setArmasActivas(arma1);
             cazador.setArmasActivas(arma2);
-            cazador.setNuevasArmasActivas(0, arma3);
+            //cazador.setNuevasArmasActivas(0, arma3);
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
             fail("posicion fuera del rango del tamaño del array");
@@ -187,7 +187,7 @@ public class CazadorTest {
         
             cazador.setArmasActivas(arma1);
             cazador.setArmasActivas(arma2);
-            cazador.setNuevasArmasActivas(0, arma3);
+            //cazador.setNuevasArmasActivas(0, arma3);
             fail("no se pueden intercambiar armas de distinto manejo");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
@@ -214,71 +214,12 @@ public class CazadorTest {
         
             cazador.setArmasActivas(arma1);
             cazador.setArmasActivas(arma2);
-            cazador.setNuevasArmasActivas(2, arma3);
+            //cazador.setNuevasArmasActivas(2, arma3);
             fail("posicion dentro del rango del tamaño de la lista de armas activas");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"posicion fuera del rango del tamaño de la lista de armas activas");
             System.out.println("CP2 correcto");
-        }
-    }
-
-    /**
-     * Test of setHabilidad method, of class Cazador.
-     * test para probar que este personaje tiene como habilidad especial el talento
-     */
-    @Test
-
-    public void testSetHabilidad() {
-        try{
-
-            Talento talento = new Talento("extirpacion",3,1,219);
-            Cazador cazador = new Cazador();
-            cazador.setHabilidad(talento);
-            
-            assertEquals(talento,cazador.getHabilidad());
-            System.out.println("CP1 incorrecto");
-        }catch(Exception e){
-            fail("este personaje no tiene esta habilidad");
-            System.out.println("CP1 correcto");
-        }
-    }
-    
-    /**
-     * Test of setHabilidad method, of class Cazador.
-     * test para probar que este personaje no tiene como habilidad especial el don 
-     * porque no tiene una edad de adquiscion
-     */
-    @Test
-    public void testSetHabilidad1() {
-        try{
-            Don don = new Don("adkgxv",3,1,455);
-            Cazador cazador = new Cazador(); 
-            cazador.setHabilidad(don);
-            fail("este personaje tiene esta habilidad");
-            System.out.println("CP2 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"este personaje no tiene esta habilidad");
-            System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setHabilidad method, of class Cazador.
-     * test para probar que este personaje no tiene como habilidad especial la disciplina 
-     * porque no tiene una edad de adquisicion
-     */
-    @Test
-    public void testSetHabilidad2() {
-        try{
-            Disciplina disciplina = new Disciplina("adkgxv",3,1,3);
-            Cazador cazador = new Cazador();
-            cazador.setHabilidad(disciplina);
-            fail("este personaje tiene esta habilidad");
-            System.out.println("CP3 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"este personaje no tiene esta habilidad");
-            System.out.println("CP3 correcto");
         }
     }
 
@@ -335,169 +276,6 @@ public class CazadorTest {
         }catch(Exception ex){
             fail("la cantidad de oro no puede ser negativa");
             System.out.println("CP3 correcto");
-        }
-    }
-
-    /**
-     * Test of setSalud method, of class Cazador.
-     * test para probar que la salud supera el maximo valor de salud permtido en 1 unidad
-     */
-    @Test
-    public void testSetSalud() {
-        try{ 
-            int salud = 6;
-            Cazador cazador = new Cazador();
-            cazador.setSalud(salud);
-            fail("la cantidad de salud esta entre 0 y 5");
-            System.out.println("CP1 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP1 correcto");
-        }
-    }
-
-    /**
-     * Test of setSalud method, of class Cazador.
-     * test para probar que la salud no alcanza el minimo valor de salud permtido
-     */
-    @Test
-    public void testSetSalud1() {
-        try{ 
-            int salud = -1;
-            Cazador cazador = new Cazador();
-            cazador.setSalud(salud);
-            fail("la cantidad de salud esta entre 0 y 5");
-            System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setSalud method, of class Cazador.
-     * test para probar que la salud es uno de los valores limite de salud permitidos 
-     */
-    @Test
-    public void testSetSalu2() {
-        try{ 
-            int salud = 0;
-            Cazador cazador = new Cazador();
-            cazador.setSalud(salud);
-            assertEquals(0,cazador.getSalud());
-            System.out.println("CP3 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de salud permitida");
-            System.out.println("CP3 correcto");
-        }
-    }
-    
-    /**
-     * Test of setSalud method, of class Cazador.
-     * test para probar que la salud esta dentro del rango de valores permitidos 
-     * pero no es uno de los valores limite
-     */
-    @Test
-    public void testSetSalud3() {
-        try{ 
-            int salud = 4;
-            Cazador cazador = new Cazador();
-            cazador.setSalud(salud);
-            assertEquals(4,cazador.getSalud());
-            System.out.println("CP4 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de salud permitida");
-            System.out.println("CP4 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Cazador.
-     * test para probar que el poder supera el maximo valor de poder permtido en 1 unidad
-     */
-    @Test
-    public void testSetPoder() {
-        try{ 
-            int poder = 6;
-            Cazador cazador = new Cazador();
-            cazador.setPoder(poder);
-            fail("la cantidad de poder esta entre 1 y 5");
-            System.out.println("CP1 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP1 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Cazador.
-     * test para probar que el poder esta a un valor de alcanzar el minimo valor de poder permtido
-     */
-    @Test
-    public void testSetPoder1() {
-        try{ 
-            int poder = 0;
-            Cazador cazador = new Cazador();
-            cazador.setPoder(poder);
-            fail("la cantidad de poder esta entre 1 y 5");
-            System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Cazador.
-     * test para probar que el poder sobrepasa en mas de 1 unidad el valor maximo de poder permitido
-     */
-    @Test
-    public void testSetPoder2() {
-        try{ 
-            int poder = 9;
-            Cazador cazador = new Cazador();
-            cazador.setPoder(poder);
-            fail("la cantidad de poder esta entre 1 y 5");
-            System.out.println("CP3 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP3 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Cazador.
-     * test para probar que el poder esta en el rango de valores permitidos sin contar los valores limite
-     */
-    @Test
-    public void testSetPoder3() {
-        try{ 
-            int poder = 3;
-            Cazador cazador = new Cazador();
-            cazador.setPoder(poder);
-            assertEquals(3,cazador.getPoder());
-            System.out.println("CP4 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de poder permitido");
-            System.out.println("CP4 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Cazador.
-     * test para probar que el poder es uno de los valores limite
-     */
-    @Test
-    public void testSetPoder4() {
-        try{ 
-            int poder = 5;
-            Cazador cazador = new Cazador();
-            cazador.setPoder(poder);
-            assertEquals(5,cazador.getPoder());
-            System.out.println("CP5 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de poder permitido");
-            System.out.println("CP5 correcto");
         }
     }
 

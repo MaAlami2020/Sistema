@@ -15,18 +15,14 @@ import java.util.Scanner;
 public class MenuInicio{
     private List<Usuario> userlist;
     private List<Operador> operatorlist = new ArrayList<>();
-    private List<Usuario> listaUsuariosDesafiantes = new ArrayList<>();
-    private List<Combate> listaCombates = new ArrayList<>();
     private List<Usuario> usuariosBaneados;
-    private List<Usuario> desafiosParaValidar;
+    private List<String> notificaciones = new ArrayList<>();
     private List<Usuario> usuariosActuales;
     
     public MenuInicio(){
-        this.desafiosParaValidar = new ArrayList<>();
         this.userlist = new ArrayList<>();
         this.usuariosBaneados = new ArrayList<>();
         this.usuariosActuales = new ArrayList<>();
-        Combate combate = new Combate(this);
     }
 
     public List<Usuario> getUsuarioActual() {
@@ -86,48 +82,31 @@ public class MenuInicio{
         return operatorlist;
     }
 
-    public List<Usuario> getListaUsuariosDesafiantes() {
-        return listaUsuariosDesafiantes;
-    }
-
     public List<Usuario> getUsuariosBaneados() {
         return usuariosBaneados;
     }
-
-    public List<Usuario> getDesafiosParaValidar() {
-        return desafiosParaValidar;
-    }
-
+    
     public void setUserlist(Usuario user) {
         this.userlist.add(user);
-    }
-
-    public List<Combate> getListaCombates() {
-        return listaCombates;
-    }
-
-    public void setListaCombates(Combate combate) {
-        this.listaCombates.add(combate);
     }
     
     public void setOperatorlist(Operador operator) {
         this.operatorlist.add(operator);
     }
 
-    public void setListaUsuariosDesafiantes(Usuario usuarioDesafiante) {
-        this.listaUsuariosDesafiantes.add(usuarioDesafiante);
-    }
-
     public void setUsuariosBaneados(Usuario usuarioBaneado) {
         this.usuariosBaneados.add(usuarioBaneado);
     }
 
-    public void setUsuariosParaValidar(Usuario usuarioParaValidar) {
-        this.desafiosParaValidar.add(usuarioParaValidar);
+    public void setNotifDesafio(String notificacion) {
+        this.notificaciones.add(notificacion);
+    }
+
+    public List<String> getNotifDesafio() {
+        return notificaciones;
     }
     
     public void updateUser(Usuario us, Personaje per){
-        
         for(Usuario usuario: userlist){
             if(usuario.getNombre().equals(us.getNombre()) & usuario.getPassword().equals(us.getPassword())){
                 usuario.setTipoPersonaje(per);

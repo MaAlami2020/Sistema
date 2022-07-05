@@ -10,8 +10,7 @@ package sistema;
  */
 public class Arma {
    private String nombre;
-    private int modificadorAtaque;
-    private int modificadorDefensa;
+    
     private String manejo;
 
     public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, String manejo) {

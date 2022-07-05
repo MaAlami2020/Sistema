@@ -15,17 +15,11 @@ public class Vampiro extends Personaje{
     private String nombre;
     private int reservaPuntosSangre;
     private int edad;
-    private List<Arma> armasActivas = new ArrayList<>();
-    private Armadura armaduraActiva;    
+    private List<Arma> armasActivas = new ArrayList<>();  
     private List<Arma> listaArmas = new ArrayList<>();
     private List<Armadura>listaArmaduras = new ArrayList<>(); 
-    private List<Fortaleza> listaFortalezas = new ArrayList<>();
-    private List<Debilidad> listaDebilidades = new ArrayList<>();
     private List<Esbirro> listaEsbirros = new ArrayList<>();  
     private double oro;
-    private int salud;
-    private int poder;
-    private Habilidad habilidad;
     
     public Vampiro(){
     }
@@ -53,16 +47,6 @@ public class Vampiro extends Personaje{
     @Override
     public double getOro(){
         return oro;
-    }
-
-    @Override
-    public int getSalud() {
-        return salud;
-    }
-
-    @Override
-    public int getPoder() {
-        return poder;
     }
 
     @Override
@@ -103,28 +87,19 @@ public class Vampiro extends Personaje{
         }
     }
     
-    @Override
-    public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
-        if(pos == 0 | pos == 1){
-            if(armasActivas.get(pos).getManejo().equals(nuevaArmaActiva.getManejo())){
-                this.armasActivas.set(pos,nuevaArmaActiva);
-            }else{
-                throw new RuntimeException("no se pueden intercambiar las armas");
-            }
-        }else{
-            throw new RuntimeException("posicion fuera del rango del tamaño del array");
-        }
-    }
-            
-
-    @Override
-    public void setArmaduraActiva(Armadura armaduraActiva) {
-        if(armaduraActiva != null){
-            this.armaduraActiva = armaduraActiva;
-        }else{
-            throw new RuntimeException("no registró ningún personaje");
-        }
-    }
+//    @Override
+//    public void setNuevasArmasActivas(int pos, Arma nuevaArmaActiva){
+//        if(pos == 0 | pos == 1){
+//            if(armasActivas.get(pos).getManejo().equals(nuevaArmaActiva.getManejo())){
+//                this.armasActivas.set(pos,nuevaArmaActiva);
+//            }else{
+//                throw new RuntimeException("no se pueden intercambiar las armas");
+//            }
+//        }else{
+//            throw new RuntimeException("posicion fuera del rango del tamaño del array");
+//        }
+//    }
+       
 
     @Override
     public void setListaArmas(Arma arma) {
@@ -149,16 +124,6 @@ public class Vampiro extends Personaje{
             throw new RuntimeException("este personaje no tiene esbirros humanos");
         }
     }
-
-    @Override
-    public void setListaFortalezas(Fortaleza fortaleza) {
-        this.listaFortalezas.add(fortaleza);
-    }
-
-    @Override
-    public void setListaDebilidades(Debilidad debilidad) {
-        this.listaDebilidades.add(debilidad);
-    }
  
     @Override
     public void setNombre(String nombre) {
@@ -182,45 +147,6 @@ public class Vampiro extends Personaje{
             throw new RuntimeException("la cantidad de oro no puede ser negativa");
         }
     }
-
-    @Override
-    public void setSalud(int salud) {
-        if(salud < 0 | salud > 5){
-            throw new RuntimeException("sobrepasó el límite de salud permitida");
-        }else{
-            this.salud = salud;
-        }
-    }
-
-    @Override
-    public void setPoder(int poder){
-        if(poder < 1 | poder > 5){
-            throw new RuntimeException("sobrepasó el límite de poder permitido");
-        }else{
-            this.poder = poder;
-        }
-    }
-
-    @Override
-    public Habilidad getHabilidad() {
-        return habilidad;
-    }
-
-    /**
-     * trato de distinguir al personaje segun el atributo que solo dispone este personaje, 
-     * es decir, que si el valor del coste en puntos de sangre es -1 significa que esa habilidad no tiene un coste
-     * y si la habilidad no tiene un coste entonces ese personaje no tiene esa habilidad
-     * @param habilidad
-     */
-    @Override
-    public void setHabilidad(Habilidad habilidad) { 
-        int valorCoste = habilidad.getCostePuntosSangre();
-        if(valorCoste != -1){
-            this.habilidad = habilidad;
-        }else{
-            throw new RuntimeException("este personaje no tiene esta habilidad");
-        }
-    }
     
     @Override
     public List<Arma> getListaArmas() {
@@ -233,24 +159,9 @@ public class Vampiro extends Personaje{
     }
 
     @Override
-    public List<Fortaleza> getListaFortalezas() {
-        return listaFortalezas;
-    }
-
-    @Override
-    public List<Debilidad> getListaDebilidades() {
-        return listaDebilidades;
-    }
-
-    @Override
     public List<Armadura> getListaArmaduras() {
        return listaArmaduras;
-    }
-
-    @Override
-    public Armadura getArmaduraActiva() {
-        return armaduraActiva;
-    }   
+    }  
 
     @Override
     public int getRabia() {

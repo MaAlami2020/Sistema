@@ -8,7 +8,7 @@ package sistema;
  *
  * @author mimit
  */
-public interface Iterator {
-    public boolean hashNext();
-    public String next();
+public abstract class Equipo {
+    private int modificadorAtaque;
+    private int modificadorDefensa;
 }

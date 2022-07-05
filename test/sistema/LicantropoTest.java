@@ -136,7 +136,7 @@ public class LicantropoTest {
         
             licantropo.setArmasActivas(arma1);
             licantropo.setArmasActivas(arma2);
-            licantropo.setNuevasArmasActivas(0, arma3);
+            //licantropo.setNuevasArmasActivas(0, arma3);
             fail("se pueden intercambiar 2 armas de distinto manejo");
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
@@ -162,7 +162,7 @@ public class LicantropoTest {
         
             licantropo.setArmasActivas(arma1);
             licantropo.setArmasActivas(arma2);
-            licantropo.setNuevasArmasActivas(0, arma3);
+            //licantropo.setNuevasArmasActivas(0, arma3);
             assertEquals("1 mano",arma3.getManejo());
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
@@ -191,67 +191,11 @@ public class LicantropoTest {
         
             licantropo.setArmasActivas(arma1);
             licantropo.setArmasActivas(arma2);
-            licantropo.setNuevasArmasActivas(2, arma3);
+            //licantropo.setNuevasArmasActivas(2, arma3);
             fail("no se ha superado el tamaño maximo de armas activas");
             System.out.println("CP3 incorrecto");
         }catch(RuntimeException e){
             assertEquals(e.getMessage(),"fuera del limite de armas activas");
-            System.out.println("CP3 correcto");
-        }
-    }
-
-    /**
-     * Test of setHabilidad method, of class Licantropo.
-     * test para probar que este personaje tiene como habilidad especial el don
-     */
-    @Test
-
-    public void testSetHabilidad() {
-        try{
-            Don don = new Don("extirpacion",3,1,2);
-            Licantropo licantropo = new Licantropo();
-            licantropo.setHabilidad(don);
-            assertEquals(don,licantropo.getHabilidad());
-            System.out.println("CP1 incorrecto");
-        }catch(Exception e){
-            fail("esta habilidad no tiene una rabia minima");
-            System.out.println("CP1 correcto");
-        }
-    }
-    
-    /**
-     * Test of setHabilidad method, of class Licantropo.
-     * test para probar que este personaje no tiene como habilidad especial la disciplina 
-     * porque el Don no tiene un coste
-     */
-    @Test
-    public void testSetHabilidad1() {
-        try{
-            Disciplina disciplina = new Disciplina("adkgxv",3,1,1);
-            Licantropo licantropo = new Licantropo();
-            licantropo.setHabilidad(disciplina);
-            fail("el personaje tiene como habilidad la disciplina");
-            System.out.println("CP2 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"no tiene esta habilidad");
-            System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setHabilidad method, of class Licantropo.
-     * test para probar que este personaje no tiene como habilidad especial el talento
-     */
-    @Test
-    public void testSetHabilidad2() {
-        try{
-            Talento talento = new Talento("adkgxv",3,1,455);
-            Licantropo licantropo = new Licantropo();
-            licantropo.setHabilidad(talento);
-            fail("el personaje tiene como habilidad el talento");
-            System.out.println("CP3 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"no tiene esta habilidad");
             System.out.println("CP3 correcto");
         }
     }
@@ -315,170 +259,7 @@ public class LicantropoTest {
             System.out.println("CP3 correcto");
         }
     }
-
-    /**
-     * Test of setSalud method, of class Licantropo.
-     * test para probar que la salud supera el maximo valor de salud permtido en 1 unidad
-     */
-    @Test
-    public void testSetSalud() {
-        try{ 
-            int salud = 6;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setSalud(salud);
-            fail("el valor de saluud esta en los limites permitidos");
-            System.out.println("CP4 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP4 correcto");
-        }
-    }
-
-    /**
-     * Test of setSalud method, of class Licantropo.
-     * test para probar que la salud no alcanza el minimo valor de salud permtido
-     */
-    @Test
-    public void testSetSalud1() {
-        try{ 
-            int salud = -1;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setSalud(salud);
-            fail("la salud esta en los limites permitidos");
-            System.out.println("CP5 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP5 correcto");
-        }
-    }
-    
-    /**
-     * Test of setSalud method, of class Licantropo.
-     * test para probar que la salud es uno de los valores limite de salud permitidos 
-     */
-    @Test
-    public void testSetSalu2() {
-        try{ 
-            int salud = 0;
-            Licantropo licantropo =  new Licantropo();
-            licantropo.setSalud(salud);
-            assertEquals(0,licantropo.getSalud());
-            System.out.println("CP7 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de salud permitida");
-            System.out.println("CP7 correcto");
-        }
-    }
-    
-    /**
-     * Test of setSalud method, of class Licantropo.
-     * test para probar que la salud esta dentro del rango de valores permitidos 
-     * pero no es uno de los valores limite
-     */
-    @Test
-    public void testSetSalud3() {
-        try{ 
-            int salud = 4;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setSalud(salud);
-            assertEquals(4,licantropo.getSalud());
-            System.out.println("CP8 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de salud permitida");
-            System.out.println("CP8 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Licantropo.
-     * test para probar que el poder supera el maximo valor de poder permtido en 1 unidad
-     */
-    @Test
-    public void testSetPoder() {
-        try{ 
-            int poder = 6;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setPoder(poder);
-            fail("el poder esta dentro del limite");
-            System.out.println("CP1 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP1 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Licantropo.
-     * test para probar que el poder esta a un valor de alcanzar el minimo valor de poder permtido
-     */
-    @Test
-    public void testSetPoder1() {
-        try{ 
-            int poder = 0;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setPoder(poder);
-            fail("el poder esta dentro del limite");
-            System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Licantroopo.
-     * test para probar que el poder sobrepasa en mas de 1 unidad el valor maximo de poder permitido
-     */
-    @Test
-    public void testSetPoder2() {
-        try{ 
-            int poder = 9;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setPoder(poder);
-            fail("el poder esta dentro de los limites");
-            System.out.println("CP3 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP3 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Licantropo.
-     * test para probar que el poder esta en el rango de valores permitidos sin contar los valores limite
-     */
-    @Test
-    public void testSetPoder3() {
-        try{ 
-            int poder = 3;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setPoder(poder);
-            assertEquals(3,licantropo.getPoder());
-            System.out.println("CP4 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de poder permitido");
-            System.out.println("CP4 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Licantropo.
-     * test para probar que el poder es uno de los valores limite
-     */
-    @Test
-    public void testSetPoder4() {
-        try{ 
-            int poder = 5;
-            Licantropo licantropo = new Licantropo();
-            licantropo.setPoder(poder);
-            assertEquals(5,licantropo.getPoder());
-            System.out.println("CP5 incorrecto");
-        }catch(Exception ex){
-            fail("sobrepasó el límite de poder permitido");
-            System.out.println("CP5 correcto");
-        }
-    }
-
+   
     /**
      * Test of setVoluntad method, of class Licantropo.
      * test en el que se intenta meter un valor de voluntad cualquiera pese a que este personaje no tiene
