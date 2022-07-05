@@ -4,22 +4,21 @@
  */
 package sistema;
 
+import java.util.List;
+
 /**
  *
  * @author mimit
  */
-public class Armadura {
+public class Armadura extends Equipo{
     private String nombre;
-    private int modificadorAtaque;
-    private int modificadorDefensa;
 
-    public Armadura(String nombre, int modificadorAtaque, int modificadorDefensa) {
+    public Armadura(String nombre, int modificadorAtaque, int modificadorDefensa, List<String> listaMateriales) {
+        super(modificadorAtaque,modificadorDefensa,listaMateriales);
         this.nombre = nombre;
-        this.modificadorAtaque = modificadorAtaque;
-        this.modificadorDefensa = modificadorDefensa;
     }
-
     
+    @Override
     public void setNombre(String nombre) {
         if(nombre != " "){
             this.nombre = nombre;
@@ -28,32 +27,19 @@ public class Armadura {
         }
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
 
-    
-    public void setModificadorAtaque(int modificadorAtaque){
-        if(modificadorAtaque < 0 | modificadorAtaque > 3){
-            throw new RuntimeException("sobrepasó el límite de modificador de ataque");
-        }else{
-            this.modificadorAtaque = modificadorAtaque;
-        }
+    @Override
+    public void setManejo(String manejo) {
+        throw new RuntimeException("este equipo no tiene un manejo");
     }
 
-    public int getModificadorAtaque() {
-        return modificadorAtaque;
+    @Override
+    public String getManejo() {
+        return null;
     }
-    
-    public int getModificadorDefensa() {
-        return modificadorDefensa;
-    }
-
-    public void setModificadorDefensa(int modificadorDefensa){
-        if(modificadorDefensa < 1 | modificadorDefensa > 3){
-            throw new RuntimeException("sobrepasó el límite del modificador de defensa");
-        }else{
-            this.modificadorDefensa = modificadorDefensa;
-        }
-    } 
+ 
 }

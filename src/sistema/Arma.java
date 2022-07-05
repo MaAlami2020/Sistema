@@ -4,22 +4,23 @@
  */
 package sistema;
 
+import java.util.List;
+
 /**
  *
  * @author mimit
  */
-public class Arma {
-   private String nombre;
-    
+public class Arma extends Equipo{
+    private String nombre;
     private String manejo;
 
-    public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, String manejo) {
+    public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, List<String> listaMateriales, String manejo) {
+        super(modificadorAtaque,modificadorDefensa,listaMateriales);
         this.nombre = nombre;
-        this.modificadorAtaque = modificadorAtaque;
-        this.modificadorDefensa = modificadorDefensa;
         this.manejo = manejo;
     }
 
+    @Override
     public void setNombre(String nombre){
         if(!nombre.equals(" ")){
             this.nombre = nombre;
@@ -28,38 +29,17 @@ public class Arma {
         }
     }
 
+    @Override
     public String getManejo() {       
         return manejo;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
-    }
-
-    public void setModificadorAtaque(int modificadorAtaque){
-        if(modificadorAtaque < 1 | modificadorAtaque > 3){
-            throw new RuntimeException("sobrepasó el límite de modificador de ataque");
-        }else{
-            this.modificadorAtaque = modificadorAtaque;
-        }
-    }
-
-    public int getModificadorAtaque() {
-        return modificadorAtaque;
-    }   
-    
-    public int getModificadorDefensa() {
-        return modificadorDefensa;
-    }
-
-    public void setModificadorDefensa(int modificadorDefensa){
-        if(modificadorDefensa < 0 | modificadorDefensa > 3){
-            throw new RuntimeException("sobrepasó el límite del modificador de defensa");
-        }else{
-            this.modificadorDefensa = modificadorDefensa;
-        }
     }   
 
+    @Override
     public void setManejo(String manejo){
         if(!manejo.equals("1 mano") & !manejo.equals("2 manos")){
              throw new RuntimeException("valor invalido");
