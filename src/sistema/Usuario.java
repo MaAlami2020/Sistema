@@ -26,6 +26,9 @@ public class Usuario implements Serializable{
     private String registro = "A00AA";
     private Personaje tipoPersonaje;
     private MenuInicio menu;
+    private List<Oferta> ofertas = new ArrayList<>();
+    private List<String> suscripciones = new ArrayList<>();
+    private List<Oferta> notificacion = new ArrayList<>();
 
     public Usuario(String nombre, String nick, String password){
         this.nombre = nombre;
@@ -178,7 +181,7 @@ public class Usuario implements Serializable{
     }
   
     public void seleccionarOpcionMenu(){
-        int opc = 0;
+        int opc;
         do{
             System.out.println("***BIENVENIDO**");
             System.out.println("3.-añadir/eliminar equipo");
@@ -262,51 +265,139 @@ public class Usuario implements Serializable{
         }while(opc !=11);
     }
     
+    public void consultarOro_Equipo_Esbirros(){
+        List<Esbirro> esbirrosPer = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros();
+        System.out.println("nombre equipo: " + menu.getUsuarioActual().get(0).getTipoPersonaje().getEquipo().getNombre());
+        int index = 1;
+        for(Esbirro esbP: esbirrosPer){
+            System.out.println("esbirro: " + index + esbP.getNombre());
+            index++;
+        }
+        double oroActual = menu.getUsuarioActual().get(0).getTipoPersonaje().getOro();
+        System.out.println("oro actual " + oroActual);
+    }
+    
     public void seleccionarEquipo_esbirrosOfertar(){
-        Oferta oferta = new Oferta();
-        int opcion;
+        String repProceso;
         do{
-           System.out.println("1.-añadir equipo");
-           System.out.println("2.-añadir esbirro/s");
-           System.out.println("seleccione una opcion -1 o 2-");
-           Scanner sc = new Scanner(System.in);
-           String selec = sc.next();
-           opcion = Integer.parseInt(selec);
-        }while(opcion < 1 || opcion > 2);
-        if(opcion == 1){
-            System.out.println("1.-añadir arma");
-            System.out.println("2.-añadir armadura");
-            System.out.println("seleccione el tipo de equipo, -1 o 2-");
+            int opcion;
+            Oferta oferta = new Oferta();
+            System.out.println("1.-añadir equipo");
+            System.out.println("2.-añadir esbirro/s");
+            System.out.println("seleccione una opcion -1 o 2-");
             Scanner sc = new Scanner(System.in);
             String selec = sc.next();
             opcion = Integer.parseInt(selec);
             if(opcion == 1){
-                Equipo equipoParaVender;
-                List<Arma> armas = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas();
-                if(!armas.isEmpty()){
-                int cont = 1;
-                for(Arma a : armas){
-                    System.out.println(cont + ".-" + a.getNombre() + " --> " + a.getManejo());
-                    cont++;
-                }
-                int opcArma = 0;
-                do{
-                    System.out.println("escoga un numero de arma activa: ");
+                if(oferta.getEquipoEnVenta() != null){
+                    Equipo equipo = ofertarEquipo();
+                    oferta.setEquipoEnVenta(equipo);
+                }else{
+                    System.out.println("ya tiene un equipo a la venta, escriba -si- si quiere modificarlo");
                     sc = new Scanner(System.in);
                     String opc = sc.next();
-                    opcArma = Integer.parseInt(opc);
-                }while(opcArma < 1 || opcArma >= cont);
-                opcArma--;
-                Arma arm = armas.get(opcArma);
-                equipoParaVender = arm;
+                    if(opc.equals("si")){
+                        Equipo equipo = ofertarEquipo();
+                        oferta.setEquipoEnVenta(equipo);
+                    }
+                }
+            }else if(opcion == 2){
+                String repetir;
+                do{
+                    Esbirro esbirroVenta = ofertarEsbirro();
+                    oferta.setEsbirroParaTraspasar(esbirroVenta);
+                    System.out.println("escriba -si- si quiere añadir otro esbirro a la oferta");
+                    sc = new Scanner(System.in);
+                    repetir = sc.next();
+                }while(repetir.equals("si"));      
             }
-            if(oferta.getEquipoEnVenta() != null){
-                oferta.setEquipoEnVenta(nuevoEquipo);
-            }else{
-                System.out.println("ya tiene un equipo a la venta, ¿quiere modificarlo?");
-                if
+            System.out.println("introduce el precio de venta de la oferta");
+            sc = new Scanner(System.in);
+            selec = sc.next();
+            double precio = Integer.parseInt(selec); 
+            oferta.setPrecioVenta(precio);
+            menu.setOfertasPendientes(oferta);
+            menu.getUsuarioActual().get(0).ofertas.add(oferta);
+            
+            System.out.println("escriba -si- si quiere añadir otra oferta");
+            sc = new Scanner(System.in);
+            repProceso = sc.next();
+        }while(repProceso.equals("si"));
+    }
+    
+    public void consultarOfertasPublicadas(){
+        boolean esMiOferta = false;
+        List<Oferta> existencias = menu.getOfertasValidadas();
+        if(!existencias.isEmpty()){
+             int cont = 1;
+            for(Oferta elem: existencias){
+                for(Oferta miOferta: menu.getUsuarioActual().get(0).ofertas){
+                    if(miOferta.equals(elem)){
+                        esMiOferta = true; 
+                    }
+                }
+                if(!esMiOferta){
+                    System.out.println("oferta " + cont);
+                    System.out.println("nombre equipo: " + elem.getEquipoEnVenta().getNombre());
+                    int index = 1;
+                    for(Esbirro esb: elem.getEsbirroParaTraspasar()){
+                        System.out.println("esbirro: " + index + esb.getNombre());
+                        index++;
+                    }
+                    System.out.println("precio total: " + elem.getPrecioVenta());
+                }
             }
+        }else{
+            System.out.println("no hay ofertas publicadas");
         }
+    }
+    
+    public Esbirro ofertarEsbirro(){
+            List<Esbirro> esbirros = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros();
+            int cont = 1;
+            for(Esbirro esb: esbirros){
+                Class claseEsbirro = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros().get(cont).getClass();
+                if(claseEsbirro == Ghoul.class){
+                    System.out.println(cont + ". " + esb.getNombre() + " GHOUL");
+                }else if(claseEsbirro == Humano.class){
+                    System.out.println(cont + ". " + esb.getNombre() + " HUMANO");
+                }else if(claseEsbirro == Demonio.class){
+                    System.out.println(cont + ". " + esb.getNombre() + " DEMONIO");
+                    List<Esbirro> hijos = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros().get(cont).getHijos();
+                    int contHijo = 1;
+                    for(Esbirro esbHijo: hijos){
+                        System.out.println(" hijo " + contHijo + ": " + esbHijo.getNombre());
+                        contHijo++;
+                    }
+                }
+                cont++;
+            }
+            int numOpc;
+            do{
+                System.out.println("escoga el numero de esbirro a ofertar");
+                Scanner sc = new Scanner(System.in);
+                String opc = sc.next();
+                numOpc = Integer.parseInt(opc);
+            }while(numOpc < 1 || numOpc >= cont);
+            Esbirro esbirroEnVenta = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros().get(cont--); 
+            return esbirroEnVenta;
+    }
+    
+    public Equipo ofertarEquipo(){
+        System.out.println("1.-añadir arma");
+        System.out.println("2.-añadir armadura");
+        System.out.println("seleccione el tipo de equipo, -1 o 2-");
+        Scanner sc = new Scanner(System.in);
+        String selec = sc.next();
+        int opcion = Integer.parseInt(selec);
+        if(opcion == 1){
+            Arma arm = elegirArma();
+            return  arm;
+        }else if(opcion == 2){
+            Armadura armd = elegirArmadura();
+            return armd;
+        }   
+        return null;
     }
     
     public void darBaja_Personaje(){
@@ -796,70 +887,70 @@ public class Usuario implements Serializable{
         }
         return false;
     }
-    
-     public void desafiarUsuario(){
-        System.out.println("introduzca el nick del usuario a desafiar: ");
-        Scanner sc = new Scanner(System.in);
-        String nickUsuarioDesafiar = sc.next();
-        Usuario usuarioDesafiado = buscarUsuarioDesafiar(menu.getUserlist(),nickUsuarioDesafiar);
-        menu.getUsuarioActual().get(0).setUsuarioDesafiar(usuarioDesafiado);
-        Usuario desafiado = menu.getUsuarioActual().get(0).getUsuarioDesafiar();
-        if(desafiado != null){
-               boolean estaBaneado = usuarioBaneado(menu.getUsuariosBaneados(),desafiado); 
-               if(estaBaneado == false){
-                   do{
-                        int oro = apostarOro();
-                        introducirApuesta(oro);
-                   }while(menu.getUsuarioActual().get(0).getOroApostado() < 0 || menu.getUsuarioActual().get(0).getOroApostado() > menu.getUsuarioActual().get(0).getTipoPersonaje().getOro());
-                   menu.setUsuariosParaValidar(menu.getUsuarioActual().get(0).usuarioDesafiar);
-                   menu.setUsuariosParaValidar(menu.getUsuarioActual().get(0));
-                   //System.out.println(menu.getDesafiosParaValidar().size());
-               }else{
-                  System.out.println("no puede desafiar a este usuario");
-               }
-        }else{
-            System.out.println("este usuario no esta registrado");
-        }  
-    } 
-    
-    public Armadura cambiarArmadura_activa(){
-       return elegirArmadura_activa();
-    }
-    
-    public int seleccionarArmaModificar(){ 
-       List<Arma> armasActivas = menu.getUsuarioActual().get(0).getTipoPersonaje().getArmasActivas();
-       int cont = 1;
-       for(Arma arm: armasActivas){
-          System.out.println(cont + ".-" + arm.getNombre() + " --> " + arm.getManejo());
-          cont++;
-       }
-       int opcArma;
-       do{
-          System.out.println("seleccione el numero de arma a modificar: ");
-          Scanner sc = new Scanner(System.in);
-          String opc = sc.next();
-          opcArma = Integer.parseInt(opc);
-       }while(opcArma < 1 || opcArma >= cont);
-       opcArma--;
-       return opcArma;
-    }
-    
-    public void cambiarArmasActivasPersonaje(){
-        int posArmaModificar = seleccionarArmaModificar();
-        boolean cambiadas = false;
-        do{
-            Arma nuevaArma = elegirArma_activa();
-            Arma armaModificar = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas().get(posArmaModificar);
-            if(armaModificar.getManejo().equals(nuevaArma.getManejo())){
-                menu.getUsuarioActual().get(0).getTipoPersonaje().setNuevasArmasActivas(posArmaModificar, nuevaArma);
-                cambiadas = true;
-            }else{
-                System.out.println("no se pueden cambiar las armas porque son de distinto manejo");
-            }
-        }while(cambiadas == false);
-    }
+//    
+//     public void desafiarUsuario(){
+//        System.out.println("introduzca el nick del usuario a desafiar: ");
+//        Scanner sc = new Scanner(System.in);
+//        String nickUsuarioDesafiar = sc.next();
+//        Usuario usuarioDesafiado = buscarUsuarioDesafiar(menu.getUserlist(),nickUsuarioDesafiar);
+//        menu.getUsuarioActual().get(0).setUsuarioDesafiar(usuarioDesafiado);
+//        Usuario desafiado = menu.getUsuarioActual().get(0).getUsuarioDesafiar();
+//        if(desafiado != null){
+//               boolean estaBaneado = usuarioBaneado(menu.getUsuariosBaneados(),desafiado); 
+//               if(estaBaneado == false){
+//                   do{
+//                        int oro = apostarOro();
+//                        introducirApuesta(oro);
+//                   }while(menu.getUsuarioActual().get(0).getOroApostado() < 0 || menu.getUsuarioActual().get(0).getOroApostado() > menu.getUsuarioActual().get(0).getTipoPersonaje().getOro());
+//                   menu.setUsuariosParaValidar(menu.getUsuarioActual().get(0).usuarioDesafiar);
+//                   menu.setUsuariosParaValidar(menu.getUsuarioActual().get(0));
+//                   //System.out.println(menu.getDesafiosParaValidar().size());
+//               }else{
+//                  System.out.println("no puede desafiar a este usuario");
+//               }
+//        }else{
+//            System.out.println("este usuario no esta registrado");
+//        }  
+//    } 
+//    
+//    public Armadura cambiarArmadura_activa(){
+//       return elegirArmadura_activa();
+//    }
+//    
+//    public int seleccionarArmaModificar(){ 
+//       List<Arma> armasActivas = menu.getUsuarioActual().get(0).getTipoPersonaje().getArmasActivas();
+//       int cont = 1;
+//       for(Arma arm: armasActivas){
+//          System.out.println(cont + ".-" + arm.getNombre() + " --> " + arm.getManejo());
+//          cont++;
+//       }
+//       int opcArma;
+//       do{
+//          System.out.println("seleccione el numero de arma a modificar: ");
+//          Scanner sc = new Scanner(System.in);
+//          String opc = sc.next();
+//          opcArma = Integer.parseInt(opc);
+//       }while(opcArma < 1 || opcArma >= cont);
+//       opcArma--;
+//       return opcArma;
+//    }
+//    
+//    public void cambiarArmasActivasPersonaje(){
+//        int posArmaModificar = seleccionarArmaModificar();
+//        boolean cambiadas = false;
+//        do{
+//            Arma nuevaArma = elegirArma_activa();
+//            Arma armaModificar = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas().get(posArmaModificar);
+//            if(armaModificar.getManejo().equals(nuevaArma.getManejo())){
+//                menu.getUsuarioActual().get(0).getTipoPersonaje().setNuevasArmasActivas(posArmaModificar, nuevaArma);
+//                cambiadas = true;
+//            }else{
+//                System.out.println("no se pueden cambiar las armas porque son de distinto manejo");
+//            }
+//        }while(cambiadas == false);
+//    }
         
-    public Armadura elegirArmadura_activa(){
+    public Armadura elegirArmadura(){
         List<Armadura> armaduras = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmaduras();
         if(!armaduras.isEmpty()){
            int cont = 1;
@@ -882,28 +973,28 @@ public class Usuario implements Serializable{
         }
     }
     
-//    public Arma elegirArma_activa(){
-//        List<Arma> armas = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas();
-//        if(!armas.isEmpty()){
-//            int cont = 1;
-//                for(Arma a : armas){
-//                    System.out.println(cont + ".-" + a.getNombre() + " --> " + a.getManejo());
-//                    cont++;
-//                }
-//                int opcArma = 0;
-//                do{
-//                    System.out.println("escoga un numero de arma activa: ");
-//                    Scanner sc = new Scanner(System.in);
-//                    String opc = sc.next();
-//                    opcArma = Integer.parseInt(opc);
-//                }while(opcArma < 1 || opcArma >= cont);
-//                opcArma--;
-//                Arma arm = armas.get(opcArma);
-//            return arm;
-//        }else{
-//            return null;
-//        }
-//    }
+    public Arma elegirArma(){
+        List<Arma> armas = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas();
+        if(!armas.isEmpty()){
+            int cont = 1;
+                for(Arma a : armas){
+                    System.out.println(cont + ".-" + a.getNombre() + " --> " + a.getManejo());
+                    cont++;
+                }
+                int opcArma = 0;
+                do{
+                    System.out.println("escoga un numero de arma activa: ");
+                    Scanner sc = new Scanner(System.in);
+                    String opc = sc.next();
+                    opcArma = Integer.parseInt(opc);
+                }while(opcArma < 1 || opcArma >= cont);
+                opcArma--;
+                Arma arm = armas.get(opcArma);
+            return arm;
+        }else{
+            return null;
+        }
+    }
     
     public void consultarOro(){ 
         System.out.println("usuario: " + menu.getUsuarioActual().get(0).getNombre());

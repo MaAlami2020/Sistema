@@ -4,13 +4,16 @@
  */
 package sistema;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author mimit
  */
 public class Oferta {
     private Equipo equipoEnVenta = null;
-    private Esbirro esbirrosParaTraspasar;
+    private List<Esbirro> esbirroParaTraspasar = new ArrayList<>();
     private double precioVenta;
 
     public Equipo getEquipoEnVenta() {
@@ -21,12 +24,12 @@ public class Oferta {
         this.equipoEnVenta = equipoEnVenta;
     }
 
-    public Esbirro getEsbirrosParaTraspasar() {
-        return esbirrosParaTraspasar;
+    public List<Esbirro> getEsbirroParaTraspasar() {
+        return esbirroParaTraspasar;
     }
 
-    public void setEsbirrosParaTraspasar(Esbirro esbirrosParaTraspasar) {
-        this.esbirrosParaTraspasar = esbirrosParaTraspasar;
+    public void setEsbirroParaTraspasar(Esbirro esbirroT) {
+        this.esbirroParaTraspasar.add(esbirroT);
     }
 
     public double getPrecioVenta() {

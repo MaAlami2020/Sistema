@@ -14,7 +14,7 @@ public class Arma extends Equipo{
     private String nombre;
     private String manejo;
 
-    public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, List<String> listaMateriales, String manejo) {
+    public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, String manejo, List<String> listaMateriales) {
         super(modificadorAtaque,modificadorDefensa,listaMateriales);
         this.nombre = nombre;
         this.manejo = manejo;

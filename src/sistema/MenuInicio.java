@@ -16,7 +16,8 @@ public class MenuInicio{
     private List<Usuario> userlist;
     private List<Operador> operatorlist = new ArrayList<>();
     private List<Usuario> usuariosBaneados;
-    private List<String> notificaciones = new ArrayList<>();
+    private List<Oferta> ofertasPendientes = new ArrayList<>();
+    private List<Oferta> ofertasValidadas = new ArrayList<>();
     private List<Usuario> usuariosActuales;
     
     public MenuInicio(){
@@ -98,13 +99,23 @@ public class MenuInicio{
         this.usuariosBaneados.add(usuarioBaneado);
     }
 
-    public void setNotifDesafio(String notificacion) {
-        this.notificaciones.add(notificacion);
+    public List<Oferta> getOfertasPendientes() {
+        return ofertasPendientes;
     }
 
-    public List<String> getNotifDesafio() {
-        return notificaciones;
+    public void setOfertasPendientes(Oferta ofertaPendiente) {
+        this.ofertasPendientes.add(ofertaPendiente);
     }
+
+    public List<Oferta> getOfertasValidadas() {
+        return ofertasValidadas;
+    }
+
+    public void setOfertasValidadas(Oferta ofertaValidada) {
+        this.ofertasValidadas.add(ofertaValidada);
+    }
+
+
     
     public void updateUser(Usuario us, Personaje per){
         for(Usuario usuario: userlist){
