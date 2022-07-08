@@ -39,7 +39,7 @@ public abstract class Equipo {
     }
 
     public void setModificadorDefensa(int modificadorDefensa){
-        if(modificadorDefensa < 0 | modificadorDefensa > 3){
+        if(modificadorDefensa < 1 | modificadorDefensa > 3){
             throw new RuntimeException("sobrepasó el límite del modificador de defensa");
         }else{
             this.modificadorDefensa = modificadorDefensa;
@@ -58,4 +58,5 @@ public abstract class Equipo {
     public abstract String getNombre();
     public abstract void setManejo(String manejo);
     public abstract String getManejo();
+    
 }

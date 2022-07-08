@@ -28,7 +28,7 @@ public class Usuario implements Serializable{
     private MenuInicio menu;
     private List<Oferta> ofertas = new ArrayList<>();
     private List<String> suscripciones = new ArrayList<>();
-    private List<Oferta> notificacion = new ArrayList<>();
+    private List<Oferta> notificaciones = new ArrayList<>();
 
     public Usuario(String nombre, String nick, String password){
         this.nombre = nombre;
@@ -248,7 +248,7 @@ public class Usuario implements Serializable{
                         consultarOfertasPublicadas();
                         break;
                     }case 8:{
-                        suscribirseOfertas();
+                        seleccionarTipoSuscripcion();
                         break;
                     }case 9:{
                         comprarElementos();
@@ -263,6 +263,123 @@ public class Usuario implements Serializable{
                 System.out.println("seleccion erronea");
             }
         }while(opc !=11);
+    }
+
+    public List<String> getSuscripciones() {
+        return suscripciones;
+    }
+
+    public List<Oferta> getNotificaciones() {
+        return notificaciones;
+    }
+    
+    public void seleccionarTipoSuscripcion(){
+        //TipoSuscripcion suscripcion = null;
+        String opcion;
+        do{
+            System.out.println("1.suscripcion por tipo de equipo/esbirros");
+            System.out.println("2.suscripcion por categoria");
+            System.out.println("3.suscripcion por valor");
+            System.out.println("4.suscripcion por lealtad de esbirro");
+            System.out.println("5.suscripcion por tipo de esbirro");
+            System.out.println("6.suscripcion por tipo  de usuario");
+            System.out.println("7.suscripcion por precio");
+            System.out.println("seleccione un numero de tipo de suscripcion");
+            Scanner sc = new Scanner(System.in);
+            opcion = sc.next();
+            int tipoOpcion = Integer.parseInt(opcion);
+            switch(tipoOpcion){
+                case 1:
+                    //suscripcion = TipoSuscripcion.porTipo;
+                    System.out.println("seleccione el  tipo de suscripcion: 1.armas, 2.armaduras, 3.esbirros, 4. armas/esbirros, 5.armaduras/esbirros");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    int subTipoOpcion = Integer.parseInt(opcion);
+                    switch(subTipoOpcion){    
+                        case 1:suscripciones.add("tipo:" + Arma.class);
+                        case 2:suscripciones.add("tipo:" + Armadura.class);
+                        case 3:suscripciones.add("tipo:" + Esbirro.class);
+                        case 4:
+                            suscripciones.add("tipo:" + Arma.class);
+                            suscripciones.add("tipo:" + Esbirro.class);
+                        case 5:
+                            suscripciones.add("tipo:" + Armadura.class);
+                            suscripciones.add("tipo:" + Esbirro.class);
+                        default:System.out.println("seleccion erronea");
+                    }    
+                case 2:
+                    //suscripcion = TipoSuscripcion.porCategoria;
+                    System.out.println("seleccione la categoria de la suscripcion: 1.Comun, 2.Raro, 3.Epico, 4.Legendario");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    subTipoOpcion = Integer.parseInt(opcion);
+                    switch(subTipoOpcion){    
+                        case 1:suscripciones.add("categoria:" + Categoria.Comun);
+                        case 2:suscripciones.add("categoria:Raro");
+                        case 3:suscripciones.add("categoria:Epico");
+                        case 4:suscripciones.add("categoria:Legendario");
+                        default:System.out.println("seleccion erronea");
+                    } 
+                case 3:
+                    //suscripcion = TipoSuscripcion.porCategoria;
+                    System.out.println("seleccione el tipo de modificador: 1.ataque, 2.defensa");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    int tipoModif = Integer.parseInt(opcion);
+                    System.out.println("seleccione el valor de la suscripcion: 1, 2 o 3");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    int valorSusc = Integer.parseInt(opcion);
+                    if(tipoModif == 1 && valorSusc == 1){suscripciones.add("valor:ataque:1");}
+                    else if(tipoModif == 1 && valorSusc == 2){suscripciones.add("valor:ataque 2");}
+                    else if(tipoModif == 1 && valorSusc == 3){suscripciones.add("valor:ataque 3");}
+                    else if(tipoModif == 2 && valorSusc == 1){suscripciones.add("valor:defensa 1");}
+                    else if(tipoModif == 2 && valorSusc == 2){suscripciones.add("valor:defensa 2");}
+                    else if(tipoModif == 2 && valorSusc == 3){suscripciones.add("valor:defensa 3");}
+                case 4:
+                    System.out.println("seleccione la lealtad de la suscripcion: 1.ALTA, 2.NORMAL, 3.BAJA");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    subTipoOpcion = Integer.parseInt(opcion);
+                    switch(subTipoOpcion){    
+                        case 1:suscripciones.add("lealtad:ALTA");
+                        case 2:suscripciones.add("lealtad:NORMAL");
+                        case 3:suscripciones.add("lealtad:BAJA");
+                        default:System.out.println("seleccion erronea");
+                    } 
+                case 5:
+                    System.out.println("seleccione el tipo de esbirro de la suscripcion: 1.ghoul, 2.demonio, 3.humano");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    subTipoOpcion = Integer.parseInt(opcion);
+                    switch(subTipoOpcion){    
+                        case 1:suscripciones.add("esbirro:ghoul");
+                        case 2:suscripciones.add("esbirro:demonio");
+                        case 3:suscripciones.add("esbirro:humano");
+                        default:System.out.println("seleccion erronea");
+                    } 
+                case 6:
+                    System.out.println("seleccione el tipo de usuario de la suscripcion: 1.vampiro, 2.licantropo, 3.cazador");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    subTipoOpcion = Integer.parseInt(opcion);
+                    switch(subTipoOpcion){    
+                        case 1:suscripciones.add("usuario:vampiro");
+                        case 2:suscripciones.add("usuario:licantropo");
+                        case 3:suscripciones.add("usuario:cazador");
+                        default:System.out.println("seleccion erronea");
+                    } 
+                case 7:
+                    System.out.println("seleccione el precio minimo-maximo de la  suscripcion");
+                    sc = new Scanner(System.in);
+                    opcion = sc.next();
+                    subTipoOpcion = Integer.parseInt(opcion);
+                    suscripciones.add("precio:" + subTipoOpcion);
+            }
+        System.out.println("escriba -no- si no quiere añadir otro tipo de suscripcion");
+        sc = new Scanner(System.in);
+        opcion = sc.next();
+        }while(!opcion.equals("no"));
     }
     
     public void consultarOro_Equipo_Esbirros(){
