@@ -43,7 +43,7 @@ public class ArmaTest {
      */
     @Test
     public void setModificadorAtaque(){
-        Arma a = new Arma(null,0,0,null);
+        Arma a = new Arma(null,0,0,null,null);
         try {
             a.setModificadorAtaque(4);
             fail("el valor del modificador al ataque esta dentro del limite (1-3)");
@@ -60,7 +60,7 @@ public class ArmaTest {
      */
     @Test
     public void setModificadorAtaque1(){
-        Arma a1 = new Arma(null,0,0,null);        
+        Arma a1 = new Arma(null,0,0,null,null);        
         try {
              a1.setModificadorAtaque(3);
              assertEquals(3,a1.getModificadorAtaque());
@@ -78,7 +78,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifAtaque2(){
-        Arma a2 = new Arma(null,0,0,null);
+        Arma a2 = new Arma(null,0,0,null,null);
         try {
              a2.setModificadorAtaque(0);
              fail("no se sobrepasó el límite de modificador de ataque");
@@ -95,7 +95,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifAtaque3(){
-        Arma a3 = new Arma(null,0,0,null);
+        Arma a3 = new Arma(null,0,0,null,null);
         try {
              a3.setModificadorAtaque(2);
              assertEquals(2,a3.getModificadorAtaque());
@@ -111,7 +111,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifAtaque4(){
-        Arma a4 = new Arma(null,0,0,null);
+        Arma a4 = new Arma(null,0,0,null,null);
         try {
              a4.setModificadorAtaque(8);
              fail("no se sobrepasó el límite de modificador de ataque");
@@ -129,7 +129,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifAtaque5(){
-        Arma a5 = new Arma(null,0,0,null);
+        Arma a5 = new Arma(null,0,0,null,null);
         try {
              a5.setModificadorAtaque(-5);
              fail("no se sobrepasó el límite de modificador de ataque");
@@ -149,7 +149,7 @@ public class ArmaTest {
      */
     @Test
     public void setModificadorDefensa(){
-        Arma a = new Arma(null,0,0,null);
+        Arma a = new Arma(null,0,0,null,null);
         try {
             a.setModificadorDefensa(4);
             fail("no se sobrepasó el límite de modificador de defensa");
@@ -166,7 +166,7 @@ public class ArmaTest {
      */
     @Test
     public void setModificadorDefensa1(){
-        Arma a1 = new Arma(null,0,0,null);        
+        Arma a1 = new Arma(null,0,0,null,null);        
         try {
              a1.setModificadorDefensa(3);
              assertEquals(3,a1.getModificadorDefensa());
@@ -182,7 +182,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifDefensa2(){
-        Arma a2 = new Arma(null,0,0,null);
+        Arma a2 = new Arma(null,0,0,null,null);
         try {
              a2.setModificadorDefensa(0);
              assertEquals(0,a2.getModificadorDefensa());
@@ -198,7 +198,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifDefensa3(){
-        Arma a3 = new Arma(null,0,0,null);
+        Arma a3 = new Arma(null,0,0,null,null);
         try {
              a3.setModificadorDefensa(-1);
              fail("no se sobrepasó el límite de modificador de defensa");
@@ -215,7 +215,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifDefensa4(){
-        Arma a4 = new Arma(null,0,0,null);
+        Arma a4 = new Arma(null,0,0,null,null);
         try {
              a4.setModificadorDefensa(2);
              assertEquals(2,a4.getModificadorDefensa());
@@ -230,7 +230,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifDefensa5(){
-        Arma a5 = new Arma(null,0,0,null);
+        Arma a5 = new Arma(null,0,0,null,null);
         try {
              a5.setModificadorDefensa(8);
              fail("no se sobrepasó el límite de modificador de defensa");
@@ -248,7 +248,7 @@ public class ArmaTest {
      */
     @Test
     public void anadirModifDefensa6(){
-        Arma a6 = new Arma(null,0,0,null);
+        Arma a6 = new Arma(null,0,0,null,null);
         try {
              a6.setModificadorDefensa(-5);
              fail("no se sobrepasó el límite de modificador de defensa");
@@ -265,7 +265,7 @@ public class ArmaTest {
      */
     @Test
     public void setNombreTest(){
-        Arma a = new Arma(null,0,0,null);
+        Arma a = new Arma(null,0,0,null,null);
         try {
              a.setNombre("asdrubal");
              assertEquals("asdrubal",a.getNombre());
@@ -280,7 +280,7 @@ public class ArmaTest {
      */
     @Test
     public void setNombreTest1(){
-        Arma a1 = new Arma(null,0,0,null);
+        Arma a1 = new Arma(null,0,0,null,null);
         try {
              a1.setNombre(" ");
              fail("el nombre es valido");
@@ -297,7 +297,7 @@ public class ArmaTest {
      */
     @Test
     public void setManejoTest(){
-        Arma a = new Arma(null,0,0,null);
+        Arma a = new Arma(null,0,0,null,null);
         try {
              a.setManejo("1 mano");
              assertEquals("1 mano",a.getManejo());
@@ -313,7 +313,7 @@ public class ArmaTest {
      */
     @Test
     public void setManejoTest1(){
-        Arma a1 = new Arma(null,0,0,null);
+        Arma a1 = new Arma(null,0,0,null,null);
         try {
              a1.setManejo("2 manos");
              assertEquals("2 manos",a1.getManejo());
@@ -328,7 +328,7 @@ public class ArmaTest {
      */
     @Test
     public void setManejoTest2(){
-        Arma a2 = new Arma(null,0,0,null);
+        Arma a2 = new Arma(null,0,0,null,null);
         try {
              a2.setManejo("ninguna");
              fail("el manejo del arma puede ser de ninguna mano");

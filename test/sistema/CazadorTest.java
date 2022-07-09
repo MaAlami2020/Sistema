@@ -4,6 +4,8 @@
  */
 package sistema;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,8 +45,11 @@ public class CazadorTest {
     @Test
     public void testSetArmasActivas() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
-            Arma arma2 = new Arma("zimmer",1,2,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
+            Arma arma2 = new Arma("zimmer",1,2,"1 mano",materiales);
             Cazador cazador = new Cazador();
             cazador.setListaArmas(arma1);
             cazador.setListaArmas(arma2);
@@ -65,9 +70,12 @@ public class CazadorTest {
     @Test
     public void testSetArmasActivas4() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
-            Arma arma2 = new Arma("zimmer",1,2,"1 mano");
-            Arma arma3 = new Arma("killer",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
+            Arma arma2 = new Arma("zimmer",1,2,"1 mano",materiales);
+            Arma arma3 = new Arma("killer",2,1,"1 mano",materiales);
             Cazador cazador = new Cazador();
             cazador.setListaArmas(arma1);
             cazador.setListaArmas(arma2);
@@ -90,8 +98,11 @@ public class CazadorTest {
     @Test
     public void testSetArmasActivas5() {
         try{
-            Arma arma2 = new Arma("zimmer",1,2,"2 manos");
-            Arma arma3 = new Arma("killer",2,1,"2 manos");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma2 = new Arma("zimmer",1,2,"2 manos",materiales);
+            Arma arma3 = new Arma("killer",2,1,"2 manos",materiales);
             Cazador cazador = new Cazador();
             cazador.setListaArmas(arma2);
             cazador.setListaArmas(arma3);
@@ -113,7 +124,10 @@ public class CazadorTest {
     @Test
     public void testSetArmasActivas3() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             Cazador cazador = new Cazador();
             cazador.setListaArmas(arma1);
         
@@ -132,7 +146,10 @@ public class CazadorTest {
     @Test
     public void testSetArmasActivas2() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"2 manos");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"2 manos",materiales);
             Cazador cazador = new Cazador();
             cazador.setListaArmas(arma1);
         
@@ -152,12 +169,14 @@ public class CazadorTest {
     public void testSetNuevasArmasActivas() {
         try{          
             Cazador cazador = new Cazador();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             cazador.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             cazador.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            Arma arma3 = new Arma("satan",3,3,"1 mano",materiales);
             cazador.setListaArmas(arma3);
         
             cazador.setArmasActivas(arma1);
@@ -177,12 +196,14 @@ public class CazadorTest {
     public void testSetNuevasArmasActivas1() {
         try{          
             Cazador cazador = new Cazador();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             cazador.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             cazador.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"2 manos");
+            Arma arma3 = new Arma("satan",3,3,"2 manos",materiales);
             cazador.setListaArmas(arma3);
         
             cazador.setArmasActivas(arma1);
@@ -204,12 +225,14 @@ public class CazadorTest {
     public void testSetNuevasArmasActivas2() {
         try{          
             Cazador cazador = new Cazador();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             cazador.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             cazador.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            Arma arma3 = new Arma("satan",3,3,"1 mano",materiales);
             cazador.setListaArmas(arma3);
         
             cazador.setArmasActivas(arma1);

@@ -42,4 +42,13 @@ public class Armadura extends Equipo{
         return null;
     }
  
+    @Override
+    public void setCategoria(Categoria categoria) {
+        throw new RuntimeException("este equipo no tiene un categoria");
+    }
+
+    @Override
+    public Categoria getCategoria() {
+        return null;
+    }
 }

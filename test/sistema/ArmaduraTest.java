@@ -43,7 +43,7 @@ public class ArmaduraTest {
      */
     @Test
     public void testSetModificadorAtaque(){
-        Armadura armadura = new Armadura(null,0,0);
+        Armadura armadura = new Armadura(null,0,0,null);
         try {
              armadura.setModificadorAtaque(4);
              fail("no se sobrepasó el límite de modificador de ataque");
@@ -62,7 +62,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorAtaque1(){
-        Armadura a1 = new Armadura(null,0,0);
+        Armadura a1 = new Armadura(null,0,0,null);
         try {
              a1.setModificadorAtaque(0);
              assertEquals(0,a1.getModificadorAtaque());
@@ -77,7 +77,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorAtaque2(){
-        Armadura a2 = new Armadura(null,0,0);        
+        Armadura a2 = new Armadura(null,0,0,null);        
         try {
              a2.setModificadorAtaque(3);
              assertEquals(3,a2.getModificadorAtaque());
@@ -93,7 +93,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorAtaque3(){
-        Armadura a3 = new Armadura(null,0,0);
+        Armadura a3 = new Armadura(null,0,0,null);
         try {
              a3.setModificadorAtaque(-1);
              fail("no se sobrepasó el límite de modificador de ataque");
@@ -110,7 +110,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorAtaque4(){
-        Armadura a4 = new Armadura(null,0,0);
+        Armadura a4 = new Armadura(null,0,0,null);
         try {
              a4.setModificadorAtaque(2);
              assertEquals(2,a4.getModificadorAtaque());
@@ -126,7 +126,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorAtaque5(){
-        Armadura a5 = new Armadura(null,0,0);
+        Armadura a5 = new Armadura(null,0,0,null);
         try {
              a5.setModificadorAtaque(8);
              fail("no se sobrepasó el límite de modificador de ataque");
@@ -144,7 +144,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorAtaque6(){
-        Armadura a6 = new Armadura(null,0,0);
+        Armadura a6 = new Armadura(null,0,0,null);
         try {
              a6.setModificadorAtaque(-5);
              fail("no se sobrepasó el límite de modificador de ataque");
@@ -164,7 +164,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorDefensa(){
-        Armadura a = new Armadura(null,0,0);
+        Armadura a = new Armadura(null,0,0,null);
         try {
             a.setModificadorDefensa(4);
             fail("no se sobrepasó el límite de modificador de defensa");
@@ -181,7 +181,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorDefensa1(){
-        Armadura a1 = new Armadura(null,0,0);        
+        Armadura a1 = new Armadura(null,0,0,null);        
         try {
              a1.setModificadorDefensa(3);
              assertEquals(3,a1.getModificadorDefensa());
@@ -196,7 +196,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorDefensa2(){
-        Armadura a2 = new Armadura(null,0,0);
+        Armadura a2 = new Armadura(null,0,0,null);
         try {
              a2.setModificadorDefensa(1);
              assertEquals(1,a2.getModificadorDefensa());
@@ -212,7 +212,7 @@ public class ArmaduraTest {
      */
     @Test
     public void setModificadorDefensa3(){
-        Armadura a3 = new Armadura(null,0,0);
+        Armadura a3 = new Armadura(null,0,0,null);
         try {
              a3.setModificadorDefensa(0);
              fail("no se sobrepasó el límite de modificador de defensa");
@@ -229,7 +229,7 @@ public class ArmaduraTest {
      */
     @Test
     public void anadirModifDefensa4(){
-        Armadura a4 = new Armadura(null,0,0);
+        Armadura a4 = new Armadura(null,0,0,null);
         try {
              a4.setModificadorDefensa(2);
              assertEquals(2,a4.getModificadorDefensa());
@@ -245,7 +245,7 @@ public class ArmaduraTest {
      */
     @Test
     public void anadirModifDefensa5(){
-        Armadura a5 = new Armadura(null,0,0);
+        Armadura a5 = new Armadura(null,0,0,null);
         try {
              a5.setModificadorDefensa(8);
              fail("no se sobrepasó el límite de modificador de defensa");
@@ -263,7 +263,7 @@ public class ArmaduraTest {
      */
     @Test
     public void anadirModifDefensa6(){
-        Armadura a6 = new Armadura(null,0,0);
+        Armadura a6 = new Armadura(null,0,0,null);
         try {
              a6.setModificadorDefensa(-5);
              fail("no se sobrepasó el límite de modificador de defensa");

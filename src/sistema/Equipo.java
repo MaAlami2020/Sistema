@@ -58,5 +58,6 @@ public abstract class Equipo {
     public abstract String getNombre();
     public abstract void setManejo(String manejo);
     public abstract String getManejo();
-    
+    public abstract void setCategoria(Categoria categoria);
+    public abstract Categoria getCategoria();  
 }

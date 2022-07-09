@@ -13,6 +13,7 @@ import java.util.List;
 public class Arma extends Equipo{
     private String nombre;
     private String manejo;
+    private Categoria categoria;
 
     public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, String manejo, List<String> listaMateriales) {
         super(modificadorAtaque,modificadorDefensa,listaMateriales);
@@ -47,4 +48,14 @@ public class Arma extends Equipo{
             this.manejo = manejo;
         }
     } 
+
+    @Override
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    @Override
+    public Categoria getCategoria() {
+        return categoria;
+    }
 }
