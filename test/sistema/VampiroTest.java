@@ -4,6 +4,8 @@
  */
 package sistema;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -184,7 +186,10 @@ public class VampiroTest {
     @Test
     public void testSetArmasActivas() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             Vampiro vampiro = new Vampiro();
             vampiro.setListaArmas(arma1);
         
@@ -203,8 +208,11 @@ public class VampiroTest {
     @Test
     public void testSetArmasActivas1() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
-            Arma arma2 = new Arma("kill",1,2,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
+            Arma arma2 = new Arma("kill",1,2,"1 mano",materiales);
             Vampiro vampiro = new Vampiro();
             vampiro.setListaArmas(arma1);
             vampiro.setListaArmas(arma2);
@@ -224,7 +232,10 @@ public class VampiroTest {
     @Test
     public void testSetArmasActivas2() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"2 manos");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"2 manos",materiales);
             Vampiro vampiro = new Vampiro();
             vampiro.setListaArmas(arma1);
         
@@ -242,9 +253,12 @@ public class VampiroTest {
     @Test
     public void testSetArmasActivas3() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
-            Arma arma2 = new Arma("calggame",2,1,"1 mano");
-            Arma arma3 = new Arma("satan",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
+            Arma arma2 = new Arma("calggame",2,1,"1 mano",materiales);
+            Arma arma3 = new Arma("satan",2,1,"1 mano",materiales);
             Vampiro vampiro = new Vampiro();
             vampiro.setListaArmas(arma1);
             vampiro.setListaArmas(arma2);
@@ -268,10 +282,12 @@ public class VampiroTest {
     public void testSetArmasActivas4() {
         try{          
             Vampiro vampiro = new Vampiro();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"2 manos");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"2 manos",materiales);
             vampiro.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"2 manos");
+            Arma arma2 = new Arma("Kgc",1,1,"2 manos",materiales);
             vampiro.setListaArmas(arma2);
         
             vampiro.setArmasActivas(arma1);
@@ -292,12 +308,14 @@ public class VampiroTest {
     public void testSetNuevasArmasActivas() {
         try{          
             Vampiro vampiro = new Vampiro();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             vampiro.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             vampiro.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            Arma arma3 = new Arma("satan",3,3,"1 mano",materiales);
             vampiro.setListaArmas(arma3);
         
             vampiro.setArmasActivas(arma1);
@@ -317,12 +335,14 @@ public class VampiroTest {
     public void testSetNuevasArmasActivas1() {
         try{          
             Vampiro vampiro = new Vampiro();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             vampiro.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             vampiro.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"2 manos");
+            Arma arma3 = new Arma("satan",3,3,"2 manos",materiales);
             vampiro.setListaArmas(arma3);
         
             vampiro.setArmasActivas(arma1);
@@ -344,12 +364,14 @@ public class VampiroTest {
     public void testSetNuevasArmasActivas2() {
         try{          
             Vampiro vampiro = new Vampiro();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             vampiro.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             vampiro.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            Arma arma3 = new Arma("satan",3,3,"1 mano",materiales);
             vampiro.setListaArmas(arma3);
         
             vampiro.setArmasActivas(arma1);

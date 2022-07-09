@@ -19,6 +19,7 @@ public class MenuInicio{
     private List<Oferta> ofertasPendientes = new ArrayList<>();
     private List<Oferta> ofertasValidadas = new ArrayList<>();
     private List<Usuario> usuariosActuales;
+    private List<Venta> ventas = new ArrayList<>();
     
     public MenuInicio(){
         this.userlist = new ArrayList<>();
@@ -125,4 +126,11 @@ public class MenuInicio{
         }    
     }
     
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(Venta venta) {
+        this.ventas.add(venta);
+    }
 }
