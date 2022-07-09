@@ -4,6 +4,8 @@
  */
 package sistema;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,7 +38,57 @@ public class VampiroTest {
     @After
     public void tearDown() {
     }
-
+    /**
+     * Test of setEdad method, of class Vampiro.
+     * test para probar que la edad del personaje es positiva
+     */
+    @Test
+    public void testSetEdad() {
+        try{
+            int edad = 0;
+            Vampiro vampiro = new Vampiro();
+            vampiro.setEdad(edad);
+            assertEquals(0,vampiro.getEdad());
+            System.out.println("CP1 incorrecto");
+        }catch(RuntimeException e){
+            fail("la edad puede ser negativa");
+            System.out.println("CP1 correcto");
+        }
+    }
+    /**
+     * Test of setEdad method, of class Vampiro.
+     * test para probar que la edad del personaje no puede ser negativa
+     */
+    @Test
+    public void testSetEdad1() {
+        try{
+            int edad = -123;
+            Vampiro vampiro = new Vampiro();
+            vampiro.setEdad(edad);
+            fail("la edad puede ser negativa");
+            System.out.println("CP2 incorrecto");
+        }catch(RuntimeException e){
+            assertEquals(e.getMessage(),"la edad no puede ser negativa");
+            System.out.println("CP2 correcto");
+        }
+    }
+    /**
+     * Test of setEdad method, of class Vampiro.
+     * test para probar que la edad del personaje puede ser 0
+     */
+    @Test
+    public void testSetEdad2() {
+        try{
+            int edad = 0;
+            Vampiro vampiro = new Vampiro();
+            vampiro.setEdad(edad);
+            assertEquals(0,vampiro.getEdad());
+            System.out.println("CP3 incorrecto");
+        }catch(RuntimeException e){
+            fail("la edad no puede ser 0");
+            System.out.println("CP3 correcto");
+        }
+    }
     /**
      * Test of setReservaPuntosSangre method, of class Vampiro.
      * test para probar que la reserva de puntos de sangre del personaje es 0
@@ -49,8 +101,8 @@ public class VampiroTest {
             vampiro.setReservaPuntosSangre(reservaPuntosSangre);
             assertEquals(0,vampiro.getReservaPuntosSangre());
             System.out.println("CP1 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor maximo de la reserva de puntos de sangre");
+        }catch(RuntimeException e){
+            fail("sobrepasa el valor maximo de la reserva de puntos de sangre");
             System.out.println("CP1 correcto");
         }
     }
@@ -67,8 +119,8 @@ public class VampiroTest {
             vampiro.setReservaPuntosSangre(reservaPuntosSangre);
             assertEquals(0,vampiro.getReservaPuntosSangre());
             System.out.println("CP2 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor maximo de la reserva de puntos de sangre");
+        }catch(RuntimeException e){
+            fail("sobrepasa el valor maximo de la reserva de puntos de sangre");
             System.out.println("CP2 correcto");
         }
     }
@@ -85,8 +137,8 @@ public class VampiroTest {
             vampiro.setReservaPuntosSangre(reservaPuntosSangre);
             assertEquals(10,vampiro.getReservaPuntosSangre());
             System.out.println("CP3 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor maximo de la reserva de puntos de sangre");
+        }catch(RuntimeException e){
+            fail("sobrepasa el valor maximo de la reserva de puntos de sangre");
             System.out.println("CP3 correcto");
         }
     }
@@ -103,8 +155,8 @@ public class VampiroTest {
             vampiro.setReservaPuntosSangre(reservaPuntosSangre);
             assertEquals(7,vampiro.getReservaPuntosSangre());
             System.out.println("CP4 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor maximo de la reserva de puntos de sangre");
+        }catch(RuntimeException e){
+            fail("sobrepasa el valor maximo de la reserva de puntos de sangre");
             System.out.println("CP4 correcto");
         }
     }
@@ -119,9 +171,9 @@ public class VampiroTest {
             int reservaPuntosSangre = 21;
             Vampiro vampiro = new Vampiro();
             vampiro.setReservaPuntosSangre(reservaPuntosSangre);
-            assertEquals(21,vampiro.getReservaPuntosSangre());
+            fail("la reserva esta dentro del rango de valores permitidos");
             System.out.println("CP5 incorrecto");
-        }catch(Exception e){
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"sobrepasa el valor maximo de la reserva de puntos de sangre");
             System.out.println("CP5 correcto");
         }
@@ -134,154 +186,205 @@ public class VampiroTest {
     @Test
     public void testSetArmasActivas() {
         try{
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             Vampiro vampiro = new Vampiro();
             vampiro.setListaArmas(arma1);
         
             vampiro.setArmasActivas(arma1);
             System.out.println("CP1 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+        }catch(RuntimeException e){
+            fail("ha llegado al tope de armas activas");
             System.out.println("CP1 correcto");
         }
     }
     
     /**
      * Test of setArmasActivas method, of class Vampiro.
-     * test que prueba que se ha llegado al tope de armas activas
+     * test que prueba que se puede seleccionar 2 armas activas de 1 mano
      */
     @Test
     public void testSetArmasActivas1() {
-        try{          
+        try{
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
+            Arma arma2 = new Arma("kill",1,2,"1 mano",materiales);
             Vampiro vampiro = new Vampiro();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
             vampiro.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
             vampiro.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
-            vampiro.setListaArmas(arma3);
+            
+            vampiro.setArmasActivas(arma2);
+            vampiro.setArmasActivas(arma1);
+            System.out.println("CP2 incorrecto");
+        }catch(RuntimeException e){
+            fail("ha llegado al tope de armas activas");
+            System.out.println("CP2 correcto");
+        }
+    }
+    /**
+     * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que se puede seleccionar un arma activa de 2 manos
+     */
+    @Test
+    public void testSetArmasActivas2() {
+        try{
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"2 manos",materiales);
+            Vampiro vampiro = new Vampiro();
+            vampiro.setListaArmas(arma1);
         
+            vampiro.setArmasActivas(arma1);
+            System.out.println("CP3 incorrecto");
+        }catch(RuntimeException e){
+            fail("ha llegado al tope de armas activas");
+            System.out.println("CP3 correcto");
+        }
+    }
+    /**
+     * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que no se puede tener 3 armas activas de 1 mano
+     */
+    @Test
+    public void testSetArmasActivas3() {
+        try{
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
+            Arma arma2 = new Arma("calggame",2,1,"1 mano",materiales);
+            Arma arma3 = new Arma("satan",2,1,"1 mano",materiales);
+            Vampiro vampiro = new Vampiro();
+            vampiro.setListaArmas(arma1);
+            vampiro.setListaArmas(arma2);
+            vampiro.setListaArmas(arma3);
+            
             vampiro.setArmasActivas(arma1);
             vampiro.setArmasActivas(arma2);
             vampiro.setArmasActivas(arma3);
-            System.out.println("CP2 incorrecto");
-        }catch(Exception e){
+            fail("se puden tener 3 armas activas");
+            System.out.println("CP4 incorrecto");
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
-            System.out.println("CP2 correcto");
+            System.out.println("CP4 correcto");
+        }
+    }
+    /**
+     * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que no se pueden tener 2 armas activas de 2 manos
+     */
+    @Test
+    public void testSetArmasActivas4() {
+        try{          
+            Vampiro vampiro = new Vampiro();
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"2 manos",materiales);
+            vampiro.setListaArmas(arma1);
+            Arma arma2 = new Arma("Kgc",1,1,"2 manos",materiales);
+            vampiro.setListaArmas(arma2);
+        
+            vampiro.setArmasActivas(arma1);
+            vampiro.setArmasActivas(arma2);
+            fail("se puden tener 4 manos activas");
+            System.out.println("CP5 incorrecto");
+        }catch(RuntimeException e){
+            assertEquals(e.getMessage(),"ha llegado al tope de armas activas");
+            System.out.println("CP5 correcto");
         }
     }
     
     /**
      * Test of setArmasActivas method, of class Vampiro.
-     * test que prueba que se puede cambiar un arma activa por otra
+     * test que prueba que se puede cambiar un arma activa por otra del mismo manejo
      */
     @Test
     public void testSetNuevasArmasActivas() {
         try{          
             Vampiro vampiro = new Vampiro();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             vampiro.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             vampiro.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            Arma arma3 = new Arma("satan",3,3,"1 mano",materiales);
             vampiro.setListaArmas(arma3);
         
             vampiro.setArmasActivas(arma1);
             vampiro.setArmasActivas(arma2);
-            vampiro.setNuevasArmasActivas(0, arma3);
+            //vampiro.setNuevasArmasActivas(0, arma3);
             System.out.println("CP1 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
+        }catch(RuntimeException e){
+            fail("no se pueden intercambiar las armas");
             System.out.println("CP1 correcto");
         }
     }
-    
+    /**
+     * Test of setArmasActivas method, of class Vampiro.
+     * test que prueba que no se puede cambiar un arma activa por otra de distinto manejo
+     */
+    @Test
+    public void testSetNuevasArmasActivas1() {
+        try{          
+            Vampiro vampiro = new Vampiro();
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
+            vampiro.setListaArmas(arma1);
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
+            vampiro.setListaArmas(arma2);
+            Arma arma3 = new Arma("satan",3,3,"2 manos",materiales);
+            vampiro.setListaArmas(arma3);
+        
+            vampiro.setArmasActivas(arma1);
+            vampiro.setArmasActivas(arma2);
+            //vampiro.setNuevasArmasActivas(0, arma3);
+            fail("se puede intercambiar un arma por otra de distinto manejo");
+            System.out.println("CP1 incorrecto");
+        }catch(RuntimeException e){
+            assertEquals(e.getMessage(),"no se pueden intercambiar las armas");
+            System.out.println("CP1 correcto");
+        }
+    }    
     /**
      * Test of setArmasActivas method, of class Vampiro.
      * test que prueba que no se puede cambiar un arma activa por otra porque el arma seleccionada
      * a cambiar esta fuera del rango del array
      */
     @Test
-    public void testSetNuevasArmasActivas1() {
+    public void testSetNuevasArmasActivas2() {
         try{          
             Vampiro vampiro = new Vampiro();
-            
-            Arma arma1 = new Arma("KFH121",2,1,"1 mano");
+            List<String> materiales = new ArrayList<>();
+            materiales.add("hgfd");
+            materiales.add("hgfdthb");
+            Arma arma1 = new Arma("KFH121",2,1,"1 mano",materiales);
             vampiro.setListaArmas(arma1);
-            Arma arma2 = new Arma("Kgc",1,1,"1 mano");
+            Arma arma2 = new Arma("Kgc",1,1,"1 mano",materiales);
             vampiro.setListaArmas(arma2);
-            Arma arma3 = new Arma("satan",3,3,"1 mano");
+            Arma arma3 = new Arma("satan",3,3,"1 mano",materiales);
             vampiro.setListaArmas(arma3);
         
             vampiro.setArmasActivas(arma1);
             vampiro.setArmasActivas(arma2);
-            vampiro.setNuevasArmasActivas(2, arma3);
-            System.out.println("CP2 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
-            System.out.println("CP2 correcto");
-        }
-    }
-
-    /**
-     * Test of setHabilidad method, of class Vampiro.
-     * test para probar que este personaje tiene como habilidad especial la disciplina
-     */
-    @Test
-
-    public void testSetHabilidad() {
-        try{
-            Disciplina disciplina = new Disciplina("extirpacion",3,1,2);
-            Vampiro vampiro = new Vampiro();
-            vampiro.setHabilidad(disciplina);
-            assertSame(disciplina,vampiro.getHabilidad());
-            System.out.println("CP1 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
-            System.out.println("CP1 correcto");
-        }
-    }
-    
-    /**
-     * Test of setHabilidad method, of class Vampiro.
-     * test para probar que este personaje no tiene como habilidad especial el don 
-     * porque esta habilidad no tiene un coste en puntos de sangre
-     */
-    @Test
-    public void testSetHabilidad1() {
-        try{
-            Don don = new Don();
-            Vampiro vampiro = new Vampiro();
-            vampiro.setHabilidad(don);
-            assertSame(don,vampiro.getHabilidad());
-            System.out.println("CP2 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
-            System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setHabilidad method, of class Vampiro.
-     * test para probar que este personaje no tiene como habilidad especial el talento 
-     * porque esta habilidad no tiene un coste en puntos de sangre
-     */
-    @Test
-    public void testSetHabilidad2() {
-        try{
-            Talento talento = new Talento();
-            Vampiro vampiro = new Vampiro();
-            vampiro.setHabilidad(talento);
-            assertSame(talento,vampiro.getHabilidad());
+            //vampiro.setNuevasArmasActivas(2, arma3);
+            fail("se puede meter un  arma activa fuera del rango de la lista");
             System.out.println("CP3 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"esta habilidad no tiene un coste");
+        }catch(RuntimeException e){
+            assertEquals(e.getMessage(),"posicion fuera del rango del tamaño del array");
             System.out.println("CP3 correcto");
         }
     }
-    
+
     /**
      * Test of setListaEsbirros method, of class Vampiro.
      * test que prueba que este personaje no puede tener un esbirro humano
@@ -293,9 +396,9 @@ public class VampiroTest {
             Humano humano = new Humano("octipus",1,ALTA);
             Vampiro vampiro = new Vampiro();
             vampiro.setListaEsbirros(humano);
-            assertEquals(humano,vampiro.getListaEsbirros().get(vampiro.getListaEsbirros().size()));
+            fail("el personaje puede tener esbirros humanos");
             System.out.println("CP1 incorrecto");
-        }catch(Exception e){
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"este personaje no tiene esbirros humanos");
             System.out.println("CP1 correcto");
         }
@@ -314,8 +417,8 @@ public class VampiroTest {
             vampiro.setListaEsbirros(ghoul);
             assertEquals(ghoul,vampiro.getListaEsbirros().get(vampiro.getListaEsbirros().size()-1));
             System.out.println("CP2 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"este esbirro no tiene esbirros humanos");
+        }catch(RuntimeException e){
+            fail("este esbirro no tiene esbirros ghoul");
             System.out.println("CP2 correcto");
         }
     }
@@ -333,8 +436,8 @@ public class VampiroTest {
             vampiro.setListaEsbirros(demonio);
             assertEquals(demonio,vampiro.getListaEsbirros().get(vampiro.getListaEsbirros().size()-1));
             System.out.println("CP3 incorrecto");
-        }catch(Exception e){
-            assertEquals(e.getMessage(),"este personaje no tiene esbirros humanos");
+        }catch(RuntimeException e){
+            fail("este personaje no tiene esbirros demonio");
             System.out.println("CP3 correcto");
         }
     }
@@ -349,12 +452,10 @@ public class VampiroTest {
         try{
             int oro = 32;     
             vampiro.setOro(oro);
-            assertEquals(32,vampiro.getOro());
+            assertEquals(32,vampiro.getOro(),0.1);
             System.out.println("CP1 incorrecto");
         }catch(Exception ex){
-            Exception e;
-            e = ex;
-            assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
+            fail("la cantidad de oro no puede ser negativa");
             System.out.println("CP1 correcto");
         }
     }
@@ -369,9 +470,9 @@ public class VampiroTest {
         try{
             int oro = -1;     
             vampiro.setOro(oro);
-            assertEquals(-1,vampiro.getOro());
+            fail("la cantidad de oro puede ser negativa");
             System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
+        }catch(RuntimeException ex){
             Exception e;
             e = ex;
             assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
@@ -389,176 +490,11 @@ public class VampiroTest {
         try{
             int oro = 0;     
             vampiro.setOro(oro);
-            assertEquals(0,vampiro.getOro());
+            assertEquals(0,vampiro.getOro(),0.1);
             System.out.println("CP3 incorrecto");
         }catch(Exception ex){
-            Exception e;
-            e = ex;
-            assertEquals(e.getMessage(),"la cantidad de oro no puede ser negativa");
+            fail("la cantidad de oro no puede ser negativa");
             System.out.println("CP3 correcto");
-        }
-    }
-
-    /**
-     * Test of setSalud method, of class Vampiro.
-     * test para probar que la salud supera el maximo valor de salud permtido en 1 unidad
-     */
-    @Test
-    public void testSetSalud() {
-        try{ 
-            int salud = 6;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setSalud(salud);
-            assertEquals(6,vampiro.getSalud());
-            System.out.println("CP4 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP4 correcto");
-        }
-    }
-
-    /**
-     * Test of setSalud method, of class Vampiro.
-     * test para probar que la salud no alcanza el minimo valor de salud permtido
-     */
-    @Test
-    public void testSetSalud1() {
-        try{ 
-            int salud = -1;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setSalud(salud);
-            assertEquals(-1,vampiro.getSalud());
-            System.out.println("CP5 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP5 correcto");
-        }
-    }
-    
-    /**
-     * Test of setSalud method, of class Vampiro.
-     * test para probar que la salud es uno de los valores limite de salud permitidos 
-     */
-    @Test
-    public void testSetSalu2() {
-        try{ 
-            int salud = 0;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setSalud(salud);
-            assertEquals(0,vampiro.getSalud());
-            System.out.println("CP7 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP7 correcto");
-        }
-    }
-    
-    /**
-     * Test of setSalud method, of class Vampiro.
-     * test para probar que la salud esta dentro del rango de valores permitidos 
-     * pero no es uno de los valores limite
-     */
-    @Test
-    public void testSetSalud3() {
-        try{ 
-            int salud = 4;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setSalud(salud);
-            assertEquals(4,vampiro.getSalud());
-            System.out.println("CP8 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de salud permitida");
-            System.out.println("CP8 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Vampiro.
-     * test para probar que el poder supera el maximo valor de poder permtido en 1 unidad
-     */
-    @Test
-    public void testSetPoder() {
-        try{ 
-            int poder = 6;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setPoder(poder);
-            assertEquals(6,vampiro.getPoder());
-            System.out.println("CP1 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP1 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Vampiro.
-     * test para probar que el poder esta a un valor de alcanzar el minimo valor de poder permtido
-     */
-    @Test
-    public void testSetPoder1() {
-        try{ 
-            int poder = 0;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setPoder(poder);
-            assertEquals(0,vampiro.getPoder());
-            System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP2 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Vampiro.
-     * test para probar que el poder sobrepasa en mas de 1 unidad el valor maximo de poder permitido
-     */
-    @Test
-    public void testSetPoder2() {
-        try{ 
-            int poder = 9;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setPoder(poder);
-            assertEquals(9,vampiro.getPoder());
-            System.out.println("CP3 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP3 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Vampiro.
-     * test para probar que el poder esta en el rango de valores permitidos sin contar los valores limite
-     */
-    @Test
-    public void testSetPoder3() {
-        try{ 
-            int poder = 3;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setPoder(poder);
-            assertEquals(3,vampiro.getPoder());
-            System.out.println("CP4 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP4 correcto");
-        }
-    }
-    
-    /**
-     * Test of setPoder method, of class Vampiro.
-     * test para probar que el poder es uno de los valores limite
-     */
-    @Test
-    public void testSetPoder4() {
-        try{ 
-            int poder = 5;
-            Vampiro vampiro = new Vampiro();
-            vampiro.setPoder(poder);
-            assertEquals(5,vampiro.getPoder());
-            System.out.println("CP5 incorrecto");
-        }catch(Exception ex){
-            assertEquals(ex.getMessage(),"sobrepasó el límite de poder permitido");
-            System.out.println("CP5 correcto");
         }
     }
 
@@ -572,9 +508,9 @@ public class VampiroTest {
             int rabia = 8;
             Vampiro vampiro = new Vampiro();
             vampiro.setRabia(rabia);
-            assertEquals(8,vampiro.getRabia());
+            fail("el personaje tiene rabia");
             System.out.println("CP1 incorrecto");
-        }catch(Exception e){
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"este personaje no tiene rabia");
             System.out.println("CP1 correcto");
         }
@@ -590,9 +526,9 @@ public class VampiroTest {
             int voluntad = 0;
             Vampiro vampiro = new Vampiro();
             vampiro.setVoluntad(voluntad);
-            assertEquals(0,vampiro.getVoluntad());
+            fail("el personaje tiene voluntad");
             System.out.println("CP1 incorrecto");
-        }catch(Exception e){
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"este personaje no tiene voluntad");
             System.out.println("CP1 correcto");
         }

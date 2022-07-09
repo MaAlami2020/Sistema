@@ -4,54 +4,51 @@
  */
 package sistema;
 
+import java.util.List;
+
 /**
  *
  * @author mimit
  */
-public class Armadura {
+public class Armadura extends Equipo{
     private String nombre;
-    private int modificadorAtaque;
-    private int modificadorDefensa;
 
-    public Armadura(String nombre, int modificadorAtaque, int modificadorDefensa) {
+    public Armadura(String nombre, int modificadorAtaque, int modificadorDefensa, List<String> listaMateriales) {
+        super(modificadorAtaque,modificadorDefensa,listaMateriales);
         this.nombre = nombre;
-        this.modificadorAtaque = modificadorAtaque;
-        this.modificadorDefensa = modificadorDefensa;
     }
     
-    public Armadura(){
-    }
-    
+    @Override
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if(nombre != " "){
+            this.nombre = nombre;
+        }else{
+            throw new RuntimeException("nombre invalido");
+        }
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
 
-    
-    public void setModificadorAtaque(int modificadorAtaque) throws Exception{
-        if(modificadorAtaque < 0 | modificadorAtaque > 3){
-            throw new Exception("sobrepasó el límite de modificador de ataque");
-        }else{
-            this.modificadorAtaque = modificadorAtaque;
-        }
+    @Override
+    public void setManejo(String manejo) {
+        throw new RuntimeException("este equipo no tiene un manejo");
     }
 
-    public int getModificadorAtaque() {
-        return modificadorAtaque;
+    @Override
+    public String getManejo() {
+        return null;
     }
-    
-    public int getModificadorDefensa() {
-        return modificadorDefensa;
+ 
+    @Override
+    public void setCategoria(Categoria categoria) {
+        throw new RuntimeException("este equipo no tiene un categoria");
     }
 
-    public void setModificadorDefensa(int modificadorDefensa) throws Exception{
-        if(modificadorDefensa < 0 | modificadorDefensa > 3){
-            throw new Exception("sobrepasó el límite del modificador de defensa");
-        }else{
-            this.modificadorDefensa = modificadorDefensa;
-        }
-    } 
+    @Override
+    public Categoria getCategoria() {
+        return null;
+    }
 }

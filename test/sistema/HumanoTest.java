@@ -47,19 +47,19 @@ public class HumanoTest {
     public void testSetSalud() {
         try{
             int salud = 2;
-            Humano humano = new Humano("estropicus",salud,ALTA);
+            Humano humano = new Humano("asòd",salud,NORMAL);
             humano.setSalud(salud);
             assertEquals(salud,humano.getSalud());
             System.out.println("CP1 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
+            fail("sobrepasa el valor limite de salud");
             System.out.println("CP1 correcto");
         }
     }
     
     /**
      * Test of setSalud method, of class Humano.
-     * test que prueba que la salud noo alcanza por 1 unidad el valor minimo de salud
+     * test que prueba que la salud no alcanza por 1 unidad el valor minimo de salud
      */
     @Test
     public void testSetSalud1() {
@@ -67,7 +67,7 @@ public class HumanoTest {
             int salud = 0;
             Humano humano = new Humano("estropicus",salud,ALTA);
             humano.setSalud(salud);
-            assertEquals(salud,humano.getSalud());
+            fail("el valor de salud esta entre 1 y 3");
             System.out.println("CP2 incorrecto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
@@ -88,7 +88,7 @@ public class HumanoTest {
             assertEquals(salud,humano.getSalud());
             System.out.println("CP3 incorrecto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"sobrepasa el valor limite de salud");
+            fail("sobrepasa el valor limite de salud");
             System.out.println("CP3 correcto");
         }
     }
@@ -101,12 +101,12 @@ public class HumanoTest {
     public void testSetDependencia() {
         try{
             int dependencia = 4;
-            Ghoul ghoul = new Ghoul("estropicus",1,dependencia);
-            ghoul.setDependencia(dependencia);
-            assertEquals(dependencia,ghoul.getDependencia());
+            Humano humano = new Humano("estropicus",1,NORMAL);
+            humano.setDependencia(dependencia);
+            fail("este esbirro tiene un valor de dependencia");
             System.out.println("CP1 incorreccto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"este esbirro  no tiene una dependencia");
+            assertEquals(e.getMessage(),"este esbirro no tiene una dependencia");
             System.out.println("CP1 correcto");
         }
     }
@@ -121,7 +121,7 @@ public class HumanoTest {
             String pacto = " ";
             Humano humano = new Humano("estropicus",1,ALTA);
             humano.setPacto(pacto);
-            assertEquals(pacto,humano.getPacto());
+            fail("este esbirro tiene un pacto");
             System.out.println("CP1 incorreccto");
         }catch(Exception e){
             assertEquals(e.getMessage(),"este esbirro no tiene un pacto");
@@ -138,11 +138,10 @@ public class HumanoTest {
         try{
             Lealtad lealtad = ALTA;
             Humano humano = new Humano("estropicus",1,ALTA);
-            humano.setLealtad(lealtad);
             assertEquals(lealtad,humano.getLealtad());
             System.out.println("CP1 incorreccto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"este esbirro no tiene una lealtad");
+            fail("este esbirro no tiene una lealtad");
             System.out.println("CP1 correcto");
         }
     }
@@ -156,11 +155,10 @@ public class HumanoTest {
         try{
             Lealtad lealtad = NORMAL;
             Humano humano = new Humano("estropicus",1,NORMAL);
-            humano.setLealtad(lealtad);
             assertEquals(lealtad,humano.getLealtad());
             System.out.println("CP2 incorreccto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"este esbirro no tiene una lealtad");
+            fail("este esbirro no tiene una lealtad");
             System.out.println("CP2 correcto");
         }
     }
@@ -174,12 +172,28 @@ public class HumanoTest {
         try{
             Lealtad lealtad = BAJA;
             Humano humano = new Humano("estropicus",1,BAJA);
-            humano.setLealtad(lealtad);
             assertEquals(lealtad,humano.getLealtad());
             System.out.println("CP3 incorreccto");
         }catch(Exception e){
-            assertEquals(e.getMessage(),"este esbirro no tiene una lealtad");
+            fail("este esbirro no tiene una lealtad");
             System.out.println("CP3 correcto");
+        }
+    }
+    /**
+     * Test of setLealtad method, of class Demonio.
+     * test que prueba que el valor de lealtad es erroneo
+     */
+    @Test
+    public void testSetLealtad3() {
+        try{
+            Lealtad lealtad = null;
+            Humano humano = new Humano("estropicus",1,null);
+            humano.setLealtad(lealtad);
+            fail("el valor de lealtad es correcto");
+            System.out.println("CP4 incorreccto");
+        }catch(Exception e){
+            assertEquals(e.getMessage(),"valor de lealtad erroneo");
+            System.out.println("CP4 correcto");
         }
     }
     

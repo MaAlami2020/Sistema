@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/MenuInicio.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Sistema.java</file>
@@ -12,5 +13,8 @@
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Vampiro.java</file>
             <file>file:/C:/Users/mimit/Sistema/Sistema/src/sistema/Combate.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 9374db28d661988b654772f614291b61de52b901
     </open-files>
 </project-private>

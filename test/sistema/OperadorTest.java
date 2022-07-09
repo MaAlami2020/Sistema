@@ -42,15 +42,14 @@ public class OperadorTest {
      */
     @Test
     public void testSetPassword() {
-        Operador operator = new Operador();
+        MenuInicio menu = new MenuInicio();
+        Operador operator = new Operador(menu);
         try{
             String password = "micontr";
-            operator.setPassword(password);
-            assertEquals(password,operator.getPassword());
+            operator.setPassword(password);            
+            fail("la longitud de la contraseña esta dentro del rango(8-12)");
             System.out.println("CP1 incorrecto");
-        }catch(Exception ex){
-            Exception e;
-            e = ex;
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"longitud de la contrasenia fuera del rango[8-12]");
             System.out.println("CP1 correcto");
         }
@@ -62,15 +61,14 @@ public class OperadorTest {
      */
     @Test
     public void testSetPassword1() {
-        Operador operator1 = new Operador();
+        MenuInicio menu = new MenuInicio();
+        Operador operator1 = new Operador(menu);
         try{
             String password = "micontrasenia";
             operator1.setPassword(password);
-            assertEquals(password,operator1.getPassword());
+            fail("la contraseña esta dentro del limite (8-12)");
             System.out.println("CP2 incorrecto");
-        }catch(Exception ex){
-            Exception e;
-            e = ex;
+        }catch(RuntimeException e){
             assertEquals(e.getMessage(),"longitud de la contrasenia fuera del rango[8-12]");
             System.out.println("CP2 correcto");
         }
@@ -82,16 +80,15 @@ public class OperadorTest {
      */
     @Test
     public void testSetPassword2() {
-        Operador operator2 = new Operador();
+        MenuInicio menu = new MenuInicio();
+        Operador operator2 = new Operador(menu);
         try{
             String password = "mypassword";
             operator2.setPassword(password);
             assertEquals(password,operator2.getPassword());
             System.out.println("CP3 incorrecto");
-        }catch(Exception ex){
-            Exception e;
-            e = ex;
-            assertEquals(e.getMessage(),"longitud de la contrasenia fuera del rango[8-12]");
+        }catch(RuntimeException e){
+            fail("longitud de la contrasenia fuera del rango[8-12]");
             System.out.println("CP3 correcto");
         }
     }

@@ -4,70 +4,58 @@
  */
 package sistema;
 
+import java.util.List;
+
 /**
  *
  * @author mimit
  */
-public class Arma {
-   private String nombre;
-    private int modificadorAtaque;
-    private int modificadorDefensa;
+public class Arma extends Equipo{
+    private String nombre;
     private String manejo;
+    private Categoria categoria;
 
-    public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, String manejo) {
+    public Arma(String nombre, int modificadorAtaque, int modificadorDefensa, String manejo, List<String> listaMateriales) {
+        super(modificadorAtaque,modificadorDefensa,listaMateriales);
         this.nombre = nombre;
-        this.modificadorAtaque = modificadorAtaque;
-        this.modificadorDefensa = modificadorDefensa;
         this.manejo = manejo;
     }
 
-    public Arma() {
-    }
-
-    public void setNombre(String nombre) throws Exception{
+    @Override
+    public void setNombre(String nombre){
         if(!nombre.equals(" ")){
             this.nombre = nombre;
         }else{
-            throw new Exception("nombre invalido");
+            throw new RuntimeException("nombre invalido");
         }
     }
 
+    @Override
     public String getManejo() {       
         return manejo;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
-    }
-    
-    public void setModificadorAtaque(int modificadorAtaque) throws Exception{
-        if(modificadorAtaque < 1 | modificadorAtaque > 3){
-            throw new Exception("sobrepasó el límite de modificador de ataque");
-        }else{
-            this.modificadorAtaque = modificadorAtaque;
-        }
-    }
-
-    public int getModificadorAtaque() {
-        return modificadorAtaque;
     }   
-    
-    public int getModificadorDefensa() {
-        return modificadorDefensa;
-    }
 
-    public void setModificadorDefensa(int modificadorDefensa) throws Exception{
-        if(modificadorDefensa < 0 | modificadorDefensa > 3){
-            throw new Exception("sobrepasó el límite del modificador de defensa");
-        }else{
-            this.modificadorDefensa = modificadorDefensa;
-        }
-    }   
-    
-    public void setManejo(String manejo) throws Exception{
+    @Override
+    public void setManejo(String manejo){
         if(!manejo.equals("1 mano") & !manejo.equals("2 manos")){
-             throw new Exception("valor manejo invalido");
+             throw new RuntimeException("valor invalido");
+        }else{
+            this.manejo = manejo;
         }
-        this.manejo = manejo;
     } 
+
+    @Override
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    @Override
+    public Categoria getCategoria() {
+        return categoria;
+    }
 }
