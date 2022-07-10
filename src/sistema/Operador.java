@@ -251,6 +251,7 @@ public class Operador implements Serializable{
             throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
         }
     }
+    
     public void serializar(Operador op){
        try{
            String fich = "D://Sistema//fichero.bin";

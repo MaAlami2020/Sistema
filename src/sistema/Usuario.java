@@ -556,13 +556,7 @@ public class Usuario implements Serializable{
                 }
             }
         }
-        boolean baneado = false;
-        for(Usuario usBaneado: menu.getUsuariosBaneados()){
-            if(usBaneado.equals(venta.getVendedor())){
-               baneado = true;
-            }  
-        }
-        if(!baneado){
+        if(!usuarioBaneado(menu.getUsuariosBaneados(),venta.getVendedor())){
             venta.setComprador(menu.getUsuarioActual().get(0));
             if(encontrado && ofertaComprar.getPrecioVenta()<=menu.getUsuarioActual().get(0).getTipoPersonaje().getOro()){
                 menu.getOfertasValidadas().remove(ofertaComprar);
@@ -1173,7 +1167,7 @@ public class Usuario implements Serializable{
         }
         return null;
     }
-    
+    */
     public boolean usuarioBaneado(List<Usuario> usuariosBaneados , Usuario usuario){
         for(Usuario us: usuariosBaneados){
             if(us.getNick().equals(usuario.nick)){
@@ -1182,7 +1176,7 @@ public class Usuario implements Serializable{
         }
         return false;
     }
-    */    
+        
     public Armadura elegirArmadura(){
         List<Armadura> armaduras = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmaduras();
         if(!armaduras.isEmpty()){

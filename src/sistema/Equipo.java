@@ -4,13 +4,14 @@
  */
 package sistema;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author mimit
  */
-public abstract class Equipo {
+public abstract class Equipo implements Serializable{
     protected int modificadorAtaque;
     protected int modificadorDefensa;
     protected List<String> listaMateriales;

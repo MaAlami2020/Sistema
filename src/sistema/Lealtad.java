@@ -4,10 +4,12 @@
  */
 package sistema;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mimit
  */
-public enum Lealtad {
+public enum Lealtad implements Serializable{
     ALTA,NORMAL,BAJA; 
 }

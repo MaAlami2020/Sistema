@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author mimit
  */
-public class Oferta {
+public class Oferta implements Serializable{
     private Equipo equipoEnVenta = null;
     private List<Esbirro> esbirroParaTraspasar = new ArrayList<>();
     private double precioVenta;

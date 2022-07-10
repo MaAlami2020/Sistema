@@ -4,13 +4,14 @@
  */
 package sistema;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author mimit
  */
-public abstract class Esbirro {
+public abstract class Esbirro implements Serializable{
     protected String nombre;
     protected int salud;
     

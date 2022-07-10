@@ -4,13 +4,14 @@
  */
 package sistema;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author mimit
  */
-public abstract class Personaje {
+public abstract class Personaje implements Serializable{
     
     public abstract void setNombre(String nombre);
     public abstract void setEdad(int edad);
