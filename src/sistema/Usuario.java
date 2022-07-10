@@ -19,6 +19,21 @@ import static sistema.Lealtad.NORMAL;
 /**
  *
  * @author MariaAmparoAlami
+ * eliminar equipo
+ * registro personajes
+ * escaner para eliminar oro
+ * caja blanca -> conozcco el codigo y me invento los test, test de cada metodo, se como funciona el metodo, se lo que da error y lo que no
+ * si se cumple 
+ * caja negra no se sabe como funciona, verificar lo que hizo el metodo y si funciona
+ * serializar al iniciar sesion y al principio del menu en usuario, en el operador cuando se registre y
+ * y justo antes de mostrarse el menu pero dentro del metodo
+ * implementar metodo para mostrar notificaiones
+ * deserializar la clase
+ * serializar solo el menuInici
+ * llamar al metodo notificar
+ * ver las suscripciones
+ * guardar la lista de suscripciones en el usuario actual
+ * hacer un getter de las suscripciones
  */
 public class Usuario implements Serializable{
     private String nombre;
@@ -180,14 +195,58 @@ public class Usuario implements Serializable{
         Usuario usuario = new Usuario(name,apodo,contrasenia);
         usuario.setRegistro(reg);
         usuario.setTipoPersonaje(tipoPersonaje);
-        serializar(usuario);
         usuario.setMenu(menu);
-        menu.setUserlist(usuario);
+        menu.serializeMenu();
+    }
+    
+    public void menuPersonaje() {
+        System.out.println("Seleccione el tipo de personaje");
+        System.out.println("1. Vampiro");
+        System.out.println("2. Licantropo");
+        System.out.println("3. Cazador");
+        Scanner sc = new Scanner(System.in);
+        String opc = sc.next();
+        int opcPer = Integer.parseInt(opc);
+        switch (opcPer) {
+            case 1:
+                registrar_vampiro();
+                break;
+            case 2:
+                registrar_licantropo();
+                break;
+            case 3:
+                registrar_cazador();
+                break;
+        }
+        this.atributosComunesPersonaje();
     }
   
+    public void eliminarArma(){
+        int cont = 1;
+        List<Arma> listaArmas = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas();
+        for(Arma arm: listaArmas){
+            System.out.println(cont + ".-" + arm.getNombre());
+            cont++;
+        }
+        int pos = cont--;
+        menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmas().remove(pos);
+    }
+    
+    public void eliminarArmadura(){
+        int cont = 1;
+        List<Armadura> listaArmaduras = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmaduras();
+        for(Armadura armd: listaArmaduras){
+            System.out.println(cont + ".-" + armd.getNombre());
+            cont++;
+        }
+        int pos = cont--;
+        menu.getUsuarioActual().get(0).getTipoPersonaje().getListaArmaduras().remove(pos);
+    }
+    
     public void seleccionarOpcionMenu(){
         int opc;
         do{
+            menu.serializeMenu();
             System.out.println("***BIENVENIDO**");
             System.out.println("3.-añadir/eliminar equipo");
             System.out.println("4.-añadir esbirro/s al personaje");
@@ -203,7 +262,7 @@ public class Usuario implements Serializable{
             String opcion = sc.next();
             opc =Integer.parseInt(opcion);
            
-            if(opc >= 3 && opc <= 9){
+            if(opc >= 3 && opc <= 10){
                 switch(opc){
                     case 3:{
                         System.out.println("1.-añadir equipo");
@@ -225,6 +284,18 @@ public class Usuario implements Serializable{
                             }else if(opt == 2){
                                 Armadura armadura = añadirArmadura();
                                 setNuevaArmaduraPersonaje(armadura);
+                            }
+                        }else if(opt == 2){
+                            System.out.println("1.-eliminar arma");
+                            System.out.println("2.-eliminar armadura");
+                            System.out.println("seleccione una opcion: -1 o 2-");
+                            sc = new Scanner(System.in);
+                            option = sc.next();
+                            opt = Integer.parseInt(option);
+                            if(opt == 1){
+                                eliminarArma();
+                            }else if(opt == 2){
+                                eliminarArmadura();
                             }
                         }
                         break;
@@ -254,14 +325,14 @@ public class Usuario implements Serializable{
                         break;
                     }case 8:{
                         seleccionarTipoSuscripcion();
+                        //menu.updateSuscripciones(this);
                         break;
                     }case 9:{
                         comprarElementos();
                         break;
                     }case 10:{
                         consultarOro_Equipo_Esbirros();
-                    }case 11:{
-                        System.out.println("saliendo del sistema");
+                        break;
                     }
                 }
             }else{
@@ -301,17 +372,20 @@ public class Usuario implements Serializable{
                     opcion = sc.next();
                     int subTipoOpcion = Integer.parseInt(opcion);
                     switch(subTipoOpcion){    
-                        case 1:suscripciones.add("tipo:" + Arma.class);
-                        case 2:suscripciones.add("tipo:" + Armadura.class);
-                        case 3:suscripciones.add("tipo:" + Esbirro.class);
+                        case 1:suscripciones.add("tipo:" + Arma.class);break;
+                        case 2:suscripciones.add("tipo:" + Armadura.class);break;
+                        case 3:suscripciones.add("tipo:" + Esbirro.class);break;
                         case 4:
                             suscripciones.add("tipo:" + Arma.class);
                             suscripciones.add("tipo:" + Esbirro.class);
+                            break;
                         case 5:
                             suscripciones.add("tipo:" + Armadura.class);
                             suscripciones.add("tipo:" + Esbirro.class);
-                        default:System.out.println("seleccion erronea");
-                    }    
+                            break;
+                        default:System.out.println("seleccion erronea");break;
+                    } 
+                    break;
                 case 2:
                     //suscripcion = TipoSuscripcion.porCategoria;
                     System.out.println("seleccione la categoria de la suscripcion: 1.Comun, 2.Raro, 3.Epico, 4.Legendario");
@@ -319,12 +393,13 @@ public class Usuario implements Serializable{
                     opcion = sc.next();
                     subTipoOpcion = Integer.parseInt(opcion);
                     switch(subTipoOpcion){    
-                        case 1:suscripciones.add("categoria:" + Categoria.Comun);
-                        case 2:suscripciones.add("categoria:" + Categoria.Raro);
-                        case 3:suscripciones.add("categoria:" + Categoria.Epico);
-                        case 4:suscripciones.add("categoria:" + Categoria.Legendario);
-                        default:System.out.println("seleccion erronea");
+                        case 1:suscripciones.add("categoria:" + Categoria.Comun);break;
+                        case 2:suscripciones.add("categoria:" + Categoria.Raro);break;
+                        case 3:suscripciones.add("categoria:" + Categoria.Epico);break;
+                        case 4:suscripciones.add("categoria:" + Categoria.Legendario);break;
+                        default:System.out.println("seleccion erronea");break;
                     } 
+                    break;
                 case 3:
                     //suscripcion = TipoSuscripcion.porCategoria;
                     System.out.println("seleccione el valor de la suscripcion: 1, 2 o 3");
@@ -332,43 +407,47 @@ public class Usuario implements Serializable{
                     opcion = sc.next();
                     int valorSusc = Integer.parseInt(opcion);
                     switch(valorSusc){
-                        case 1:suscripciones.add("valor:" + 1);
-                        case 2:suscripciones.add("valor:" + 2);
-                        case 3:suscripciones.add("valor:" + 3);
+                        case 1:suscripciones.add("valor:" + 1);break;
+                        case 2:suscripciones.add("valor:" + 2);break;
+                        case 3:suscripciones.add("valor:" + 3);break;
                     }
+                    break;
                 case 4:
                     System.out.println("seleccione la lealtad de la suscripcion: 1.ALTA, 2.NORMAL, 3.BAJA");
                     sc = new Scanner(System.in);
                     opcion = sc.next();
                     subTipoOpcion = Integer.parseInt(opcion);
                     switch(subTipoOpcion){    
-                        case 1:suscripciones.add("lealtad:" + Lealtad.ALTA);
-                        case 2:suscripciones.add("lealtad:" + Lealtad.NORMAL);
-                        case 3:suscripciones.add("lealtad:" + Lealtad.BAJA);
-                        default:System.out.println("seleccion erronea");
+                        case 1:suscripciones.add("lealtad:" + Lealtad.ALTA);break;
+                        case 2:suscripciones.add("lealtad:" + Lealtad.NORMAL);break;
+                        case 3:suscripciones.add("lealtad:" + Lealtad.BAJA);break;
+                        default:System.out.println("seleccion erronea");break;
                     } 
+                    break;
                 case 5:
                     System.out.println("seleccione el tipo de esbirro de la suscripcion: 1.ghoul, 2.demonio, 3.humano");
                     sc = new Scanner(System.in);
                     opcion = sc.next();
                     subTipoOpcion = Integer.parseInt(opcion);
                     switch(subTipoOpcion){    
-                        case 1:suscripciones.add("esbirro:" + Ghoul.class);
-                        case 2:suscripciones.add("esbirro:" + Demonio.class);
-                        case 3:suscripciones.add("esbirro:" + Humano.class);
-                        default:System.out.println("seleccion erronea");
+                        case 1:suscripciones.add("esbirro:" + Ghoul.class);break;
+                        case 2:suscripciones.add("esbirro:" + Demonio.class);break;
+                        case 3:suscripciones.add("esbirro:" + Humano.class);break;
+                        default:System.out.println("seleccion erronea");break;
                     } 
+                    break;
                 case 6:
                     System.out.println("seleccione el tipo de usuario de la suscripcion: 1.vampiro, 2.licantropo, 3.cazador");
                     sc = new Scanner(System.in);
                     opcion = sc.next();
                     subTipoOpcion = Integer.parseInt(opcion);
                     switch(subTipoOpcion){    
-                        case 1:suscripciones.add("usuario:" + Vampiro.class);
-                        case 2:suscripciones.add("usuario:" + Licantropo.class);
-                        case 3:suscripciones.add("usuario:" + Cazador.class);
-                        default:System.out.println("seleccion erronea");
+                        case 1:suscripciones.add("usuario:" + Vampiro.class);break;
+                        case 2:suscripciones.add("usuario:" + Licantropo.class);break;
+                        case 3:suscripciones.add("usuario:" + Cazador.class);break;
+                        default:System.out.println("seleccion erronea");break;
                     } 
+                    break;
                 case 7:
                     int min;
                     do{
@@ -385,11 +464,17 @@ public class Usuario implements Serializable{
                         max = Integer.parseInt(opcion);
                     }while(max <= min);
                     suscripciones.add("precio:" + min + "-" + max);
+                    break;
             }
         System.out.println("escriba -no- si no quiere añadir otro tipo de suscripcion");
         sc = new Scanner(System.in);
         opcion = sc.next();
         }while(!opcion.equals("no"));
+        menu.getUsuarioActual().get(0).setSuscripciones(suscripciones);
+    }
+
+    public void setSuscripciones(List<String> suscripciones) {
+        menu.getUsuarioActual().get(0).suscripciones = suscripciones;
     }
     
     public void consultarOro_Equipo_Esbirros(){
@@ -423,18 +508,8 @@ public class Usuario implements Serializable{
             String selec = sc.next();
             opcion = Integer.parseInt(selec);
             if(opcion == 1){
-                if(oferta.getEquipoEnVenta() != null){
-                    Equipo equipo = ofertarEquipo();
-                    oferta.setEquipoEnVenta(equipo);
-                }else{
-                    System.out.println("ya tiene un equipo a la venta, escriba -si- si quiere modificarlo");
-                    sc = new Scanner(System.in);
-                    String opc = sc.next();
-                    if(opc.equals("si")){
-                        Equipo equipo = ofertarEquipo();
-                        oferta.setEquipoEnVenta(equipo);
-                    }
-                }
+                Equipo equipo = ofertarEquipo();
+                oferta.setEquipoEnVenta(equipo);
             }else if(opcion == 2){
                 String repetir;
                 do{
@@ -470,8 +545,8 @@ public class Usuario implements Serializable{
             opc = Integer.parseInt(opcionOferta);
         }while(opc <= 0 || opc > menu.getOfertasValidadas().size());
         
-        int op = opc--;
-        Oferta ofertaComprar = menu.getOfertasValidadas().get(op);
+        //int op = opc--;
+        Oferta ofertaComprar = menu.getOfertasValidadas().get(--opc);
          boolean encontrado = false;
         for(Usuario us: menu.getUserlist()){
             for(Oferta offer: us.getOfertas()){
@@ -481,13 +556,7 @@ public class Usuario implements Serializable{
                 }
             }
         }
-        boolean baneado = false;
-        for(Usuario usBaneado: menu.getUsuariosBaneados()){
-            if(usBaneado.equals(venta.getVendedor())){
-               baneado = true;
-            }  
-        }
-        if(!baneado){
+        if(!usuarioBaneado(menu.getUsuariosBaneados(),venta.getVendedor())){
             venta.setComprador(menu.getUsuarioActual().get(0));
             if(encontrado && ofertaComprar.getPrecioVenta()<=menu.getUsuarioActual().get(0).getTipoPersonaje().getOro()){
                 menu.getOfertasValidadas().remove(ofertaComprar);
@@ -548,6 +617,7 @@ public class Usuario implements Serializable{
                     System.out.println("precio total: " + elem.getPrecioVenta());
                 }
                 cont++;
+                esMiOferta = false;
             }
         }else{
             System.out.println("no hay ofertas publicadas");
@@ -558,14 +628,14 @@ public class Usuario implements Serializable{
             List<Esbirro> esbirros = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros();
             int cont = 1;
             for(Esbirro esb: esbirros){
-                Class claseEsbirro = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros().get(cont).getClass();
+                Class claseEsbirro = esb.getClass();
                 if(claseEsbirro == Ghoul.class){
                     System.out.println(cont + ". " + esb.getNombre() + " GHOUL");
                 }else if(claseEsbirro == Humano.class){
                     System.out.println(cont + ". " + esb.getNombre() + " HUMANO");
                 }else if(claseEsbirro == Demonio.class){
                     System.out.println(cont + ". " + esb.getNombre() + " DEMONIO");
-                    List<Esbirro> hijos = menu.getUsuarioActual().get(0).getTipoPersonaje().getListaEsbirros().get(cont).getHijos();
+                    List<Esbirro> hijos = esb.getHijos();
                     int contHijo = 1;
                     for(Esbirro esbHijo: hijos){
                         System.out.println(" hijo " + contHijo + ": " + esbHijo.getNombre());
@@ -1073,21 +1143,22 @@ public class Usuario implements Serializable{
            sangreAcum = anadirSangreAcum();
            setSangreAcumPersonaje(sangreAcum);
         }while(sangreAcum < 0 | sangreAcum > 10);
+        atributosComunesPersonaje();
 
     }
     
     public void registrar_licantropo(){
         Fabrica fabrica = new FabricacionLicantropo();
         menu.getUsuarioActual().get(0).setTipoPersonaje(fabrica.crearPersonaje());
-        
+        atributosComunesPersonaje();
     }
     
     public void registrar_cazador(){
         Fabrica fabrica = new FabricacionCazador();
         menu.getUsuarioActual().get(0).setTipoPersonaje(fabrica.crearPersonaje());
-        
+        atributosComunesPersonaje();
     }
-    
+    /**
     public Usuario buscarUsuarioDesafiar(List<Usuario> listaUsuarios, String nickUsuario){     
         for(Usuario usuarioDesafiado: listaUsuarios){
            if(usuarioDesafiado.nick.equals(nickUsuario)){
@@ -1096,7 +1167,7 @@ public class Usuario implements Serializable{
         }
         return null;
     }
-    
+    */
     public boolean usuarioBaneado(List<Usuario> usuariosBaneados , Usuario usuario){
         for(Usuario us: usuariosBaneados){
             if(us.getNick().equals(usuario.nick)){
@@ -1151,12 +1222,27 @@ public class Usuario implements Serializable{
             return null;
         }
     }
-    
+    /**
     public void consultarOro(){ 
         System.out.println("usuario: " + menu.getUsuarioActual().get(0).getNombre());
         System.out.println("oro actual: "+menu.getUsuarioActual().get(0).tipoPersonaje.getOro());
     }
-   
+    */
+    public void crearPersonaje(){
+       System.out.println("1.vampiro");
+       System.out.println("2.licantropo");
+       System.out.println("3.cazador");
+       System.out.println("seleccione el numero de tipo de personaje");
+       Scanner sc = new Scanner(System.in);
+       String op = sc.next();
+       int opcPer = Integer.parseInt(op);
+       switch(opcPer){
+           case 1:registrar_vampiro();break;
+           case 2:registrar_licantropo();break;
+           case 3:registrar_cazador();break;
+       }
+    }
+    
     public void entrar_salirSistema(){ 
       System.out.println("1.-entrar en el sistema");
       System.out.println("2.-salir del sistema");
@@ -1177,6 +1263,10 @@ public class Usuario implements Serializable{
            if(nameUser.equals(user.getNombre()) && contraseniaUser.equals(user.getPassword())){
                userRegistered = true;  
                menu.setUsuarioActual(user);
+               if (menu.getUsuarioActual().get(0).getTipoPersonaje() == null) {
+                    this.menuPersonaje();
+               }
+               mostrarNotificaciones();
                seleccionarOpcionMenu();
                menu.getUsuarioActual().clear();
            }
@@ -1189,6 +1279,24 @@ public class Usuario implements Serializable{
       }
     }
     
+    private void mostrarNotificaciones() {
+        List<Oferta> notificaciones = menu.getUsuarioActual().get(0).getNotificaciones();
+        if (!notificaciones.isEmpty()) {
+            System.out.println("Tienes ofertas relacionadas con tus subscripciones");
+            int cont = 1;
+            for (Oferta o : notificaciones) {
+                System.out.println("oferta " + cont++);
+                System.out.println("nombre equipo: " + o.getEquipoEnVenta().getNombre());
+                int index = 1;
+                for (Esbirro esb : o.getEsbirroParaTraspasar()) {
+                    System.out.println("esbirro: " + index + esb.getNombre());
+                    index++;
+                }
+                System.out.println("precio total: " + o.getPrecioVenta());
+            }
+            //this.notificaciones.clear();
+        }
+    }
     
     public String getPassword() {
         return password;

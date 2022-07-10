@@ -4,10 +4,12 @@
  */
 package sistema;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mimit
  */
-public enum Categoria {
+public enum Categoria implements Serializable{
     Comun, Raro, Epico, Legendario   
 }

@@ -162,8 +162,9 @@ public class Operador implements Serializable{
     public void validarOfertas(){
         for(Oferta ofertaPendiente: menu.getOfertasPendientes()){
             menu.setOfertasValidadas(ofertaPendiente);
+            System.out.println("validacion realizada");
         } 
-        System.out.println("no tiene ofertas pendientes para validar");
+        menu.getOfertasPendientes().clear();
     }  
     /**
      * el operador puede banear a un usuario siempre y cuando éste haya perdido un combate en las ultimas 24h
@@ -250,7 +251,7 @@ public class Operador implements Serializable{
             throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
         }
     }
-    /**
+
     public void serializar(Operador op){
        try{
            String fich = "D://Sistema//fichero.bin";
@@ -261,5 +262,4 @@ public class Operador implements Serializable{
            System.out.println(e);
        }
     } 
-    */
 }

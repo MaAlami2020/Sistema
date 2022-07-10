@@ -4,6 +4,9 @@
  */
 package sistema;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,7 +15,7 @@ import java.util.Scanner;
  *
  * @author mimit
  */
-public class MenuInicio{
+public class MenuInicio implements Serializable{
     private List<Usuario> userlist;
     private List<Operador> operatorlist = new ArrayList<>();
     private List<Usuario> usuariosBaneados;
@@ -132,5 +135,16 @@ public class MenuInicio{
 
     public void setVentas(Venta venta) {
         this.ventas.add(venta);
+    }
+     
+    public void serializeMenu() {//se escribe en el fichero out y se le trae el objeto mState
+        try {
+            String fich = System.getProperty("user.dir") + "\\menu.bin";
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
+            out.writeObject(this);
+            out.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

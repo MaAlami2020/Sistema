@@ -4,11 +4,13 @@
  */
 package sistema;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mimit
  */
-public abstract class Fabrica {
+public abstract class Fabrica implements Serializable{
     
     public abstract Personaje crearPersonaje();
     

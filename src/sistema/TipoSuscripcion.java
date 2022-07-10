@@ -4,10 +4,12 @@
  */
 package sistema;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mimit
  */
-public enum TipoSuscripcion {
+public enum TipoSuscripcion implements Serializable{
     porTipo, porCategoria, porValor, porLealtad, porTipoUsuario, porTipoEsbirro, porPrecio
 }
