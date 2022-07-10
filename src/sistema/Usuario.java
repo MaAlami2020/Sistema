@@ -524,7 +524,11 @@ public class Usuario implements Serializable{
             sc = new Scanner(System.in);
             selec = sc.next();
             double precio = Integer.parseInt(selec); 
-            oferta.setPrecioVenta(precio);
+            try{
+                oferta.setPrecioVenta(precio);
+            }catch(RuntimeException e){
+                System.out.println(e.getMessage());
+            }
             menu.setOfertasPendientes(oferta);
             menu.getUsuarioActual().get(0).ofertas.add(oferta);
             

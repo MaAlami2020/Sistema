@@ -4,6 +4,7 @@
  */
 package sistema;
 
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author mimit
  */
-public class VentaTest {
+public class OfertaTest {
     
-    public VentaTest() {
+    public OfertaTest() {
     }
     
     @BeforeClass
@@ -35,16 +36,15 @@ public class VentaTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of setPrecio method, of class Venta.
+/**
+     * Test of setPrecio method, of class Oferta.
      * test que prueba que no se puede tener un precio nulo
      */
     @Test
     public void testSetPrecio() {
-        Venta v = new Venta();
+        Oferta o = new Oferta();
         try{
-            v.setPrecio(0);
+            o.setPrecioVenta(0);
             fail("se puede tener un precio nulo");
             System.out.println("CP1 incorrecto");
         } catch(RuntimeException ex) {
@@ -54,14 +54,14 @@ public class VentaTest {
     }
     
     /**
-     * Test of setPrecio method, of class Venta.
+     * Test of setPrecio method, of class Oferta.
      * test que prueba que no se puede tener un precio negativo
      */
     @Test
     public void testSetPrecio1() {
-        Venta v = new Venta();
+        Oferta o = new Oferta();
         try{
-            v.setPrecio(-5.3);
+            o.setPrecioVenta(-5.3);
             fail("se puede tener un precio nulo");
             System.out.println("CP2 incorrecto");
         } catch(RuntimeException ex) {
@@ -71,20 +71,19 @@ public class VentaTest {
     }
 
     /**
-     * Test of setPrecio method, of class Venta.
+     * Test of setPrecio method, of class Oferta.
      * test para probar que el precio es un valor positivo
      */
     @Test
     public void testSetPrecio2() {
-        Venta v = new Venta();
+        Oferta o = new Oferta();
         try {
-             v.setPrecio(10.99);
-             assertEquals(10.99,v.getPrecio());
+             o.setPrecioVenta(10.99);
+             assertEquals(10.99,o.getPrecioVenta());
              System.out.println("CP3 incorrecto");
         } catch(RuntimeException ex) {
             fail("el precio no es positivo");
             System.out.println("CP3 correcto");
         }
     }
-    
 }
