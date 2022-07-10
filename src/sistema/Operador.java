@@ -106,7 +106,7 @@ public class Operador implements Serializable{
         if(operatorRegistered == false){
             Operador operador = new Operador(name,apodo,contrasenia);
             menu.setOperatorlist(operador);
-            serializar(operador);
+            menu.serializeMenu();
             
             System.out.println("registrado/a corractamente");
             entrar_salirSistema();
@@ -251,7 +251,7 @@ public class Operador implements Serializable{
             throw new RuntimeException("longitud de la contrasenia fuera del rango[8-12]"); 
         }
     }
-
+    /**
     public void serializar(Operador op){
        try{
            String fich = "D://Sistema//fichero.bin";
@@ -261,5 +261,6 @@ public class Operador implements Serializable{
        }catch(IOException e){
            System.out.println(e);
        }
-    } 
+    }
+    */
 }
