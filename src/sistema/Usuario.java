@@ -585,7 +585,11 @@ public class Usuario implements Serializable{
 
                 double oroVendedor = venta.getVendedor().getTipoPersonaje().getOro()+ofertaComprar.getPrecioVenta();
                 venta.getVendedor().getTipoPersonaje().setOro(oroVendedor);
-                venta.setPrecio(ofertaComprar.getPrecioVenta());
+                try{
+                    venta.setPrecio(ofertaComprar.getPrecioVenta());
+                }catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
                 venta.setFecha(LocalDate.now());
 
                 menu.setVentas(venta);

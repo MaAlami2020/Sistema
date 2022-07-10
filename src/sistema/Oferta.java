@@ -38,7 +38,11 @@ public class Oferta implements Serializable{
     }
 
     public void setPrecioVenta(double precioVenta) {
-        this.precioVenta = precioVenta;
+        if(precioVenta > 0){
+            this.precioVenta = precioVenta;
+        }else{
+            throw new RuntimeException("el precio debe ser positivo");
+        }
     }
     
     
